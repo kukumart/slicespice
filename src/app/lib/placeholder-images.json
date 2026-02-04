@@ -26,18 +26,6 @@
       "imageHint": "chicken burger"
     },
     {
-      "id": "coffee-latte",
-      "description": "Smooth Caffe Latte with silky foam",
-      "imageUrl": "https://picsum.photos/seed/latte-art/600/400",
-      "imageHint": "caffe latte"
-    },
-    {
-      "id": "drink-lemonade",
-      "description": "Freshly squeezed Lemonade with mint",
-      "imageUrl": "https://picsum.photos/seed/lemonade-mint/600/400",
-      "imageHint": "fresh lemonade"
-    },
-    {
       "id": "snack-fries",
       "description": "Golden crispy French Fries with sea salt",
       "imageUrl": "https://picsum.photos/seed/fries-truffle/600/400",
@@ -48,6 +36,18 @@
       "description": "Hand-battered Onion Rings",
       "imageUrl": "https://picsum.photos/seed/onion-rings/600/400",
       "imageHint": "onion rings"
+    },
+    {
+      "id": "coffee-latte",
+      "description": "Smooth Caffe Latte with silky foam",
+      "imageUrl": "https://picsum.photos/seed/latte-art/600/400",
+      "imageHint": "caffe latte"
+    },
+    {
+      "id": "drink-lemonade",
+      "description": "Freshly squeezed Lemonade with mint",
+      "imageUrl": "https://picsum.photos/seed/lemonade-mint/600/400",
+      "imageHint": "fresh lemonade"
     },
     {
       "id": "hero-restaurant",

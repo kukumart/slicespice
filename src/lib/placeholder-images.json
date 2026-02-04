@@ -1,3 +1,58 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "pizza-margherita",
+      "description": "Classic Pizza Margherita with fresh basil",
+      "imageUrl": "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYXJnaGVyaXRhJTIwcGl6emF8ZW58MHx8fHwxNzcwMjEwNDc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "margherita pizza"
+    },
+    {
+      "id": "pizza-pepperoni",
+      "description": "Spicy Pepperoni Pizza with melted mozzarella",
+      "imageUrl": "https://images.unsplash.com/photo-1605478371310-a9f1e96b4ff4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwZXBwZXJvbmklMjBwaXp6YXxlbnwwfHx8fDE3NzAyMDU0NTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pepperoni pizza"
+    },
+    {
+      "id": "burger-beef",
+      "description": "Juicy Classic Beef Burger with cheddar",
+      "imageUrl": "https://images.unsplash.com/photo-1632898658005-af95f6fa589c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxnb3VybWV0JTIwYnVyZ2VyfGVufDB8fHx8MTc3MDE0NDI5OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "gourmet burger"
+    },
+    {
+      "id": "burger-chicken",
+      "description": "Crispy Chicken Burger with spicy mayo",
+      "imageUrl": "https://images.unsplash.com/photo-1606755962773-d324e0a13086?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaGlja2VuJTIwYnVyZ2VyfGVufDB8fHx8MTc3MDIyOTUyNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chicken burger"
+    },
+    {
+      "id": "snack-fries",
+      "description": "Golden crispy French Fries with sea salt",
+      "imageUrl": "https://images.unsplash.com/photo-1747628857843-96f695316cfc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8dHJ1ZmZsZSUyMGZyaWVzfGVufDB8fHx8MTc3MDIyOTUyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "truffle fries"
+    },
+    {
+      "id": "snack-onion-rings",
+      "description": "Hand-battered Onion Rings",
+      "imageUrl": "https://images.unsplash.com/photo-1630825533949-74f62f54553a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxvbmlvbiUyMHJpbmdzfGVufDB8fHx8MTc3MDIyOTUyNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "onion rings"
+    },
+    {
+      "id": "coffee-latte",
+      "description": "Smooth Caffe Latte with silky foam",
+      "imageUrl": "https://images.unsplash.com/photo-1555511894-e1e34e35c953?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjYWZmZSUyMGxhdHRlfGVufDB8fHx8MTc3MDE0Nzk2MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "caffe latte"
+    },
+    {
+      "id": "drink-lemonade",
+      "description": "Freshly squeezed Lemonade with mint",
+      "imageUrl": "https://images.unsplash.com/photo-1573500883698-e3ef47a95feb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmcmVzaCUyMGxlbW9uYWRlfGVufDB8fHx8MTc3MDIyOTUyNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fresh lemonade"
+    },
+    {
+      "id": "hero-restaurant",
+      "description": "Modern luxury restaurant interior",
+      "imageUrl": "https://images.unsplash.com/photo-1521917441209-e886f0404a7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxsdXh1cnklMjByZXN0YXVyYW50fGVufDB8fHx8MTc3MDE0Nzg5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "luxury restaurant"
+    }
+  ]
 }
