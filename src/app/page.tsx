@@ -9,6 +9,8 @@ import { PlaceHolderImages } from "@/lib/placeholder-images"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 
 export default function Home() {
+  const heroImage = PlaceHolderImages.find(img => img.id === "hero-main")
+  
   const featuredItems = [
     PlaceHolderImages.find(img => img.id === "pizza-margherita"),
     PlaceHolderImages.find(img => img.id === "burger-beef"),
@@ -27,7 +29,22 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 overflow-hidden bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background">
+      <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 overflow-hidden">
+        {/* Background Image with Overlay */}
+        {heroImage && (
+          <div className="absolute inset-0 z-0">
+            <Image 
+              src={heroImage.imageUrl} 
+              alt="Slice and Juice" 
+              fill 
+              priority
+              className="object-cover opacity-30 grayscale-[0.2]"
+              data-ai-hint={heroImage.imageHint}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+          </div>
+        )}
+
         <div className="relative z-10 max-w-7xl mx-auto text-center space-y-8 md:space-y-12 py-12">
           <div className="inline-flex items-center gap-2 px-6 py-2 glass rounded-full text-xs md:text-sm font-bold tracking-wider uppercase text-primary animate-in fade-in slide-in-from-bottom-4 duration-1000 mx-auto">
             <Star className="w-4 h-4 fill-primary" />
