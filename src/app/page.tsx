@@ -9,8 +9,6 @@ import { PlaceHolderImages } from "@/lib/placeholder-images"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(img => img.id === "hero-main") || PlaceHolderImages.find(img => img.id === "hero-restaurant")
-  
   const featuredItems = [
     PlaceHolderImages.find(img => img.id === "pizza-margherita"),
     PlaceHolderImages.find(img => img.id === "burger-beef"),
@@ -29,23 +27,7 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 overflow-hidden">
-        {heroImage && (
-          <div className="absolute inset-0 z-0">
-            <Image 
-              src={heroImage.imageUrl} 
-              alt="Slice & Juice Experience" 
-              fill 
-              className="object-cover opacity-60 scale-105 transition-transform duration-[10s] hover:scale-100"
-              priority
-              data-ai-hint={heroImage.imageHint}
-            />
-            {/* Dynamic Overlays for clarity */}
-            <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background"></div>
-            <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]"></div>
-          </div>
-        )}
-
+      <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 overflow-hidden bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background">
         <div className="relative z-10 max-w-7xl mx-auto text-center space-y-8 md:space-y-12 py-12">
           <div className="inline-flex items-center gap-2 px-6 py-2 glass rounded-full text-xs md:text-sm font-bold tracking-wider uppercase text-primary animate-in fade-in slide-in-from-bottom-4 duration-1000 mx-auto">
             <Star className="w-4 h-4 fill-primary" />
@@ -57,7 +39,7 @@ export default function Home() {
               CRAVE THE <span className="text-gold italic font-extrabold">SLICE</span><br />
               LOVE THE <span className="text-gold italic font-extrabold">JUICE</span>
             </h1>
-            <p className="text-lg md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed font-light px-4 drop-shadow-lg">
+            <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-light px-4">
               Artisanal sourdough pizzas and cold-pressed organic juices. <br className="hidden md:block" />
               A premium symphony of flavors for the modern palate.
             </p>
@@ -73,10 +55,9 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Floating background element for visual depth */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:block opacity-50">
-          <div className="w-1 h-12 rounded-full glass border-white/10" />
-        </div>
+        {/* Decorative elements for background texture */}
+        <div className="absolute top-1/4 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse delay-1000" />
       </section>
 
       {/* Quick Features */}
