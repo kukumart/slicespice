@@ -1,3 +1,4 @@
+
 import { Navbar } from "@/components/navbar"
 import { GlassCard } from "@/components/glass-card"
 import { Button } from "@/components/ui/button"
@@ -8,7 +9,8 @@ import { PlaceHolderImages } from "@/lib/placeholder-images"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(img => img.id === "hero-restaurant")
+  const heroImage = PlaceHolderImages.find(img => img.id === "hero-main") || PlaceHolderImages.find(img => img.id === "hero-restaurant")
+  
   const featuredItems = [
     PlaceHolderImages.find(img => img.id === "pizza-margherita"),
     PlaceHolderImages.find(img => img.id === "burger-beef"),
@@ -32,13 +34,14 @@ export default function Home() {
           <div className="absolute inset-0 z-0">
             <Image 
               src={heroImage.imageUrl} 
-              alt="Slice & Juice Restaurant" 
+              alt="Slice & Juice Experience" 
               fill 
-              className="object-cover opacity-20 scale-105"
+              className="object-cover opacity-30 scale-105"
               priority
               data-ai-hint={heroImage.imageHint}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background"></div>
+            <div className="absolute inset-0 bg-black/40"></div>
           </div>
         )}
 

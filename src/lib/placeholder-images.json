@@ -53,6 +53,12 @@
       "description": "Modern luxury restaurant interior",
       "imageUrl": "https://images.unsplash.com/photo-1521917441209-e886f0404a7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxsdXh1cnklMjByZXN0YXVyYW50fGVufDB8fHx8MTc3MDE0Nzg5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "luxury restaurant"
+    },
+    {
+      "id": "hero-main",
+      "description": "Artisanal pizza and fresh organic juice lifestyle shot",
+      "imageUrl": "https://images.unsplash.com/photo-1700760933900-320bf1158d71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwaXp6YSUyMGp1aWNlfGVufDB8fHx8MTc3MDIyOTY1NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pizza juice"
     }
   ]
 }
