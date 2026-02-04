@@ -36,43 +36,51 @@ export default function Home() {
               src={heroImage.imageUrl} 
               alt="Slice & Juice Experience" 
               fill 
-              className="object-cover opacity-30 scale-105"
+              className="object-cover opacity-60 scale-105 transition-transform duration-[10s] hover:scale-100"
               priority
               data-ai-hint={heroImage.imageHint}
             />
+            {/* Dynamic Overlays for clarity */}
             <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background"></div>
-            <div className="absolute inset-0 bg-black/40"></div>
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]"></div>
           </div>
         )}
 
         <div className="relative z-10 max-w-7xl mx-auto text-center space-y-8 md:space-y-12 py-12">
-          <div className="inline-flex items-center gap-2 px-6 py-2 glass rounded-full text-xs md:text-sm font-bold tracking-wider uppercase text-primary animate-float mx-auto">
+          <div className="inline-flex items-center gap-2 px-6 py-2 glass rounded-full text-xs md:text-sm font-bold tracking-wider uppercase text-primary animate-in fade-in slide-in-from-bottom-4 duration-1000 mx-auto">
             <Star className="w-4 h-4 fill-primary" />
             The Gold Standard of Fast Food
           </div>
-          <div className="space-y-4">
+          
+          <div className="space-y-4 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 fill-mode-both">
             <h1 className="text-5xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-[1.1] md:leading-[0.95]">
               CRAVE THE <span className="text-gold italic font-extrabold">SLICE</span><br />
               LOVE THE <span className="text-gold italic font-extrabold">JUICE</span>
             </h1>
-            <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-light px-4">
+            <p className="text-lg md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed font-light px-4 drop-shadow-lg">
               Artisanal sourdough pizzas and cold-pressed organic juices. <br className="hidden md:block" />
               A premium symphony of flavors for the modern palate.
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 pt-4">
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 pt-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500 fill-mode-both">
             <Button asChild size="lg" className="gold-gradient text-lg md:text-xl px-12 md:px-16 py-6 md:py-8 rounded-full w-full sm:w-auto font-bold shadow-2xl hover:scale-105 transition-transform">
               <Link href="/menu">Browse Menu</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="glass border-white/20 text-lg md:text-xl px-12 md:px-16 py-6 md:py-8 rounded-full w-full sm:w-auto font-bold hover:bg-white/5 transition-all">
+            <Button asChild variant="outline" size="lg" className="glass border-white/20 text-lg md:text-xl px-12 md:px-16 py-6 md:py-8 rounded-full w-full sm:w-auto font-bold hover:bg-white/10 transition-all text-white">
               <Link href="/about">Our Philosophy</Link>
             </Button>
           </div>
         </div>
+
+        {/* Floating background element for visual depth */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:block opacity-50">
+          <div className="w-1 h-12 rounded-full glass border-white/10" />
+        </div>
       </section>
 
       {/* Quick Features */}
-      <section className="py-24 px-4 bg-background">
+      <section className="py-24 px-4 bg-background relative z-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((f, i) => (
             <GlassCard key={i} className="p-10 flex flex-col items-center text-center gap-6">
@@ -89,7 +97,7 @@ export default function Home() {
       </section>
 
       {/* Featured Items Carousel */}
-      <section className="py-24 bg-secondary/10">
+      <section className="py-24 bg-secondary/10 relative z-10">
         <div className="max-w-7xl mx-auto px-4 space-y-16">
           <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-8 text-center md:text-left">
             <div className="space-y-4">
@@ -137,7 +145,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-24 px-4 border-t border-white/5 bg-background">
+      <footer className="py-24 px-4 border-t border-white/5 bg-background relative z-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="space-y-6">
             <div className="flex items-center gap-2 justify-start">
