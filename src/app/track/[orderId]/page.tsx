@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -49,7 +48,7 @@ export default function TrackingPage() {
               </h2>
             </div>
             <div className="glass p-6 rounded-2xl flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full gold-gradient flex items-center justify-center font-bold">SJ</div>
+              <div className="w-12 h-12 rounded-full gold-gradient text-primary-foreground flex items-center justify-center font-bold">SJ</div>
               <div>
                 <p className="font-bold">Marco rider</p>
                 <p className="text-xs text-muted-foreground">Your assigned rider</p>
@@ -66,7 +65,7 @@ export default function TrackingPage() {
               const isProcessing = step.id === currentStep
               return (
                 <div key={step.id} className={`flex md:flex-col items-start gap-4 transition-all duration-500 ${isActive ? 'opacity-100' : 'opacity-20 grayscale'}`}>
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all ${isProcessing ? 'gold-gradient scale-110 shadow-lg shadow-primary/30' : 'glass'}`}>
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all ${isProcessing ? 'gold-gradient text-primary-foreground scale-110 shadow-lg shadow-primary/30' : 'glass'}`}>
                     {step.icon}
                   </div>
                   <div className="space-y-1">

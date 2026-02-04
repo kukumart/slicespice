@@ -46,10 +46,10 @@ export default function Home() {
               alt="Slice and Juice Experience" 
               fill 
               priority
-              className="object-cover opacity-50"
+              className="object-cover opacity-60"
               data-ai-hint={heroImage.imageHint}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background" />
+            <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/60 to-background" />
           </div>
         )}
 
@@ -70,7 +70,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
-            <Button asChild size="lg" className="gold-gradient text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black shadow-2xl hover:scale-105 transition-all duration-300 uppercase tracking-widest">
+            <Button asChild size="lg" className="gold-gradient text-primary-foreground text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black shadow-2xl hover:scale-105 transition-all duration-300 uppercase tracking-widest border-none">
               <Link href="/menu" className="flex items-center gap-2">
                 Order Now <ArrowRight className="w-5 h-5" />
               </Link>
@@ -149,7 +149,7 @@ export default function Home() {
           <p className="text-muted-foreground text-xl max-w-2xl mx-auto font-medium leading-relaxed">
             Join the elite circle of food lovers who refuse to compromise. Order now and experience the S&J difference.
           </p>
-          <Button asChild size="lg" className="gold-gradient px-16 py-10 rounded-2xl text-xl font-black shadow-2xl hover:scale-105 transition-all uppercase tracking-widest">
+          <Button asChild size="lg" className="gold-gradient text-primary-foreground px-16 py-10 rounded-2xl text-xl font-black shadow-2xl hover:scale-105 transition-all uppercase tracking-widest border-none">
             <Link href="/menu">START YOUR ORDER</Link>
           </Button>
         </div>
@@ -202,7 +202,7 @@ export default function Home() {
                   placeholder="Your Email" 
                   className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 w-full text-sm outline-none focus:border-primary/50" 
                 />
-                <Button className="gold-gradient px-6 rounded-xl font-black uppercase text-xs">Join</Button>
+                <Button className="gold-gradient text-primary-foreground px-6 rounded-xl font-black uppercase text-xs border-none">Join</Button>
               </div>
             </div>
           </div>

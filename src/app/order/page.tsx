@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -40,7 +39,7 @@ export default function OrderPage() {
             <h1 className="text-5xl font-bold tracking-tight">Your cart is <span className="text-gold">empty</span></h1>
             <p className="text-muted-foreground text-lg">Looks like you haven't added any masterpieces to your selection yet.</p>
           </div>
-          <Button asChild size="lg" className="gold-gradient px-12 py-8 rounded-2xl font-bold text-lg">
+          <Button asChild size="lg" className="gold-gradient text-primary-foreground px-12 py-8 rounded-2xl font-bold text-lg border-none">
             <Link href="/menu">Go to Menu</Link>
           </Button>
         </div>
@@ -124,7 +123,7 @@ export default function OrderPage() {
                   <Button asChild variant="outline" className="flex-1 py-8 rounded-2xl font-bold border-white/10">
                     <Link href="/menu"><ArrowLeft className="w-4 h-4 mr-2" /> Add More</Link>
                   </Button>
-                  <Button onClick={() => setStep(2)} className="flex-[2] gold-gradient py-8 rounded-2xl text-lg font-bold shadow-xl shadow-primary/10">
+                  <Button onClick={() => setStep(2)} className="flex-[2] gold-gradient text-primary-foreground py-8 rounded-2xl text-lg font-bold shadow-xl shadow-primary/10 border-none">
                     Proceed to Delivery
                   </Button>
                 </div>
@@ -175,7 +174,7 @@ export default function OrderPage() {
                     <Button type="button" variant="ghost" onClick={() => setStep(1)} className="flex-1 py-8 rounded-2xl font-bold">
                       Back to Cart
                     </Button>
-                    <Button type="submit" className="flex-[2] gold-gradient py-8 rounded-2xl text-lg font-bold shadow-2xl">
+                    <Button type="submit" className="flex-[2] gold-gradient text-primary-foreground py-8 rounded-2xl text-lg font-bold shadow-2xl border-none">
                       Confirm & Place Order
                     </Button>
                   </div>

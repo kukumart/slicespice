@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -122,7 +121,7 @@ export default function MenuPage() {
                       <span className="text-2xl font-black text-gold">${item.price}</span>
                       <Button 
                         onClick={() => addToCart(item)}
-                        className="gold-gradient rounded-xl px-4 py-6 font-black shadow-lg hover:scale-105 transition-transform"
+                        className="gold-gradient text-primary-foreground rounded-xl px-4 py-6 font-black shadow-lg hover:scale-105 transition-transform border-none"
                       >
                         <Plus className="w-5 h-5" />
                         ADD
