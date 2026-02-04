@@ -5,21 +5,21 @@ import { Badge } from "@/components/ui/badge"
 
 const LOCATIONS = [
   {
-    name: "Downtown Flagship",
-    address: "123 Gourmet Avenue, NY 10001",
+    name: "Waris Mall Flagship",
+    address: "Eastern Bypass, Waris Mall, Opposite Carrefour, Ground Floor, Nairobi",
     status: "Open Now",
     type: "Dine-in & Delivery"
   },
   {
-    name: "Brooklyn Slice Hub",
-    address: "45 Artisanal Street, BK 11201",
-    status: "Opening Soon",
+    name: "Eastern Bypass Hub",
+    address: "Eastern Bypass Service Road, Nairobi",
+    status: "Open Now",
     type: "Express & Pickup"
   },
   {
-    name: "The Juice Lab",
-    address: "88 Organic Blvd, NY 10013",
-    status: "Open Now",
+    name: "CBD Juice Lab",
+    address: "Kenyatta Avenue, Nairobi Central",
+    status: "Opening Soon",
     type: "Cold-Press Specialist"
   }
 ]
@@ -36,7 +36,7 @@ export default function LocationPage() {
           </Badge>
           <h1 className="text-6xl md:text-8xl font-black tracking-tighter">FIND A <span className="gold-highlight">HUB</span></h1>
           <p className="text-muted-foreground text-xl max-w-2xl mx-auto font-medium">
-            Visit our flagship restaurant in the heart of the city or discover our specialized express hubs.
+            Visit our flagship restaurant at Waris Mall or discover our specialized express hubs across Nairobi.
           </p>
         </div>
 
@@ -58,7 +58,7 @@ export default function LocationPage() {
                       </Badge>
                     </div>
                     <div className="space-y-2 text-sm text-muted-foreground font-medium">
-                      <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-gold" /> {loc.address}</p>
+                      <p className="flex items-center gap-2 leading-tight"><MapPin className="w-5 h-5 text-gold shrink-0" /> {loc.address}</p>
                       <p className="flex items-center gap-2"><Clock className="w-4 h-4 text-gold" /> 10:00 AM - 11:00 PM</p>
                     </div>
                     <div className="pt-2">
@@ -76,7 +76,7 @@ export default function LocationPage() {
                 </div>
                 <div>
                   <h4 className="font-black uppercase text-xs tracking-widest text-gold">Priority Line</h4>
-                  <p className="font-bold text-lg">+1 (800) SLICE-JUICE</p>
+                  <p className="font-bold text-lg">+254 (0) SLICE-JUICE</p>
                 </div>
               </div>
             </GlassCard>
@@ -99,32 +99,18 @@ export default function LocationPage() {
 
               {/* Map Canvas Placeholder */}
               <div className="absolute inset-0 bg-[#0a0a0a] overflow-hidden">
-                {/* Grid Pattern */}
                 <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]" />
-                
-                {/* Background "Map" Shape */}
-                <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/map-dark/1200/800')] opacity-20 grayscale pointer-events-none mix-blend-luminosity" />
+                <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/nairobi-map/1200/800')] opacity-20 grayscale pointer-events-none mix-blend-luminosity" />
                 
                 {/* Interactive Points */}
-                <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                    <div className="relative">
                       <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping scale-150" />
                       <div className="relative w-16 h-16 rounded-full gold-gradient shadow-2xl shadow-primary/40 flex items-center justify-center border-4 border-black/50">
                         <MapPin className="w-8 h-8 text-primary-foreground" />
                       </div>
                       <div className="absolute top-full mt-4 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                        <GlassCard className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest">Flagship HQ</GlassCard>
-                      </div>
-                   </div>
-                </div>
-
-                <div className="absolute bottom-1/4 right-1/4">
-                   <div className="relative group/pin cursor-pointer">
-                      <div className="w-10 h-10 rounded-full glass border-primary/50 flex items-center justify-center text-gold hover:scale-110 transition-transform">
-                        <MapPin className="w-5 h-5" />
-                      </div>
-                      <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 opacity-0 group-hover/pin:opacity-100 transition-opacity whitespace-nowrap">
-                        <GlassCard className="px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest">Brooklyn Hub</GlassCard>
+                        <GlassCard className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest">Waris Mall Flagship</GlassCard>
                       </div>
                    </div>
                 </div>
@@ -137,7 +123,7 @@ export default function LocationPage() {
                     <Star className="w-8 h-8 text-gold fill-gold" />
                     <div>
                       <p className="font-black text-lg uppercase tracking-tight">The Gold Standard</p>
-                      <p className="text-xs text-muted-foreground font-medium">Find your nearest premium slice and cold-pressed juice hub.</p>
+                      <p className="text-xs text-muted-foreground font-medium">Opposite Carrefour, Eastern Bypass. Your slice awaits.</p>
                     </div>
                   </div>
                   <button className="gold-gradient text-primary-foreground px-8 py-3 rounded-xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-lg">
