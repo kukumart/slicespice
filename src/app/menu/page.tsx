@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -7,8 +8,9 @@ import { Badge } from "@/components/ui/badge"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
 import Image from "next/image"
 import { useState, useMemo } from "react"
-import { Plus, Search, SlidersHorizontal } from "lucide-react"
+import { Plus, Search, ShoppingBag } from "lucide-react"
 import { Input } from "@/components/ui/input"
+import { useCart } from "@/context/cart-context"
 
 const MENU_ITEMS = [
   { id: 1, category: "Pizza", name: "Classic Margherita", price: 14.99, desc: "Fresh basil, buffalo mozzarella, and san marzano tomatoes.", imageId: "pizza-margherita" },
@@ -26,6 +28,7 @@ const CATEGORIES = ["All", "Pizza", "Burgers", "Snacks", "Drinks"]
 export default function MenuPage() {
   const [activeCategory, setActiveCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
+  const { addToCart, cart } = useCart()
 
   const filteredItems = useMemo(() => {
     return MENU_ITEMS.filter(item => {
@@ -35,6 +38,10 @@ export default function MenuPage() {
       return matchesCategory && matchesSearch
     })
   }, [activeCategory, searchQuery])
+
+  const getItemQty = (id: number) => {
+    return cart.find(i => i.id === id)?.qty || 0
+  }
 
   return (
     <main className="min-h-screen bg-background pt-32 pb-24 px-4">
@@ -80,6 +87,8 @@ export default function MenuPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
             {filteredItems.map(item => {
               const imgData = PlaceHolderImages.find(img => img.id === item.imageId)
+              const qty = getItemQty(item.id)
+              
               return (
                 <GlassCard key={item.id} className="flex flex-col">
                   <div className="relative aspect-[4/5] overflow-hidden">
@@ -92,23 +101,29 @@ export default function MenuPage() {
                         data-ai-hint={imgData.imageHint}
                       />
                     )}
-                    <div className="absolute top-6 left-6">
+                    <div className="absolute top-6 left-6 flex flex-col gap-2">
                       <Badge className="bg-primary/90 text-primary-foreground font-black px-4 py-1 rounded-lg backdrop-blur-md border-none shadow-lg">
                         {item.category.toUpperCase()}
                       </Badge>
+                      {qty > 0 && (
+                        <Badge className="bg-foreground text-background font-black px-4 py-1 rounded-lg backdrop-blur-md border-none shadow-lg self-start">
+                          {qty} IN CART
+                        </Badge>
+                      )}
                     </div>
                   </div>
                   <div className="p-8 flex flex-col flex-1 space-y-6">
                     <div className="space-y-2">
-                      <div className="flex justify-between items-start">
-                        <h3 className="text-2xl font-bold leading-tight group-hover:text-gold transition-colors">{item.name}</h3>
-                      </div>
+                      <h3 className="text-2xl font-bold leading-tight group-hover:text-gold transition-colors">{item.name}</h3>
                       <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{item.desc}</p>
                     </div>
                     
                     <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
                       <span className="text-2xl font-black text-gold">${item.price}</span>
-                      <Button className="gold-gradient rounded-xl px-4 py-6 font-black shadow-lg hover:scale-105 transition-transform">
+                      <Button 
+                        onClick={() => addToCart(item)}
+                        className="gold-gradient rounded-xl px-4 py-6 font-black shadow-lg hover:scale-105 transition-transform"
+                      >
                         <Plus className="w-5 h-5" />
                         ADD
                       </Button>

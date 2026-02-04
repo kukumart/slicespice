@@ -1,3 +1,4 @@
+
 "use client"
 
 import Link from "next/link"
@@ -5,10 +6,13 @@ import { ShoppingCart, Menu, X, MapPin, Info, Utensils } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useCart } from "@/context/cart-context"
+import { Badge } from "@/components/ui/badge"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { totalItems } = useCart()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -49,21 +53,36 @@ export function Navbar() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 gold-gradient group-hover:w-full transition-all duration-300" />
             </Link>
           ))}
-          <Button asChild variant="default" className="rounded-full gold-gradient hover:opacity-90 transition-all font-black px-8 py-6 shadow-xl hover:scale-105 active:scale-95">
+          <Button asChild variant="default" className="rounded-full gold-gradient hover:opacity-90 transition-all font-black px-8 py-6 shadow-xl hover:scale-105 active:scale-95 relative overflow-visible">
             <Link href="/order" className="flex items-center">
               <ShoppingCart className="w-5 h-5 mr-2" />
               ORDER NOW
+              {totalItems > 0 && (
+                <Badge className="absolute -top-2 -right-2 bg-foreground text-background font-bold border-2 border-primary rounded-full px-2 py-0.5 min-w-[1.5rem] h-6 flex items-center justify-center">
+                  {totalItems}
+                </Badge>
+              )}
             </Link>
           </Button>
         </div>
 
         {/* Mobile Toggle */}
-        <button 
-          className="md:hidden glass w-12 h-12 rounded-2xl flex items-center justify-center text-foreground"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="flex items-center gap-4 md:hidden">
+          <Link href="/order" className="relative glass w-12 h-12 rounded-2xl flex items-center justify-center">
+            <ShoppingCart className="w-6 h-6" />
+            {totalItems > 0 && (
+              <Badge className="absolute -top-1 -right-1 bg-primary text-primary-foreground font-black text-[10px] p-1 h-5 w-5 flex items-center justify-center rounded-full">
+                {totalItems}
+              </Badge>
+            )}
+          </Link>
+          <button 
+            className="glass w-12 h-12 rounded-2xl flex items-center justify-center text-foreground"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
