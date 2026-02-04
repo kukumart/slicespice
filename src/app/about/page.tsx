@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/navbar"
 import { GlassCard } from "@/components/glass-card"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
@@ -15,7 +14,7 @@ export default function AboutPage() {
         {/* Story Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h1 className="text-5xl font-bold tracking-tight">Our <span className="text-gold">Story</span></h1>
+            <h1 className="text-5xl font-bold tracking-tight">Our <span className="gold-highlight">Story</span></h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Founded in 2021, Slice & Juice began with a simple observation: why should fast food be a compromise on health or quality? We wanted to combine the comfort of a perfect pizza with the vitality of fresh, organic juices.
             </p>
@@ -39,19 +38,19 @@ export default function AboutPage() {
         {/* Mission Section */}
         <section className="space-y-12">
           <div className="text-center">
-            <h2 className="text-4xl font-bold">Mission & <span className="text-gold">Values</span></h2>
+            <h2 className="text-4xl font-bold">Mission & <span className="gold-highlight">Values</span></h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <GlassCard className="p-8 space-y-4">
-              <h3 className="text-2xl font-bold text-gold">Premium First</h3>
+              <h3 className="text-2xl font-bold text-primary-foreground gold-gradient inline-block px-3 py-1 rounded-lg">Premium First</h3>
               <p className="text-muted-foreground">We never settle for "good enough". Our ingredients are hand-picked from premium suppliers.</p>
             </GlassCard>
             <GlassCard className="p-8 space-y-4">
-              <h3 className="text-2xl font-bold text-gold">Eco-Conscious</h3>
+              <h3 className="text-2xl font-bold text-primary-foreground gold-gradient inline-block px-3 py-1 rounded-lg">Eco-Conscious</h3>
               <p className="text-muted-foreground">Our packaging is 100% biodegradable. We care about the planet as much as our taste buds.</p>
             </GlassCard>
             <GlassCard className="p-8 space-y-4">
-              <h3 className="text-2xl font-bold text-gold">Community</h3>
+              <h3 className="text-2xl font-bold text-primary-foreground gold-gradient inline-block px-3 py-1 rounded-lg">Community</h3>
               <p className="text-muted-foreground">Slice & Juice is a hub for the local community, supporting local farms and businesses.</p>
             </GlassCard>
           </div>

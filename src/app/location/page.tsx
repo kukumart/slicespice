@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/navbar"
 import { GlassCard } from "@/components/glass-card"
 import { MapPin, Phone, Mail, Clock } from "lucide-react"
@@ -10,7 +9,7 @@ export default function LocationPage() {
       
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="text-center space-y-4">
-          <h1 className="text-5xl font-bold">Find <span className="text-gold">Us</span></h1>
+          <h1 className="text-5xl font-bold">Find <span className="gold-highlight">Us</span></h1>
           <p className="text-muted-foreground max-w-xl mx-auto">Visit our flagship restaurant in the heart of the city or order delivery to your home.</p>
         </div>
 
@@ -18,7 +17,9 @@ export default function LocationPage() {
           {/* Contact Details */}
           <div className="space-y-6">
             <GlassCard className="p-8 flex items-start gap-4">
-              <MapPin className="w-6 h-6 text-gold mt-1" />
+              <div className="w-10 h-10 rounded-lg gold-gradient flex items-center justify-center text-primary-foreground flex-shrink-0">
+                <MapPin className="w-6 h-6" />
+              </div>
               <div>
                 <h3 className="font-bold text-xl mb-1">Our Flagship</h3>
                 <p className="text-muted-foreground">123 Gourmet Avenue<br />Culinary District, NY 10001</p>
@@ -26,7 +27,9 @@ export default function LocationPage() {
             </GlassCard>
             
             <GlassCard className="p-8 flex items-start gap-4">
-              <Clock className="w-6 h-6 text-gold mt-1" />
+              <div className="w-10 h-10 rounded-lg gold-gradient flex items-center justify-center text-primary-foreground flex-shrink-0">
+                <Clock className="w-6 h-6" />
+              </div>
               <div>
                 <h3 className="font-bold text-xl mb-1">Opening Hours</h3>
                 <div className="text-muted-foreground space-y-1">
@@ -38,7 +41,9 @@ export default function LocationPage() {
             </GlassCard>
 
             <GlassCard className="p-8 flex items-start gap-4">
-              <Phone className="w-6 h-6 text-gold mt-1" />
+              <div className="w-10 h-10 rounded-lg gold-gradient flex items-center justify-center text-primary-foreground flex-shrink-0">
+                <Phone className="w-6 h-6" />
+              </div>
               <div>
                 <h3 className="font-bold text-xl mb-1">Call Us</h3>
                 <p className="text-muted-foreground">+1 (800) SLICE-JUICE</p>

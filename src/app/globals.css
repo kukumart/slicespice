@@ -69,6 +69,10 @@
   background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
 }
 
+.gold-highlight {
+  @apply gold-gradient text-primary-foreground px-4 py-1 rounded-xl inline-block shadow-lg shadow-primary/10;
+}
+
 .text-gold {
   @apply bg-clip-text text-transparent gold-gradient;
 }

@@ -46,10 +46,10 @@ export default function Home() {
               alt="Slice and Juice Experience" 
               fill 
               priority
-              className="object-cover opacity-60"
+              className="object-cover opacity-40"
               data-ai-hint={heroImage.imageHint}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/60 to-background" />
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
           </div>
         )}
 
@@ -60,9 +60,9 @@ export default function Home() {
           </div>
           
           <div className="space-y-6">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9]">
-              CRAVE THE <span className="text-gold">SLICE</span><br />
-              LOVE THE <span className="text-gold">JUICE</span>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[1.1]">
+              CRAVE THE <span className="gold-highlight">SLICE</span><br />
+              LOVE THE <span className="gold-highlight">JUICE</span>
             </h1>
             <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium px-4">
               Experience a premium symphony of artisanal sourdough pizzas and cold-pressed organic juices, crafted for the modern palate.
@@ -106,11 +106,11 @@ export default function Home() {
       </section>
 
       {/* Featured Items Section */}
-      <section className="py-24 px-4 bg-background">
+      <section className="py-32 px-4 bg-background">
         <div className="max-w-7xl mx-auto space-y-16">
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="flex items-center justify-between">
-               <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase">Trending <span className="text-gold">Masterpieces</span></h2>
+               <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase">Trending <span className="gold-highlight">Masterpieces</span></h2>
                <Link href="/menu" className="hidden md:flex items-center gap-2 text-gold font-black uppercase tracking-widest text-sm hover:underline">
                   Full Menu <ChevronRight className="w-4 h-4" />
                </Link>
@@ -145,7 +145,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-32 px-4 bg-background border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center space-y-10">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">Ready for a <span className="text-gold">Premium</span> Taste?</h2>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">Ready for a <span className="gold-highlight">Premium</span> Taste?</h2>
           <p className="text-muted-foreground text-xl max-w-2xl mx-auto font-medium leading-relaxed">
             Join the elite circle of food lovers who refuse to compromise. Order now and experience the S&J difference.
           </p>

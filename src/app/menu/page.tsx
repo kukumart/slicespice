@@ -49,7 +49,7 @@ export default function MenuPage() {
       <div className="max-w-7xl mx-auto space-y-16">
         <div className="flex flex-col items-center gap-12 text-center">
           <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tight">Our <span className="text-gold italic">Masterpieces</span></h1>
+            <h1 className="text-6xl md:text-8xl font-bold tracking-tight">Our <span className="gold-highlight italic">Masterpieces</span></h1>
             <p className="text-muted-foreground text-xl max-w-2xl">Discover a symphony of premium flavors, curated for the modern foodie.</p>
           </div>
           
@@ -101,7 +101,7 @@ export default function MenuPage() {
                       />
                     )}
                     <div className="absolute top-6 left-6 flex flex-col gap-2">
-                      <Badge className="bg-primary/90 text-primary-foreground font-black px-4 py-1 rounded-lg backdrop-blur-md border-none shadow-lg">
+                      <Badge className="bg-primary text-primary-foreground font-black px-4 py-1 rounded-lg backdrop-blur-md border-none shadow-lg">
                         {item.category.toUpperCase()}
                       </Badge>
                       {qty > 0 && (
@@ -113,12 +113,12 @@ export default function MenuPage() {
                   </div>
                   <div className="p-8 flex flex-col flex-1 space-y-6">
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-bold leading-tight group-hover:text-gold transition-colors">{item.name}</h3>
+                      <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors">{item.name}</h3>
                       <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{item.desc}</p>
                     </div>
                     
                     <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
-                      <span className="text-2xl font-black text-gold">${item.price}</span>
+                      <span className="text-2xl font-black text-primary-foreground gold-gradient px-3 py-1 rounded-lg">${item.price}</span>
                       <Button 
                         onClick={() => addToCart(item)}
                         className="gold-gradient text-primary-foreground rounded-xl px-4 py-6 font-black shadow-lg hover:scale-105 transition-transform border-none"
@@ -135,7 +135,7 @@ export default function MenuPage() {
         ) : (
           <div className="text-center py-24 space-y-4">
             <h3 className="text-3xl font-bold text-muted-foreground">No matches found for "{searchQuery}"</h3>
-            <p className="text-gold">Try exploring another category</p>
+            <p className="text-primary-foreground gold-gradient px-4 py-1 rounded-lg inline-block">Try exploring another category</p>
           </div>
         )}
       </div>
