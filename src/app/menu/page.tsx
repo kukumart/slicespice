@@ -67,6 +67,9 @@ export default function MenuPage() {
                       alt={item.name} 
                       fill 
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      data-ai-hint={imgData.imageHint}
+                      width={600}
+                      height={400}
                     />
                   )}
                   <div className="absolute top-4 left-4">

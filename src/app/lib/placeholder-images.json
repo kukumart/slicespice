@@ -4,55 +4,55 @@
     {
       "id": "pizza-margherita",
       "description": "Classic Pizza Margherita with fresh basil",
-      "imageUrl": "https://picsum.photos/seed/pizza1/600/400",
-      "imageHint": "pizza margherita"
+      "imageUrl": "https://picsum.photos/seed/pizza-marg/600/400",
+      "imageHint": "margherita pizza"
     },
     {
       "id": "pizza-pepperoni",
       "description": "Spicy Pepperoni Pizza with melted mozzarella",
-      "imageUrl": "https://picsum.photos/seed/pizza2/600/400",
+      "imageUrl": "https://picsum.photos/seed/pizza-pep/600/400",
       "imageHint": "pepperoni pizza"
     },
     {
       "id": "burger-beef",
       "description": "Juicy Classic Beef Burger with cheddar",
-      "imageUrl": "https://picsum.photos/seed/burger1/600/400",
-      "imageHint": "beef burger"
+      "imageUrl": "https://picsum.photos/seed/burger-gold/600/400",
+      "imageHint": "gourmet burger"
     },
     {
       "id": "burger-chicken",
       "description": "Crispy Chicken Burger with spicy mayo",
-      "imageUrl": "https://picsum.photos/seed/burger2/600/400",
+      "imageUrl": "https://picsum.photos/seed/burger-crisp/600/400",
       "imageHint": "chicken burger"
     },
     {
       "id": "coffee-latte",
       "description": "Smooth Caffe Latte with silky foam",
-      "imageUrl": "https://picsum.photos/seed/coffee1/600/400",
+      "imageUrl": "https://picsum.photos/seed/latte-art/600/400",
       "imageHint": "caffe latte"
     },
     {
       "id": "drink-lemonade",
       "description": "Freshly squeezed Lemonade with mint",
-      "imageUrl": "https://picsum.photos/seed/drink1/600/400",
+      "imageUrl": "https://picsum.photos/seed/lemonade-mint/600/400",
       "imageHint": "fresh lemonade"
     },
     {
       "id": "snack-fries",
       "description": "Golden crispy French Fries with sea salt",
-      "imageUrl": "https://picsum.photos/seed/snack1/600/400",
-      "imageHint": "french fries"
+      "imageUrl": "https://picsum.photos/seed/fries-truffle/600/400",
+      "imageHint": "truffle fries"
     },
     {
       "id": "snack-onion-rings",
       "description": "Hand-battered Onion Rings",
-      "imageUrl": "https://picsum.photos/seed/snack2/600/400",
+      "imageUrl": "https://picsum.photos/seed/onion-rings/600/400",
       "imageHint": "onion rings"
     },
     {
       "id": "hero-restaurant",
       "description": "Modern luxury restaurant interior",
-      "imageUrl": "https://picsum.photos/seed/restaurant/1200/800",
+      "imageUrl": "https://picsum.photos/seed/luxury-dining/1200/800",
       "imageHint": "luxury restaurant"
     }
   ]

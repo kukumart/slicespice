@@ -30,6 +30,7 @@ export default function AboutPage() {
                 alt="Our kitchen" 
                 fill 
                 className="object-cover"
+                data-ai-hint={restaurantImage.imageHint}
               />
             )}
           </div>

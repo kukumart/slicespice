@@ -30,6 +30,7 @@ export default function Home() {
               fill 
               className="object-cover opacity-30 scale-110 blur-sm"
               priority
+              data-ai-hint={heroImage.imageHint}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background"></div>
           </div>
