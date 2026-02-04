@@ -23,27 +23,27 @@
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 45 100% 50%;
-    --radius: 1.25rem;
+    --radius: 1rem;
   }
   .dark {
-    --background: 0 0% 7%;
+    --background: 0 0% 3%;
     --foreground: 0 0% 100%;
-    --card: 0 0% 10%;
+    --card: 0 0% 6%;
     --card-foreground: 0 0% 100%;
-    --popover: 0 0% 7%;
+    --popover: 0 0% 3%;
     --popover-foreground: 0 0% 100%;
     --primary: 45 100% 50%;
     --primary-foreground: 0 0% 10%;
-    --secondary: 0 0% 15%;
+    --secondary: 0 0% 10%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 60%;
     --accent: 45 100% 50%;
     --accent-foreground: 0 0% 10%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
     --ring: 45 100% 50%;
   }
 }
@@ -62,11 +62,11 @@
 }
 
 .glass-dark {
-  @apply bg-black/40 backdrop-blur-2xl border border-white/5 shadow-2xl;
+  @apply bg-black/60 backdrop-blur-2xl border border-white/5 shadow-2xl;
 }
 
 .gold-gradient {
-  background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+  background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
 }
 
 .text-gold {
@@ -74,7 +74,7 @@
 }
 
 .gold-glow {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
 }
 
 .premium-border {
