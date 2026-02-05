@@ -1,4 +1,3 @@
-
 "use client"
 
 import Link from "next/link"
@@ -10,6 +9,7 @@ import { useCart } from "@/context/cart-context"
 import { Badge } from "@/components/ui/badge"
 import { useAuth, useDoc, useFirestore } from "@/firebase"
 import { doc } from "firebase/firestore"
+import { ShareDialog } from "./share-dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -75,6 +75,8 @@ export function Navbar() {
           ))}
 
           <div className="flex items-center gap-4">
+            <ShareDialog />
+            
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -119,6 +121,7 @@ export function Navbar() {
 
         {/* Mobile Toggle */}
         <div className="flex items-center gap-4 md:hidden">
+          <ShareDialog />
           <Link href="/order" className="relative glass w-12 h-12 rounded-2xl flex items-center justify-center no-underline">
             <ShoppingCart className="w-6 h-6 text-foreground" />
             {totalItems > 0 && (

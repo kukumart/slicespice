@@ -3,8 +3,9 @@ import { GlassCard } from "@/components/glass-card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
-import { Truck, Clock, ShieldCheck, ChevronRight, Star, ArrowRight } from "lucide-react"
+import { Truck, Clock, ShieldCheck, ChevronRight, Star, ArrowRight, Share2 } from "lucide-react"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
+import { ShareDialog } from "@/components/share-dialog"
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(img => img.id === "hero-main")
@@ -138,6 +139,52 @@ export default function Home() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Sharing Section */}
+      <section className="py-32 px-4 bg-background">
+        <div className="max-w-5xl mx-auto">
+          <GlassCard className="p-12 md:p-20 text-center space-y-10 border-primary/10 overflow-hidden group/share">
+            <div className="absolute top-0 right-0 p-12 opacity-5 group-hover/share:opacity-10 transition-opacity">
+              <Share2 className="w-64 h-64 text-gold" />
+            </div>
+            <div className="space-y-4 relative z-10">
+              <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">Share the <span className="gold-highlight italic text-primary-foreground">Spice</span></h2>
+              <p className="text-muted-foreground text-lg max-w-xl mx-auto font-medium">
+                Spread the gold standard with your inner circle. Scan or share the link to invite friends to the Slice & Spice experience.
+              </p>
+            </div>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-12 relative z-10">
+               <div className="p-4 bg-white rounded-[2.5rem] shadow-2xl shadow-primary/20 rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
+                  <ShareDialog trigger={
+                    <div className="cursor-pointer">
+                       <Image 
+                        src="https://picsum.photos/seed/share-qr/200/200" 
+                        alt="Scan to share" 
+                        width={200} 
+                        height={200}
+                        className="rounded-2xl"
+                        data-ai-hint="qr code"
+                       />
+                       <p className="text-[10px] font-black uppercase tracking-widest text-black mt-3">Scan to experience</p>
+                    </div>
+                  } />
+               </div>
+               <div className="space-y-6 text-center md:text-left">
+                  <div className="space-y-2">
+                    <p className="font-black uppercase tracking-widest text-xs text-gold">Invite Friends</p>
+                    <p className="text-muted-foreground text-sm font-medium">Get rewards for every new masterpiece lover you bring to the circle.</p>
+                  </div>
+                  <ShareDialog trigger={
+                    <Button className="gold-gradient text-primary-foreground px-10 py-8 rounded-2xl font-black uppercase tracking-widest shadow-xl hover:scale-105 transition-all border-none">
+                      <Share2 className="w-5 h-5 mr-3 text-primary-foreground" />
+                      Generate Share Link
+                    </Button>
+                  } />
+               </div>
+            </div>
+          </GlassCard>
         </div>
       </section>
 
