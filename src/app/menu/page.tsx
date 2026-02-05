@@ -7,9 +7,17 @@ import { Badge } from "@/components/ui/badge"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
 import Image from "next/image"
 import { useState, useMemo } from "react"
-import { Plus, Search, ShoppingBag } from "lucide-react"
+import { Plus, Search, Sparkles, Loader2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { useCart } from "@/context/cart-context"
+import { recommendFood, RecommendFoodOutput } from "@/ai/flows/recommend-food-flow"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 const MENU_ITEMS = [
   { id: 1, category: "Pizza", name: "Classic Margherita", price: 14.99, desc: "Fresh basil, buffalo mozzarella, and san marzano tomatoes.", imageId: "pizza-margherita" },
@@ -27,6 +35,10 @@ const CATEGORIES = ["All", "Pizza", "Burgers", "Snacks", "Drinks"]
 export default function MenuPage() {
   const [activeCategory, setActiveCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
+  const [aiPreference, setAiPreference] = useState("")
+  const [aiLoading, setAiLoading] = useState(false)
+  const [aiResult, setAiResult] = useState<RecommendFoodOutput | null>(null)
+  
   const { addToCart, cart } = useCart()
 
   const filteredItems = useMemo(() => {
@@ -42,6 +54,19 @@ export default function MenuPage() {
     return cart.find(i => i.id === id)?.qty || 0
   }
 
+  const handleAiRecommend = async () => {
+    if (!aiPreference) return
+    setAiLoading(true)
+    try {
+      const result = await recommendFood({ preference: aiPreference })
+      setAiResult(result)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setAiLoading(false)
+    }
+  }
+
   return (
     <main className="min-h-screen bg-background pt-32 pb-24 px-4">
       <Navbar />
@@ -49,19 +74,83 @@ export default function MenuPage() {
       <div className="max-w-7xl mx-auto space-y-16">
         <div className="flex flex-col items-center gap-12 text-center">
           <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tight">Our <span className="gold-highlight italic">Masterpieces</span></h1>
-            <p className="text-muted-foreground text-xl max-w-2xl">Discover a symphony of premium flavors, curated for the modern foodie.</p>
+            <h1 className="text-6xl md:text-8xl font-bold tracking-tight uppercase">Our <span className="gold-highlight italic">Masterpieces</span></h1>
+            <p className="text-muted-foreground text-xl max-w-2xl font-medium">Discover a symphony of premium flavors, curated for the modern foodie.</p>
           </div>
           
           <div className="w-full max-w-4xl space-y-8">
-            <div className="relative group">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-gold transition-colors" />
-              <Input 
-                className="glass h-16 pl-16 pr-6 rounded-2xl text-lg border-white/5 focus-visible:ring-primary/20 bg-white/5"
-                placeholder="Search your cravings..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+            <div className="flex gap-4">
+              <div className="relative flex-1 group">
+                <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-gold transition-colors" />
+                <Input 
+                  className="glass h-16 pl-16 pr-6 rounded-2xl text-lg border-white/5 focus-visible:ring-primary/20 bg-white/5"
+                  placeholder="Search your cravings..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="lg" className="h-16 px-8 rounded-2xl gold-gradient text-primary-foreground font-black shadow-xl hover:scale-105 transition-all border-none">
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    ASK AI
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="glass-dark border-white/10 text-foreground max-w-lg">
+                  <DialogHeader>
+                    <DialogTitle className="text-3xl font-black uppercase tracking-tight">AI Taste <span className="text-gold">Assistant</span></DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-6 pt-4">
+                    <div className="space-y-2">
+                      <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">Describe your mood or craving</p>
+                      <Input 
+                        placeholder="e.g. Something spicy and a cold drink..." 
+                        className="glass border-white/10 h-14"
+                        value={aiPreference}
+                        onChange={(e) => setAiPreference(e.target.value)}
+                      />
+                    </div>
+                    <Button 
+                      onClick={handleAiRecommend} 
+                      disabled={aiLoading}
+                      className="w-full gold-gradient text-primary-foreground h-14 font-black text-lg border-none"
+                    >
+                      {aiLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : "GENERATE RECOMMENDATION"}
+                    </Button>
+
+                    {aiResult && (
+                      <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div className="space-y-4">
+                          {aiResult.recommendations.map((rec, i) => {
+                            const item = MENU_ITEMS.find(m => m.id === rec.itemId)
+                            return item ? (
+                              <div key={i} className="glass p-4 rounded-xl border-primary/20 bg-primary/5">
+                                <div className="flex justify-between items-start mb-2">
+                                  <h4 className="font-black text-gold uppercase">{item.name}</h4>
+                                  <span className="font-bold text-xs">${item.price}</span>
+                                </div>
+                                <p className="text-sm text-muted-foreground italic">"{rec.reason}"</p>
+                                <Button 
+                                  size="sm" 
+                                  className="mt-3 gold-gradient text-primary-foreground font-bold h-8 border-none"
+                                  onClick={() => addToCart(item)}
+                                >
+                                  ADD TO CART
+                                </Button>
+                              </div>
+                            ) : null
+                          })}
+                        </div>
+                        <div className="p-4 border-l-4 border-gold bg-white/5 rounded-r-xl">
+                          <p className="text-xs font-black text-gold uppercase tracking-widest mb-1">Juice Pairing Tip</p>
+                          <p className="text-sm italic">{aiResult.pairingTip}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
 
             <div className="flex flex-wrap justify-center gap-4">
@@ -101,8 +190,8 @@ export default function MenuPage() {
                       />
                     )}
                     <div className="absolute top-6 left-6 flex flex-col gap-2">
-                      <Badge className="bg-primary text-primary-foreground font-black px-4 py-1 rounded-lg backdrop-blur-md border-none shadow-lg">
-                        {item.category.toUpperCase()}
+                      <Badge className="bg-primary text-primary-foreground font-black px-4 py-1 rounded-lg backdrop-blur-md border-none shadow-lg uppercase tracking-widest">
+                        {item.category}
                       </Badge>
                       {qty > 0 && (
                         <Badge className="bg-foreground text-background font-black px-4 py-1 rounded-lg backdrop-blur-md border-none shadow-lg self-start">
@@ -113,8 +202,8 @@ export default function MenuPage() {
                   </div>
                   <div className="p-8 flex flex-col flex-1 space-y-6">
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors">{item.name}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{item.desc}</p>
+                      <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">{item.name}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 font-medium">{item.desc}</p>
                     </div>
                     
                     <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
@@ -135,7 +224,7 @@ export default function MenuPage() {
         ) : (
           <div className="text-center py-24 space-y-4">
             <h3 className="text-3xl font-bold text-muted-foreground">No matches found for "{searchQuery}"</h3>
-            <p className="text-primary-foreground gold-gradient px-4 py-1 rounded-lg inline-block">Try exploring another category</p>
+            <p className="text-primary-foreground gold-gradient px-4 py-1 rounded-lg inline-block font-black">Try exploring another category</p>
           </div>
         )}
       </div>
