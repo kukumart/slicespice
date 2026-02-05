@@ -5,10 +5,10 @@ import { Navbar } from "@/components/navbar"
 import { GlassCard } from "@/components/glass-card"
 import { Progress } from "@/components/ui/progress"
 import { useParams } from "next/navigation"
-import { Clock, CheckCircle2, Truck, Utensils, PackageCheck, Loader2, Bike } from "lucide-react"
-import { useEffect, useState, useMemo } from "react"
+import { Clock, CheckCircle2, Truck, Utensils, PackageCheck, Loader2 } from "lucide-react"
+import { useEffect, useState } from "react"
 import { doc } from "firebase/firestore"
-import { useFirestore, useDoc } from "@/firebase"
+import { useFirestore, useDoc, useMemoFirebase } from "@/firebase"
 
 const STEPS = [
   { id: 1, status: "placed", name: "Order Placed", icon: (active: boolean) => <CheckCircle2 className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "We've received your order." },
@@ -26,15 +26,12 @@ const PROVIDER_NAMES: Record<string, string> = {
 export default function TrackingPage() {
   const { orderId } = useParams()
   const db = useFirestore()
-  const orderRef = useMemo(() => doc(db, "orders", orderId as string), [db, orderId])
-  const { data: order, loading } = useDoc(orderRef)
+  const orderRef = useMemoFirebase(() => doc(db, "orders", orderId as string), [db, orderId])
+  const { data: order, isLoading } = useDoc(orderRef)
 
   const [progress, setProgress] = useState(0)
 
-  const currentStepIndex = useMemo(() => {
-    if (!order) return 0
-    return STEPS.findIndex(s => s.status === order.status) + 1
-  }, [order])
+  const currentStepIndex = order ? STEPS.findIndex(s => s.status === order.status) + 1 : 0
 
   useEffect(() => {
     if (currentStepIndex > 0) {
@@ -42,7 +39,7 @@ export default function TrackingPage() {
     }
   }, [currentStepIndex])
 
-  if (loading) {
+  if (isLoading) {
     return (
       <main className="min-h-screen bg-background pt-32 pb-24 flex items-center justify-center">
         <Loader2 className="w-12 h-12 text-gold animate-spin" />
@@ -101,7 +98,6 @@ export default function TrackingPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {STEPS.map((step) => {
               const isActive = step.id <= currentStepIndex
-              const isProcessing = step.id === currentStepIndex
               return (
                 <div key={step.id} className={`flex md:flex-col items-start gap-4 transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-20 grayscale'}`}>
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-500 ${isActive ? 'gold-gradient shadow-lg shadow-primary/30 border-none' : 'glass border-white/5'}`}>

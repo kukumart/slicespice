@@ -12,10 +12,8 @@ import { ShoppingBag, Truck, CreditCard, ChevronRight, Minus, Plus, Trash2, Arro
 import { useRouter } from "next/navigation"
 import { useCart } from "@/context/cart-context"
 import Link from "next/link"
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"
-import { useFirestore, useAuth } from "@/firebase"
-import { errorEmitter } from "@/firebase/error-emitter"
-import { FirestorePermissionError } from "@/firebase/errors"
+import { collection, doc, serverTimestamp } from "firebase/firestore"
+import { useFirestore, useAuth, setDocumentNonBlocking } from "@/firebase"
 
 const DELIVERY_PROVIDERS = [
   { id: 'own', name: 'S&S Express', desc: 'Our priority riders', icon: <Bike className="w-5 h-5" /> },
@@ -35,12 +33,16 @@ export default function OrderPage() {
   const deliveryFee = cart.length > 0 ? (deliveryProvider === 'own' ? 2.50 : 3.50) : 0
   const total = subtotal + deliveryFee
 
-  const handlePlaceOrder = async (e: React.FormEvent) => {
+  const handlePlaceOrder = (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
     const formData = new FormData(e.target as HTMLFormElement)
+    const orderCol = collection(db, "orders")
+    const newOrderRef = doc(orderCol)
+    
     const orderData = {
+      id: newOrderRef.id,
       userId: user?.uid || "guest",
       items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty })),
       total: total,
@@ -53,20 +55,13 @@ export default function OrderPage() {
       deliveryNote: formData.get("note") as string,
     }
 
-    try {
-      const docRef = await addDoc(collection(db, "orders"), orderData)
-      clearCart()
-      router.push(`/track/${docRef.id}`)
-    } catch (error: any) {
-      const permissionError = new FirestorePermissionError({
-        path: 'orders',
-        operation: 'create',
-        requestResourceData: orderData,
-      })
-      errorEmitter.emit('permission-error', permissionError)
-    } finally {
-      setLoading(false)
-    }
+    // Non-blocking mutation
+    setDocumentNonBlocking(newOrderRef, orderData, {})
+    
+    // Immediate local updates
+    clearCart()
+    router.push(`/track/${newOrderRef.id}`)
+    setLoading(false)
   }
 
   if (cart.length === 0 && step === 1) {
