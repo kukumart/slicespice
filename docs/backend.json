@@ -4,7 +4,7 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "User",
       "type": "object",
-      "description": "Represents a user of the Slice & Juice application.",
+      "description": "Represents a user of the Slice & Spice application.",
       "properties": {
         "id": {
           "type": "string",
@@ -51,7 +51,8 @@
   "auth": {
     "providers": [
       "password",
-      "anonymous"
+      "anonymous",
+      "google.com"
     ]
   },
   "firestore": {
@@ -89,6 +90,6 @@
         }
       }
     ],
-    "reasoning": "This design prioritizes security and scalability for the Slice & Juice application, particularly around user authentication and authorization. It leverages Structural Segregation and Authorization Independence to simplify security rules and enable robust data access control. The key collections are `/users` for user profiles, `/roles_admin` for admin role assignments.  The design emphasizes denormalization to avoid hierarchical `get()` calls in security rules, ensuring atomic operations. Path-based ownership secures user-specific data, while existence checks for admin roles simplify admin authorization.\n\n**Authorization Independence:** The `users` collection stores the `role` property directly within the user document. This eliminates the need for security rules to fetch user roles from a separate location, enabling atomic operations and simplifying rule logic.\n\n**QAPs (Rules are not Filters):**\n*   The separation of user roles into a distinct collection (`/roles_admin`) and the role property in the user collection enables secure `list` operations. Listing of users can be secured based on their role. Existence checks on `/roles_admin/{userId}` can determine admin privileges.\n\n"
+    "reasoning": "This design prioritizes security and scalability for the Slice & Spice application, particularly around user authentication and authorization. It leverages Structural Segregation and Authorization Independence to simplify security rules and enable robust data access control. The key collections are `/users` for user profiles, `/roles_admin` for admin role assignments.  The design emphasizes denormalization to avoid hierarchical `get()` calls in security rules, ensuring atomic operations. Path-based ownership secures user-specific data, while existence checks for admin roles simplify admin authorization.\n\n**Authorization Independence:** The `users` collection stores the `role` property directly within the user document. This eliminates the need for security rules to fetch user roles from a separate location, enabling atomic operations and simplifying rule logic.\n\n**QAPs (Rules are not Filters):**\n*   The separation of user roles into a distinct collection (`/roles_admin`) and the role property in the user collection enables secure `list` operations. Listing of users can be secured based on their role. Existence checks on `/roles_admin/{userId}` can determine admin privileges.\n\n"
   }
 }
