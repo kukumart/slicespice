@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -6,7 +7,7 @@ import { GlassCard } from "@/components/glass-card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useAuth } from "@/firebase"
+import { useFirebase } from "@/firebase"
 import { 
   initiateEmailSignIn, 
   initiateEmailSignUp,
@@ -25,14 +26,11 @@ export default function AuthPage() {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [isGuestLoading, setIsGuestLoading] = useState(false)
   
-  const { auth, user, isUserLoading } = useAuth()
+  const { auth, user, isUserLoading } = useFirebase()
   const router = useRouter()
   const { toast } = useToast()
 
   useEffect(() => {
-    // If user is logged in (even anonymously), we can redirect them
-    // However, for guest users, we might want them to stay if they want to 'upgrade'
-    // but typically for a login page, we redirect to home.
     if (user && !isUserLoading) {
       router.push("/")
     }

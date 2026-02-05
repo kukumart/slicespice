@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { 
   useFirestore, 
   useCollection,
-  useAuth,
+  useUser,
   useMemoFirebase
 } from "@/firebase"
 import { 
@@ -38,7 +38,7 @@ const STATUS_CONFIG = {
 }
 
 export default function ProfilePage() {
-  const { user, isUserLoading } = useAuth()
+  const { user, isUserLoading } = useUser()
   const db = useFirestore()
   
   const ordersQuery = useMemoFirebase(() => 

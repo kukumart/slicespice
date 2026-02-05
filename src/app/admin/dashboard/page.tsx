@@ -17,7 +17,7 @@ import {
 import { 
   useFirestore, 
   useCollection,
-  useAuth,
+  useUser,
   useDoc,
   useMemoFirebase,
   updateDocumentNonBlocking
@@ -65,7 +65,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function AdminDashboard() {
-  const { user, isUserLoading } = useAuth()
+  const { user, isUserLoading } = useUser()
   const db = useFirestore()
   
   const adminRef = useMemoFirebase(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
@@ -85,7 +85,6 @@ export default function AdminDashboard() {
   const stats = useMemo(() => {
     if (!orders) return { active: 0, completed: 0, revenue: 0, chartData: [] }
     
-    // Simple revenue aggregation for the chart
     const dailyData: Record<string, number> = {}
     orders.forEach(o => {
       const date = o.createdAt?.toDate ? o.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Recent'

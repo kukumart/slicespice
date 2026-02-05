@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useCart } from "@/context/cart-context"
 import { Badge } from "@/components/ui/badge"
-import { useAuth, useDoc, useFirestore, useMemoFirebase } from "@/firebase"
+import { useFirebase, useDoc, useFirestore, useMemoFirebase } from "@/firebase"
 import { doc } from "firebase/firestore"
 import { ShareDialog } from "./share-dialog"
 import {
@@ -24,7 +24,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { totalItems } = useCart()
-  const { auth, user } = useAuth()
+  const { auth, user } = useFirebase()
   const db = useFirestore()
 
   const adminRef = useMemoFirebase(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
@@ -62,7 +62,6 @@ export function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
             <Link 
@@ -130,7 +129,6 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Toggle */}
         <div className="flex items-center gap-4 md:hidden">
           <ShareDialog />
           <Link href="/order" className="relative glass w-12 h-12 rounded-2xl flex items-center justify-center no-underline">
@@ -150,7 +148,6 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden mt-4 glass-dark rounded-[2rem] p-8 flex flex-col gap-6 pointer-events-auto animate-in fade-in slide-in-from-top-4 border-white/10">
           {navLinks.map((link) => (

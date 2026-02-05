@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation"
 import { useCart } from "@/context/cart-context"
 import Link from "next/link"
 import { collection, doc, serverTimestamp } from "firebase/firestore"
-import { useFirestore, useAuth, setDocumentNonBlocking } from "@/firebase"
+import { useFirestore, useUser, setDocumentNonBlocking } from "@/firebase"
 
 const DELIVERY_PROVIDERS = [
   { id: 'own', name: 'S&S Express', desc: 'Our priority riders', icon: <Bike className="w-5 h-5" /> },
@@ -24,9 +24,9 @@ const DELIVERY_PROVIDERS = [
 export default function OrderPage() {
   const router = useRouter()
   const db = useFirestore()
-  const { user } = useAuth()
+  const { user } = useUser()
   const { cart, subtotal, updateQty, clearCart } = useCart()
-  const [step, setStep] = useState(1) // 1: Cart Summary, 2: Delivery Details
+  const [step, setStep] = useState(1) 
   const [loading, setLoading] = useState(false)
   const [deliveryProvider, setDeliveryProvider] = useState('own')
 
@@ -55,10 +55,8 @@ export default function OrderPage() {
       deliveryNote: formData.get("note") as string,
     }
 
-    // Non-blocking mutation
     setDocumentNonBlocking(newOrderRef, orderData, {})
     
-    // Immediate local updates
     clearCart()
     router.push(`/track/${newOrderRef.id}`)
     setLoading(false)
