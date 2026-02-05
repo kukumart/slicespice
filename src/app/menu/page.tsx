@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -7,11 +8,12 @@ import { Badge } from "@/components/ui/badge"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
 import Image from "next/image"
 import { useState, useMemo } from "react"
-import { Plus, Minus, Search, Sparkles, Loader2 } from "lucide-react"
+import { Plus, Minus, Search, Sparkles, Loader2, ShoppingCart, ArrowRight } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { useCart } from "@/context/cart-context"
 import { recommendFood, RecommendFoodOutput } from "@/ai/flows/recommend-food-flow"
 import { useToast } from "@/hooks/use-toast"
+import Link from "next/link"
 import {
   Dialog,
   DialogContent,
@@ -40,7 +42,7 @@ export default function MenuPage() {
   const [aiLoading, setAiLoading] = useState(false)
   const [aiResult, setAiResult] = useState<RecommendFoodOutput | null>(null)
   
-  const { addToCart, updateQty, cart } = useCart()
+  const { addToCart, updateQty, cart, totalItems, subtotal } = useCart()
   const { toast } = useToast()
 
   const filteredItems = useMemo(() => {
@@ -85,7 +87,7 @@ export default function MenuPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background pt-32 pb-24 px-4">
+    <main className="min-h-screen bg-background pt-32 pb-24 px-4 relative">
       <Navbar />
       
       <div className="max-w-7xl mx-auto space-y-16">
@@ -272,6 +274,32 @@ export default function MenuPage() {
           </div>
         )}
       </div>
+
+      {/* Sticky Checkout summary */}
+      {totalItems > 0 && (
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4 animate-in slide-in-from-bottom-8 duration-500">
+          <Link href="/order" className="no-underline group">
+            <GlassCard className="p-4 bg-primary text-primary-foreground border-none shadow-2xl flex items-center justify-between hover:scale-[1.05] transition-transform">
+               <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-black/10 flex items-center justify-center">
+                    <ShoppingCart className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="font-black text-lg uppercase tracking-tight leading-none">{totalItems} Items</p>
+                    <p className="text-xs font-bold opacity-80 uppercase tracking-widest">In your selection</p>
+                  </div>
+               </div>
+               <div className="flex items-center gap-4 text-right">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest opacity-80">Subtotal</p>
+                    <p className="font-black text-xl leading-none">${subtotal.toFixed(2)}</p>
+                  </div>
+                  <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+               </div>
+            </GlassCard>
+          </Link>
+        </div>
+      )}
     </main>
   )
 }

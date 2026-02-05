@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
-import { ShoppingBag, Truck, CreditCard, ChevronRight, Minus, Plus, Trash2, ArrowLeft, Loader2, Bike } from "lucide-react"
+import { ShoppingBag, Truck, CreditCard, ChevronRight, Minus, Plus, Trash2, ArrowLeft, Loader2, Bike, Wallet, Sparkles } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/context/cart-context"
 import Link from "next/link"
@@ -19,8 +19,8 @@ import { FirestorePermissionError } from "@/firebase/errors"
 
 const DELIVERY_PROVIDERS = [
   { id: 'own', name: 'S&S Express', desc: 'Our priority riders', icon: <Bike className="w-5 h-5" /> },
-  { id: 'uber-eats', name: 'Uber Eats', desc: 'Standard partner delivery', icon: <Truck className="w-5 h-5" /> },
-  { id: 'bolt', name: 'Bolt Food', desc: 'Standard partner delivery', icon: <Truck className="w-5 h-5" /> },
+  { id: 'uber-eats', name: 'Uber Eats', desc: 'Partner delivery', icon: <Truck className="w-5 h-5" /> },
+  { id: 'bolt', name: 'Bolt Food', desc: 'Partner delivery', icon: <Truck className="w-5 h-5" /> },
 ]
 
 export default function OrderPage() {
@@ -81,7 +81,7 @@ export default function OrderPage() {
             <h1 className="text-5xl font-bold tracking-tight uppercase">Your cart is <span className="text-gold">empty</span></h1>
             <p className="text-muted-foreground text-lg font-medium">Looks like you haven't added any masterpieces to your selection yet.</p>
           </div>
-          <Button asChild size="lg" className="gold-gradient text-primary-foreground px-12 py-8 rounded-2xl font-black text-lg border-none uppercase tracking-widest">
+          <Button asChild size="lg" className="gold-gradient text-primary-foreground px-12 py-8 rounded-2xl font-black text-lg border-none uppercase tracking-widest shadow-xl">
             <Link href="/menu">Go to Menu</Link>
           </Button>
         </div>
@@ -95,156 +95,172 @@ export default function OrderPage() {
 
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center gap-4 mb-12 overflow-x-auto pb-4 scrollbar-hide">
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${step >= 1 ? 'border-primary text-primary-foreground bg-primary shadow-lg' : 'border-white/10 text-muted-foreground'}`}>
-            <ShoppingBag className={`w-4 h-4 ${step >= 1 ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
-            <span className="font-bold whitespace-nowrap uppercase tracking-widest text-xs">Order Review</span>
+          <div className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all ${step >= 1 ? 'border-primary text-primary-foreground bg-primary shadow-lg scale-105' : 'border-white/10 text-muted-foreground opacity-50'}`}>
+            <ShoppingBag className="w-4 h-4" />
+            <span className="font-black whitespace-nowrap uppercase tracking-widest text-xs">Review Selection</span>
           </div>
-          <ChevronRight className="w-4 h-4 text-muted-foreground" />
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${step >= 2 ? 'border-primary text-primary-foreground bg-primary shadow-lg' : 'border-white/10 text-muted-foreground'}`}>
-            <Truck className={`w-4 h-4 ${step >= 2 ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
-            <span className="font-bold whitespace-nowrap uppercase tracking-widest text-xs">Delivery & Payment</span>
+          <ChevronRight className="w-4 h-4 text-muted-foreground opacity-20" />
+          <div className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all ${step >= 2 ? 'border-primary text-primary-foreground bg-primary shadow-lg scale-105' : 'border-white/10 text-muted-foreground opacity-50'}`}>
+            <Truck className="w-4 h-4" />
+            <span className="font-black whitespace-nowrap uppercase tracking-widest text-xs">Delivery & Pay</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-8">
             {step === 1 ? (
-              <GlassCard className="p-8 space-y-8">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-3xl font-black uppercase tracking-tight">Your <span className="text-gold">Selection</span></h2>
-                  <Button variant="ghost" onClick={clearCart} className="text-muted-foreground hover:text-destructive flex items-center gap-2 font-bold uppercase tracking-widest text-xs">
+              <GlassCard className="p-8 space-y-8" hover={false}>
+                <div className="flex items-center justify-between border-b border-white/5 pb-6">
+                  <h2 className="text-3xl font-black uppercase tracking-tight">Current <span className="text-gold">Cart</span></h2>
+                  <Button variant="ghost" onClick={clearCart} className="text-muted-foreground hover:text-destructive flex items-center gap-2 font-black uppercase tracking-widest text-[10px]">
                     <Trash2 className="w-4 h-4" /> Clear All
                   </Button>
                 </div>
                 
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {cart.map((item) => (
-                    <div key={item.id} className="flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-white/5 gap-6">
+                    <div key={item.id} className="flex flex-col sm:flex-row sm:items-center justify-between py-6 glass rounded-2xl p-6 border-white/5 gap-6 group">
                       <div className="flex items-center gap-6">
-                        <div className="w-20 h-20 glass rounded-2xl overflow-hidden flex-shrink-0 relative">
+                        <div className="w-16 h-16 glass rounded-xl overflow-hidden flex-shrink-0 relative">
                           <div className="absolute inset-0 gold-gradient opacity-10" />
-                          <div className="w-full h-full flex items-center justify-center font-black text-2xl text-gold">
+                          <div className="w-full h-full flex items-center justify-center font-black text-xl text-gold group-hover:scale-110 transition-transform">
                             {item.name.charAt(0)}
                           </div>
                         </div>
                         <div className="space-y-1">
-                          <h4 className="font-black text-xl uppercase tracking-tight">{item.name}</h4>
-                          <p className="text-xs text-muted-foreground uppercase tracking-widest font-black">{item.category}</p>
+                          <h4 className="font-black text-lg uppercase tracking-tight leading-none">{item.name}</h4>
+                          <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-black opacity-60">{item.category}</p>
                           <p className="font-black text-gold">${item.price}</p>
                         </div>
                       </div>
                       
-                      <div className="flex items-center justify-between sm:justify-end gap-8">
-                        <div className="flex items-center gap-4 glass p-1.5 rounded-xl">
+                      <div className="flex items-center justify-between sm:justify-end gap-10">
+                        <div className="flex items-center gap-2 glass p-1 rounded-xl bg-white/5">
                           <Button 
                             variant="ghost" 
                             size="icon" 
-                            className="w-8 h-8 rounded-lg hover:bg-white/10"
+                            className="w-10 h-10 rounded-lg hover:bg-white/10 text-gold"
                             onClick={() => updateQty(item.id, -1)}
                           >
                             <Minus className="w-4 h-4" />
                           </Button>
-                          <span className="font-black min-w-[1.5rem] text-center">{item.qty}</span>
+                          <span className="font-black min-w-[1.5rem] text-center text-lg">{item.qty}</span>
                           <Button 
                             variant="ghost" 
                             size="icon" 
-                            className="w-8 h-8 rounded-lg hover:bg-white/10"
+                            className="w-10 h-10 rounded-lg hover:bg-white/10 text-gold"
                             onClick={() => updateQty(item.id, 1)}
                           >
                             <Plus className="w-4 h-4" />
                           </Button>
                         </div>
-                        <span className="font-black text-xl min-w-[5rem] text-right">${(item.price * item.qty).toFixed(2)}</span>
+                        <span className="font-black text-2xl min-w-[6rem] text-right text-gold">${(item.price * item.qty).toFixed(2)}</span>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex gap-4">
-                  <Button asChild variant="outline" className="flex-1 py-8 rounded-2xl font-black border-white/10 uppercase tracking-widest text-xs">
-                    <Link href="/menu"><ArrowLeft className="w-4 h-4 mr-2" /> Add More</Link>
+                <div className="flex flex-col sm:flex-row gap-4 pt-6">
+                  <Button asChild variant="outline" className="flex-1 py-8 rounded-2xl font-black border-white/10 uppercase tracking-widest text-[10px] glass">
+                    <Link href="/menu"><ArrowLeft className="w-4 h-4 mr-2" /> Continue Shopping</Link>
                   </Button>
-                  <Button onClick={() => setStep(2)} className="flex-[2] gold-gradient text-primary-foreground py-8 rounded-2xl text-lg font-black shadow-xl shadow-primary/10 border-none uppercase tracking-widest">
-                    Proceed to Delivery
+                  <Button onClick={() => setStep(2)} className="flex-[2] gold-gradient text-primary-foreground py-8 rounded-2xl text-lg font-black shadow-2xl border-none uppercase tracking-widest group">
+                    Next: Delivery Details <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </div>
               </GlassCard>
             ) : (
-              <GlassCard className="p-8 space-y-8">
-                <h2 className="text-3xl font-black uppercase tracking-tight">Delivery <span className="text-gold">Details</span></h2>
-                <form onSubmit={handlePlaceOrder} className="space-y-10">
+              <GlassCard className="p-8 space-y-10" hover={false}>
+                <div className="border-b border-white/5 pb-6">
+                  <h2 className="text-3xl font-black uppercase tracking-tight leading-none">Complete <span className="text-gold">Order</span></h2>
+                  <p className="text-xs text-muted-foreground font-black uppercase tracking-widest mt-2">Step 2 of 2: Shipping & Payment</p>
+                </div>
+                
+                <form onSubmit={handlePlaceOrder} className="space-y-12">
                   <div className="space-y-6">
+                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-gold flex items-center gap-2">
+                       <Truck className="w-4 h-4" /> Recipient Info
+                    </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Full Name</Label>
-                        <Input name="name" className="glass h-14 border-white/10 focus:border-primary/50 font-bold" placeholder="John Doe" required />
+                        <Input name="name" className="glass h-14 border-white/10 focus:border-primary/50 font-bold bg-white/5" placeholder="John Doe" required />
                       </div>
                       <div className="space-y-2">
                         <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Phone Number</Label>
-                        <Input name="phone" className="glass h-14 border-white/10 focus:border-primary/50 font-bold" placeholder="+254..." required />
+                        <Input name="phone" className="glass h-14 border-white/10 focus:border-primary/50 font-bold bg-white/5" placeholder="+254..." required />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Delivery Address</Label>
-                      <Input name="address" className="glass h-14 border-white/10 focus:border-primary/50 font-bold" placeholder="Street Name, Building No." required />
+                      <Input name="address" className="glass h-14 border-white/10 focus:border-primary/50 font-bold bg-white/5" placeholder="Street Name, Apartment, Floor" required />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Delivery Note (Optional)</Label>
-                      <Textarea name="note" className="glass min-h-[100px] border-white/10 focus:border-primary/50 font-bold" placeholder="Gate code, floor, or specific instructions..." />
+                      <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Driver Instructions (Optional)</Label>
+                      <Textarea name="note" className="glass min-h-[100px] border-white/10 focus:border-primary/50 font-bold bg-white/5" placeholder="e.g. Leave at the gate, call upon arrival..." />
                     </div>
                   </div>
 
                   <div className="space-y-6">
-                    <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
-                      <Bike className="w-5 h-5 text-gold" />
-                      Delivery Partner
+                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-gold flex items-center gap-2">
+                       <Bike className="w-4 h-4" /> Delivery Mode
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       {DELIVERY_PROVIDERS.map((provider) => (
                         <label 
                           key={provider.id} 
-                          className={`relative glass p-6 rounded-2xl cursor-pointer border transition-all ${
-                            deliveryProvider === provider.id ? 'border-primary/40 bg-primary/5 shadow-inner' : 'border-white/5 opacity-60 hover:opacity-100'
+                          className={`relative glass p-6 rounded-2xl cursor-pointer border transition-all duration-300 ${
+                            deliveryProvider === provider.id ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(255,215,0,0.1)]' : 'border-white/5 opacity-40 hover:opacity-100 hover:border-white/20'
                           }`}
                           onClick={() => setDeliveryProvider(provider.id)}
                         >
                           <input type="radio" name="provider" className="absolute opacity-0" checked={deliveryProvider === provider.id} onChange={() => {}} />
-                          <div className={`flex items-center gap-2 font-black text-lg uppercase ${deliveryProvider === provider.id ? 'text-primary-foreground' : 'text-foreground'}`}>
+                          <div className={`flex items-center gap-2 font-black text-sm uppercase ${deliveryProvider === provider.id ? 'text-primary' : 'text-foreground'}`}>
                             {provider.icon} {provider.name}
                           </div>
-                          <div className={`text-[9px] uppercase font-black tracking-widest mt-1 ${deliveryProvider === provider.id ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                          <div className="text-[9px] uppercase font-black tracking-widest mt-1 opacity-60">
                             {provider.desc}
                           </div>
+                          {deliveryProvider === provider.id && (
+                            <div className="absolute top-2 right-2">
+                              <Sparkles className="w-3 h-3 text-gold animate-pulse" />
+                            </div>
+                          )}
                         </label>
                       ))}
                     </div>
                   </div>
                   
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
-                      <CreditCard className="w-5 h-5 text-gold" />
-                      Payment Method
+                  <div className="space-y-6">
+                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-gold flex items-center gap-2">
+                       <CreditCard className="w-4 h-4" /> Payment Selection
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <label className="relative glass p-6 rounded-2xl cursor-pointer border border-primary/40 bg-primary/5 shadow-inner">
+                      <label className="relative glass p-6 rounded-2xl cursor-pointer border border-primary bg-primary/10 shadow-[0_0_20px_rgba(255,215,0,0.1)] group">
                         <input type="radio" name="payment" className="absolute opacity-0" defaultChecked />
-                        <div className="font-black text-lg uppercase text-primary-foreground">Cash on Delivery</div>
-                        <div className="text-[10px] text-primary-foreground/70 uppercase font-black tracking-widest">Pay when you receive</div>
+                        <div className="flex items-center gap-3">
+                          <Wallet className="w-6 h-6 text-primary" />
+                          <div className="font-black text-lg uppercase leading-none">Cash/M-Pesa</div>
+                        </div>
+                        <div className="text-[10px] text-primary/80 uppercase font-black tracking-widest mt-2">Pay on Delivery</div>
                       </label>
-                      <label className="relative glass p-6 rounded-2xl cursor-not-allowed border border-white/5 opacity-40">
+                      <label className="relative glass p-6 rounded-2xl cursor-not-allowed border border-white/5 opacity-30">
                         <input type="radio" name="payment" className="absolute opacity-0" disabled />
-                        <div className="font-black text-lg uppercase">Credit/Debit Card</div>
-                        <div className="text-[10px] text-muted-foreground italic uppercase font-black tracking-widest">Coming Soon</div>
+                        <div className="flex items-center gap-3">
+                          <CreditCard className="w-6 h-6" />
+                          <div className="font-black text-lg uppercase leading-none">Digital Card</div>
+                        </div>
+                        <div className="text-[10px] text-muted-foreground italic uppercase font-black tracking-widest mt-2">Secure Gateway Soon</div>
                       </label>
                     </div>
                   </div>
 
-                  <div className="flex gap-4 pt-6">
-                    <Button type="button" variant="ghost" onClick={() => setStep(1)} className="flex-1 py-8 rounded-2xl font-black uppercase tracking-widest">
-                      Back to Cart
+                  <div className="flex flex-col sm:flex-row gap-4 pt-6">
+                    <Button type="button" variant="ghost" onClick={() => setStep(1)} className="flex-1 py-8 rounded-2xl font-black uppercase tracking-widest text-[10px] glass">
+                      Back to Selection
                     </Button>
-                    <Button type="submit" disabled={loading} className="flex-[2] gold-gradient text-primary-foreground py-8 rounded-2xl text-lg font-black shadow-2xl border-none uppercase tracking-widest">
-                      {loading ? <Loader2 className="w-6 h-6 animate-spin text-primary-foreground" /> : "Confirm & Place Order"}
+                    <Button type="submit" disabled={loading} className="flex-[2] gold-gradient text-primary-foreground py-8 rounded-2xl text-xl font-black shadow-2xl border-none uppercase tracking-widest">
+                      {loading ? <Loader2 className="w-6 h-6 animate-spin text-primary-foreground" /> : "Authorize & Place Order"}
                     </Button>
                   </div>
                 </form>
@@ -253,34 +269,46 @@ export default function OrderPage() {
           </div>
 
           <div className="space-y-8">
-            <GlassCard className="p-8 space-y-6">
-              <h3 className="text-2xl font-black uppercase tracking-tight">Order Summary</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between text-muted-foreground text-xs font-black uppercase tracking-widest">
-                  <span>Subtotal</span>
-                  <span className="font-black text-foreground text-sm">${subtotal.toFixed(2)}</span>
+            <GlassCard className="p-8 space-y-8 border-white/10" hover={false}>
+              <h3 className="text-2xl font-black uppercase tracking-tight border-b border-white/5 pb-4">Bill Summary</h3>
+              <div className="space-y-5">
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Merchandise Subtotal</span>
+                  <span className="font-black text-lg">${subtotal.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-muted-foreground text-xs font-black uppercase tracking-widest">
-                  <span>Delivery Fee</span>
-                  <span className="font-black text-foreground text-sm">${deliveryFee.toFixed(2)}</span>
+                <div className="flex justify-between items-center">
+                  <div className="flex flex-col">
+                    <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Service & Delivery</span>
+                    <span className="text-[8px] font-black uppercase tracking-[0.2em] text-primary">{deliveryProvider === 'own' ? 'Priority Express' : 'Partner Standard'}</span>
+                  </div>
+                  <span className="font-black text-lg">${deliveryFee.toFixed(2)}</span>
                 </div>
-                <div className="h-px bg-white/5 my-4" />
-                <div className="flex justify-between text-3xl font-black uppercase tracking-tighter">
-                  <span>Total</span>
-                  <span className="text-gold">${total.toFixed(2)}</span>
+                <div className="h-px bg-white/5 my-2" />
+                <div className="flex justify-between items-end pt-2">
+                  <div className="flex flex-col">
+                    <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest">Grand Total</span>
+                    <span className="text-[8px] font-black uppercase tracking-widest text-primary italic">All Taxes Included</span>
+                  </div>
+                  <span className="text-4xl font-black text-gold tracking-tighter">${total.toFixed(2)}</span>
                 </div>
               </div>
             </GlassCard>
             
-            <GlassCard className="p-6 bg-primary/5 border-primary/20">
-              <div className="flex items-start gap-3">
-                <Truck className="w-5 h-5 text-gold mt-1" />
+            <GlassCard className="p-6 bg-primary/5 border-primary/20" hover={false}>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                   <Sparkles className="w-5 h-5 text-gold" />
+                </div>
                 <div className="space-y-1">
-                  <p className="font-black text-sm uppercase tracking-tight">Express Delivery</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed font-medium">Your order will be prepared and delivered in approximately 25-35 minutes.</p>
+                  <p className="font-black text-sm uppercase tracking-tight">The S&S Guarantee</p>
+                  <p className="text-[10px] text-muted-foreground leading-relaxed font-medium uppercase tracking-widest">Your order will arrive at peak temperature in premium sustainable packaging.</p>
                 </div>
               </div>
             </GlassCard>
+
+            <div className="px-4 text-center">
+               <p className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40">Secure Gold Standard Encryption</p>
+            </div>
           </div>
         </div>
       </div>
