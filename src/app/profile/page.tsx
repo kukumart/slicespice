@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -28,6 +27,7 @@ import {
   Star,
   ShieldCheck
 } from "lucide-react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 
 const STATUS_CONFIG = {
@@ -40,6 +40,11 @@ const STATUS_CONFIG = {
 export default function ProfilePage() {
   const { user, isUserLoading } = useUser()
   const db = useFirestore()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
   
   const ordersQuery = useMemoFirebase(() => 
     user ? query(collection(db, "orders"), where("userId", "==", user.uid), orderBy("createdAt", "desc")) : null, 
@@ -47,7 +52,7 @@ export default function ProfilePage() {
   )
   const { data: orders, isLoading: isOrdersLoading } = useCollection(ordersQuery)
 
-  if (isUserLoading) {
+  if (isUserLoading || !mounted) {
     return (
       <main className="min-h-screen bg-background pt-32 flex items-center justify-center">
         <Loader2 className="w-12 h-12 text-gold animate-spin" />
@@ -135,7 +140,7 @@ export default function ProfilePage() {
                              </Badge>
                           </div>
                           <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest flex items-center gap-2">
-                             <Clock className="w-3 h-3" /> {order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString() : 'Just now'}
+                             <Clock className="w-3 h-3" /> {mounted && order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString() : 'Just now'}
                           </p>
                         </div>
                       </div>

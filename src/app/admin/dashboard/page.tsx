@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -40,7 +39,7 @@ import {
   TrendingUp,
   ArrowUpRight
 } from "lucide-react"
-import { useMemo } from "react"
+import { useMemo, useState, useEffect } from "react"
 import Link from "next/link"
 import { Area, AreaChart, CartesianGrid, XAxis, ResponsiveContainer } from "recharts"
 import {
@@ -67,6 +66,11 @@ const chartConfig = {
 export default function AdminDashboard() {
   const { user, isUserLoading } = useUser()
   const db = useFirestore()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
   
   const adminRef = useMemoFirebase(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
   const { data: adminRole, isLoading: isAdminCheckLoading } = useDoc(adminRef)
@@ -83,7 +87,7 @@ export default function AdminDashboard() {
   }
 
   const stats = useMemo(() => {
-    if (!orders) return { active: 0, completed: 0, revenue: 0, chartData: [] }
+    if (!orders || !mounted) return { active: 0, completed: 0, revenue: 0, chartData: [] }
     
     const dailyData: Record<string, number> = {}
     orders.forEach(o => {
@@ -99,9 +103,9 @@ export default function AdminDashboard() {
       revenue: orders.reduce((acc, o) => acc + (o.total || 0), 0),
       chartData
     }
-  }, [orders])
+  }, [orders, mounted])
 
-  if (isUserLoading || isAdminCheckLoading) {
+  if (isUserLoading || isAdminCheckLoading || !mounted) {
     return (
       <main className="min-h-screen bg-background pt-32 pb-24 flex flex-col items-center justify-center space-y-8 px-4">
         <Loader2 className="w-12 h-12 text-gold animate-spin" />
