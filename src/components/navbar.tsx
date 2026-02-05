@@ -2,7 +2,7 @@
 "use client"
 
 import Link from "next/link"
-import { ShoppingCart, Menu, X, MapPin, Info, Utensils, User, LogOut, LayoutDashboard, Settings } from "lucide-react"
+import { ShoppingCart, Menu, X, MapPin, Info, Utensils, User, LogOut, LayoutDashboard, Settings, Shield } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -82,13 +82,20 @@ export function Navbar() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-12 w-12 rounded-2xl glass hover:bg-white/10">
                     <User className="w-6 h-6 text-gold" />
+                    {isAdmin && (
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full border-2 border-background flex items-center justify-center">
+                        <Shield className="w-2.5 h-2.5 text-primary-foreground fill-primary-foreground" />
+                      </div>
+                    )}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="glass-dark border-white/10 w-64" align="end">
                   <DropdownMenuLabel className="font-black uppercase tracking-widest text-[10px] text-muted-foreground p-4">Member Identity</DropdownMenuLabel>
                   <div className="px-4 pb-4">
                     <p className="text-xs font-black truncate text-foreground">{user.email || 'Anonymous Member'}</p>
-                    <p className="text-[8px] font-black uppercase tracking-[0.2em] text-gold mt-1">Gold Standard Profile</p>
+                    <p className="text-[8px] font-black uppercase tracking-[0.2em] text-gold mt-1">
+                      {isAdmin ? "ADMIN COMMANDER" : "GOLD STANDARD PROFILE"}
+                    </p>
                   </div>
                   <DropdownMenuSeparator className="bg-white/5" />
                   <DropdownMenuItem asChild>
@@ -98,8 +105,8 @@ export function Navbar() {
                   </DropdownMenuItem>
                   {isAdmin && (
                     <DropdownMenuItem asChild>
-                      <Link href="/admin/dashboard" className="cursor-pointer font-bold flex items-center gap-2 py-4 px-4 hover:bg-white/5">
-                        <LayoutDashboard className="w-4 h-4 text-gold" /> Admin Command Center
+                      <Link href="/admin/dashboard" className="cursor-pointer font-bold flex items-center gap-2 py-4 px-4 hover:bg-white/5 bg-primary/5">
+                        <LayoutDashboard className="w-4 h-4 text-primary" /> Admin Command Center
                       </Link>
                     </DropdownMenuItem>
                   )}
@@ -169,6 +176,16 @@ export function Navbar() {
             >
               <span className="w-2 h-2 rounded-full gold-gradient mr-4 opacity-0 group-hover:opacity-100 transition-opacity" />
               My Vault
+            </Link>
+          )}
+          {isAdmin && (
+             <Link 
+              href="/admin/dashboard" 
+              className="text-2xl font-black uppercase tracking-tighter text-primary flex items-center group no-underline"
+              onClick={() => setIsOpen(false)}
+            >
+              <span className="w-2 h-2 rounded-full bg-primary mr-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              Admin Center
             </Link>
           )}
           <div className="h-px bg-white/5 my-2" />
