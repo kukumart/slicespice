@@ -66,7 +66,7 @@
 }
 
 .gold-gradient {
-  background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+  background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #FFD700 100%);
 }
 
 .gold-highlight {
@@ -91,6 +91,17 @@
   100% { transform: translateY(0px); }
 }
 
+@keyframes highlight-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+.animate-masterpiece {
+  animation: float 4s ease-in-out infinite, highlight-shimmer 3s ease infinite;
+  background-size: 200% 200%;
 }

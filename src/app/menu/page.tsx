@@ -74,7 +74,7 @@ export default function MenuPage() {
       <div className="max-w-7xl mx-auto space-y-16">
         <div className="flex flex-col items-center gap-12 text-center">
           <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tight uppercase">Our <span className="gold-highlight italic">Masterpieces</span></h1>
+            <h1 className="text-6xl md:text-8xl font-bold tracking-tight uppercase">Our <span className="gold-highlight italic animate-masterpiece">Masterpieces</span></h1>
             <p className="text-muted-foreground text-xl max-w-2xl font-medium">Discover a symphony of premium flavors, curated for the modern foodie.</p>
           </div>
           

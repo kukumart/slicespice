@@ -110,7 +110,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-               <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase">Trending <span className="gold-highlight italic">Masterpieces</span></h2>
+               <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase">Trending <span className="gold-highlight italic animate-masterpiece">Masterpieces</span></h2>
                <Link href="/menu" className="hidden md:flex items-center gap-2 text-gold font-black uppercase tracking-widest text-sm hover:underline">
                   Full Menu <ChevronRight className="w-4 h-4" />
                </Link>
