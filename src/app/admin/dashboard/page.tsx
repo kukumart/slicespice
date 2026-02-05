@@ -1,10 +1,10 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
 import { GlassCard } from "@/components/glass-card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
 import { 
   Table, 
   TableBody, 
@@ -86,8 +86,12 @@ export default function AdminDashboard() {
 
   if (isUserLoading || isAdminCheckLoading) {
     return (
-      <main className="min-h-screen bg-background pt-32 pb-24 flex items-center justify-center">
+      <main className="min-h-screen bg-background pt-32 pb-24 flex flex-col items-center justify-center space-y-8 px-4">
         <Loader2 className="w-12 h-12 text-gold animate-spin" />
+        <div className="w-full max-w-4xl space-y-4">
+           <Skeleton className="h-32 w-full rounded-3xl" />
+           <Skeleton className="h-64 w-full rounded-3xl" />
+        </div>
       </main>
     )
   }
@@ -102,10 +106,10 @@ export default function AdminDashboard() {
           </div>
           <div className="space-y-2">
             <h2 className="text-3xl font-black uppercase tracking-tight">Access Denied</h2>
-            <p className="text-muted-foreground text-sm font-medium">This command center is reserved for authorized Slice & Spice staff only.</p>
+            <p className="text-muted-foreground text-sm font-black uppercase tracking-widest">Authorized Command Center Only</p>
           </div>
           <Button asChild className="gold-gradient text-black w-full py-7 font-black rounded-2xl border-none uppercase tracking-widest">
-            <Link href="/auth">Authenticate Now</Link>
+            <Link href="/auth">AUTHENTICATE</Link>
           </Button>
         </GlassCard>
       </main>
@@ -120,7 +124,7 @@ export default function AdminDashboard() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div className="space-y-4">
             <h1 className="text-6xl font-black tracking-tighter uppercase">Command <span className="gold-highlight italic text-black">Center</span></h1>
-            <p className="text-muted-foreground font-medium uppercase tracking-[0.2em] text-xs flex items-center gap-2">
+            <p className="text-muted-foreground font-black uppercase tracking-[0.2em] text-xs flex items-center gap-2">
               <LayoutDashboard className="w-4 h-4 text-gold" /> Real-time Order Stream
             </p>
           </div>
@@ -154,8 +158,10 @@ export default function AdminDashboard() {
           
           <div className="overflow-x-auto">
             {isOrdersLoading ? (
-              <div className="p-20 flex justify-center">
-                <Loader2 className="w-8 h-8 text-gold animate-spin" />
+              <div className="p-10 space-y-4">
+                 <Skeleton className="h-12 w-full" />
+                 <Skeleton className="h-12 w-full" />
+                 <Skeleton className="h-12 w-full" />
               </div>
             ) : (
               <Table>
@@ -181,13 +187,13 @@ export default function AdminDashboard() {
                         <TableCell>
                           <div className="flex flex-col">
                             <span className="font-black uppercase text-xs text-foreground">{order.customerName}</span>
-                            <span className="text-[10px] text-muted-foreground">{order.customerPhone}</span>
+                            <span className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">{order.customerPhone}</span>
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="flex flex-col gap-1">
                             {order.items?.map((item: any, i: number) => (
-                              <span key={i} className="text-[10px] font-medium text-muted-foreground">
+                              <span key={i} className="text-[10px] font-black uppercase tracking-tight text-muted-foreground">
                                 {item.qty}x {item.name}
                               </span>
                             ))}

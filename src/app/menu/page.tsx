@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -14,6 +13,7 @@ import { useCart } from "@/context/cart-context"
 import { recommendFood, RecommendFoodOutput } from "@/ai/flows/recommend-food-flow"
 import { useToast } from "@/hooks/use-toast"
 import Link from "next/link"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   Dialog,
   DialogContent,
@@ -61,8 +61,8 @@ export default function MenuPage() {
   const handleAddToCart = (item: any) => {
     addToCart(item)
     toast({
-      title: "Added to Cart",
-      description: `${item.name} has been added to your selection.`,
+      title: "Selection Added",
+      description: `${item.name} is now in your cart.`,
       className: "glass-dark border-primary/20",
     })
   }
@@ -78,7 +78,7 @@ export default function MenuPage() {
       toast({
         variant: "destructive",
         title: "Assistant is Busy",
-        description: "The Taste Assistant is receiving a high volume of requests. Please wait a moment and try again.",
+        description: "The Taste Assistant is receiving high volume. Please try again in a few moments.",
         className: "glass-dark border-destructive/20",
       })
     } finally {
@@ -93,7 +93,7 @@ export default function MenuPage() {
       <div className="max-w-7xl mx-auto space-y-16">
         <div className="flex flex-col items-center gap-12 text-center">
           <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tight uppercase">Our <span className="gold-highlight italic animate-masterpiece text-primary-foreground">Masterpieces</span></h1>
+            <h1 className="text-6xl md:text-8xl font-black tracking-tight uppercase">Our <span className="gold-highlight italic animate-masterpiece text-black">Masterpieces</span></h1>
             <p className="text-muted-foreground text-xl max-w-2xl font-medium">Discover a symphony of premium flavors, curated for the modern foodie.</p>
           </div>
           
@@ -111,8 +111,8 @@ export default function MenuPage() {
 
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button size="lg" className="h-16 px-8 rounded-2xl gold-gradient text-primary-foreground font-black shadow-xl hover:scale-105 transition-all border-none">
-                    <Sparkles className="w-5 h-5 mr-2 text-primary-foreground" />
+                  <Button size="lg" className="h-16 px-8 rounded-2xl gold-gradient text-black font-black shadow-xl hover:scale-105 transition-all border-none">
+                    <Sparkles className="w-5 h-5 mr-2" />
                     ASK AI TASTE ASSISTANT
                   </Button>
                 </DialogTrigger>
@@ -122,7 +122,7 @@ export default function MenuPage() {
                   </DialogHeader>
                   <div className="space-y-6 pt-4">
                     <div className="space-y-2">
-                      <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest">Describe your mood or craving</p>
+                      <p className="text-sm font-black text-muted-foreground uppercase tracking-widest">Describe your mood or craving</p>
                       <Input 
                         placeholder="e.g. Something spicy and a cold drink..." 
                         className="glass border-white/10 h-14"
@@ -133,9 +133,9 @@ export default function MenuPage() {
                     <Button 
                       onClick={handleAiRecommend} 
                       disabled={aiLoading}
-                      className="w-full gold-gradient text-primary-foreground h-14 font-black text-lg border-none"
+                      className="w-full gold-gradient text-black h-14 font-black text-lg border-none"
                     >
-                      {aiLoading ? <Loader2 className="w-6 h-6 animate-spin text-primary-foreground" /> : "GENERATE RECOMMENDATION"}
+                      {aiLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : "GENERATE RECOMMENDATION"}
                     </Button>
 
                     {aiResult && (
@@ -150,11 +150,11 @@ export default function MenuPage() {
                                   <span className="font-black text-gold text-sm">${item.price}</span>
                                 </div>
                                 <div className="p-3 bg-primary/10 rounded-lg border border-primary/20 mb-4">
-                                  <p className="text-xs text-foreground leading-relaxed font-medium italic">"{rec.reason}"</p>
+                                  <p className="text-xs text-foreground leading-relaxed font-black italic">"{rec.reason}"</p>
                                 </div>
                                 <Button 
                                   size="sm" 
-                                  className="gold-gradient text-primary-foreground font-black h-10 border-none w-full shadow-lg"
+                                  className="gold-gradient text-black font-black h-10 border-none w-full shadow-lg"
                                   onClick={() => handleAddToCart(item)}
                                 >
                                   ADD TO SELECTION
@@ -165,10 +165,10 @@ export default function MenuPage() {
                         </div>
                         <div className="p-5 gold-gradient rounded-xl shadow-2xl relative overflow-hidden group">
                           <div className="absolute top-0 right-0 p-2 opacity-20">
-                            <Sparkles className="w-8 h-8 text-primary-foreground" />
+                            <Sparkles className="w-8 h-8 text-black" />
                           </div>
-                          <p className="text-[10px] font-black text-primary-foreground uppercase tracking-[0.2em] mb-1">Expert Spice Pairing</p>
-                          <p className="text-sm font-bold text-primary-foreground italic leading-relaxed">{aiResult.pairingTip}</p>
+                          <p className="text-[10px] font-black text-black uppercase tracking-[0.2em] mb-1">Expert Spice Pairing</p>
+                          <p className="text-sm font-bold text-black italic leading-relaxed">{aiResult.pairingTip}</p>
                         </div>
                       </div>
                     )}
@@ -182,9 +182,9 @@ export default function MenuPage() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-8 py-3 rounded-full font-bold transition-all duration-300 text-sm tracking-widest uppercase ${
+                  className={`px-8 py-3 rounded-full font-black transition-all duration-300 text-sm tracking-widest uppercase ${
                     activeCategory === cat 
-                    ? "gold-gradient text-primary-foreground shadow-lg shadow-primary/20 scale-105" 
+                    ? "gold-gradient text-black shadow-lg shadow-primary/20 scale-105" 
                     : "glass hover:bg-white/10 text-muted-foreground hover:text-foreground"
                   }`}
                 >
@@ -195,16 +195,16 @@ export default function MenuPage() {
           </div>
         </div>
 
-        {filteredItems.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-            {filteredItems.map(item => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+          {filteredItems.length > 0 ? (
+            filteredItems.map(item => {
               const imgData = PlaceHolderImages.find(img => img.id === item.imageId)
               const qty = getItemQty(item.id)
               
               return (
                 <GlassCard key={item.id} className="flex flex-col group">
                   <div className="relative aspect-[4/5] overflow-hidden">
-                    {imgData && (
+                    {imgData ? (
                       <Image 
                         src={imgData.imageUrl} 
                         alt={item.name} 
@@ -212,9 +212,11 @@ export default function MenuPage() {
                         className="object-cover group-hover:scale-110 transition-transform duration-700"
                         data-ai-hint={imgData.imageHint}
                       />
+                    ) : (
+                      <Skeleton className="w-full h-full" />
                     )}
                     <div className="absolute top-6 left-6 flex flex-col gap-2">
-                      <Badge className="bg-primary text-primary-foreground font-black px-4 py-1 rounded-lg backdrop-blur-md border-none shadow-lg uppercase tracking-widest">
+                      <Badge className="bg-primary text-black font-black px-4 py-1 rounded-lg backdrop-blur-md border-none shadow-lg uppercase tracking-widest">
                         {item.category}
                       </Badge>
                     </div>
@@ -222,7 +224,7 @@ export default function MenuPage() {
                   <div className="p-8 flex flex-col flex-1 space-y-6">
                     <div className="space-y-2">
                       <div className="flex justify-between items-start gap-2">
-                        <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">{item.name}</h3>
+                        <h3 className="text-2xl font-black leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">{item.name}</h3>
                         <span className="text-xl font-black text-gold whitespace-nowrap">${item.price}</span>
                       </div>
                       <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 font-medium">{item.desc}</p>
@@ -240,7 +242,7 @@ export default function MenuPage() {
                             <Minus className="w-5 h-5" />
                           </Button>
                           <div className="flex flex-col items-center">
-                            <span className="font-black text-xl">{qty}</span>
+                            <span className="font-black text-xl text-foreground">{qty}</span>
                             <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">In Cart</span>
                           </div>
                           <Button 
@@ -255,9 +257,9 @@ export default function MenuPage() {
                       ) : (
                         <Button 
                           onClick={() => handleAddToCart(item)}
-                          className="w-full gold-gradient text-primary-foreground rounded-2xl py-7 font-black shadow-xl hover:scale-[1.02] active:scale-95 transition-all border-none uppercase tracking-widest flex items-center justify-center gap-2"
+                          className="w-full gold-gradient text-black rounded-2xl py-7 font-black shadow-xl hover:scale-[1.02] active:scale-95 transition-all border-none uppercase tracking-widest flex items-center justify-center gap-2"
                         >
-                          <Plus className="w-5 h-5 text-primary-foreground" />
+                          <Plus className="w-5 h-5" />
                           ADD TO CART
                         </Button>
                       )}
@@ -265,21 +267,26 @@ export default function MenuPage() {
                   </div>
                 </GlassCard>
               )
-            })}
-          </div>
-        ) : (
-          <div className="text-center py-24 space-y-4">
-            <h3 className="text-3xl font-bold text-muted-foreground">No matches found for "{searchQuery}"</h3>
-            <p className="text-primary-foreground gold-gradient px-4 py-1 rounded-lg inline-block font-black">Try exploring another category</p>
-          </div>
-        )}
+            })
+          ) : (
+            Array.from({ length: 8 }).map((_, i) => (
+              <GlassCard key={i} className="flex flex-col h-[500px]" hover={false}>
+                <Skeleton className="h-2/3 w-full" />
+                <div className="p-8 space-y-4">
+                  <Skeleton className="h-8 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-14 w-full rounded-2xl mt-auto" />
+                </div>
+              </GlassCard>
+            ))
+          )}
+        </div>
       </div>
 
-      {/* Sticky Checkout summary */}
       {totalItems > 0 && (
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4 animate-in slide-in-from-bottom-8 duration-500">
           <Link href="/order" className="no-underline group">
-            <GlassCard className="p-4 bg-primary text-primary-foreground border-none shadow-2xl flex items-center justify-between hover:scale-[1.05] transition-transform">
+            <GlassCard className="p-4 bg-primary text-black border-none shadow-2xl flex items-center justify-between hover:scale-[1.05] transition-transform">
                <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-black/10 flex items-center justify-center">
                     <ShoppingCart className="w-6 h-6" />
