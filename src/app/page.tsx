@@ -46,25 +46,27 @@ export default function Home() {
               alt="Slice and Spice Experience" 
               fill 
               priority
-              className="object-cover opacity-40"
+              className="object-cover opacity-60 scale-105 animate-in fade-in zoom-in duration-1000"
               data-ai-hint={heroImage.imageHint}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
+            {/* Cinematic Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-background" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
           </div>
         )}
 
         <div className="relative z-10 max-w-7xl mx-auto text-center space-y-12 py-20">
-          <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-xs md:text-sm font-black tracking-[0.3em] uppercase text-primary mx-auto">
+          <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-xs md:text-sm font-black tracking-[0.3em] uppercase text-primary mx-auto glass backdrop-blur-md border-primary/20 shadow-2xl">
             <Star className="w-4 h-4 fill-primary" />
             The Gold Standard of Fast Food
           </div>
           
           <div className="space-y-6">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[1.1] uppercase animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[1.1] uppercase animate-in fade-in slide-in-from-bottom-8 duration-1000 drop-shadow-2xl">
               CRAVE THE <span className="gold-highlight italic text-primary-foreground">SLICE</span><br />
               LOVE THE <span className="gold-highlight italic text-primary-foreground">SPICE</span>
             </h1>
-            <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium px-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-200">
+            <p className="text-lg md:text-2xl text-white max-w-3xl mx-auto leading-relaxed font-black px-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-200 drop-shadow-lg">
               Experience a premium symphony of artisanal sourdough pizzas and bold exotic spices, crafted for the modern palate.
             </p>
           </div>
@@ -81,8 +83,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="absolute top-1/4 -left-64 w-[50rem] h-[50rem] bg-primary/5 rounded-full blur-[140px]" />
-        <div className="absolute bottom-0 -right-64 w-[50rem] h-[50rem] bg-primary/5 rounded-full blur-[140px]" />
+        {/* Ambient Glows */}
+        <div className="absolute top-1/4 -left-64 w-[50rem] h-[50rem] bg-primary/10 rounded-full blur-[140px]" />
+        <div className="absolute bottom-0 -right-64 w-[50rem] h-[50rem] bg-primary/10 rounded-full blur-[140px]" />
       </section>
 
       {/* Value Propositions */}
