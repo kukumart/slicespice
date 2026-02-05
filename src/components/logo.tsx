@@ -24,8 +24,8 @@ export function Logo({ className, size = "md" }: LogoProps) {
           S
         </span>
         
-        {/* Overlapping & (Black) */}
-        <span className="absolute z-10 text-4xl font-black text-black leading-none group-hover:scale-110 transition-transform duration-700 select-none italic" style={{ fontFamily: 'serif' }}>
+        {/* Overlapping & (White) */}
+        <span className="absolute z-10 text-4xl font-black text-white leading-none group-hover:scale-110 transition-transform duration-700 select-none italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" style={{ fontFamily: 'serif' }}>
           &
         </span>
         
