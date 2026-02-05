@@ -14,32 +14,32 @@ export function Logo({ className, size = "md" }: LogoProps) {
 
   return (
     <div className={cn(
-      "flex flex-col items-center justify-center group pointer-events-auto bg-background/80 backdrop-blur-md p-4 rounded-3xl border border-white/10 shadow-2xl transition-all duration-500 hover:border-primary/30",
+      "flex flex-col items-center justify-center group pointer-events-auto bg-primary p-4 rounded-3xl border border-black/10 shadow-2xl transition-all duration-500 hover:scale-105",
       scales[size], 
       className
     )}>
       <div className="relative h-12 w-24 flex items-center justify-center">
-        {/* Left S (Gold) */}
-        <span className="absolute left-2 text-5xl font-black text-gold leading-none -translate-x-1 group-hover:-translate-x-2 transition-transform duration-700 drop-shadow-[0_4px_10px_rgba(212,175,55,0.3)] select-none italic" style={{ fontFamily: 'serif' }}>
+        {/* Left S (Black) */}
+        <span className="absolute left-2 text-5xl font-black text-black leading-none -translate-x-1 group-hover:-translate-x-2 transition-transform duration-700 drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] select-none italic" style={{ fontFamily: 'serif' }}>
           S
         </span>
         
-        {/* Overlapping & (Silver/White) */}
-        <span className="absolute z-10 text-4xl font-black text-white/90 leading-none group-hover:scale-110 transition-transform duration-700 drop-shadow-[0_2px_5px_rgba(255,255,255,0.4)] select-none italic" style={{ fontFamily: 'serif' }}>
+        {/* Overlapping & (Black) */}
+        <span className="absolute z-10 text-4xl font-black text-black leading-none group-hover:scale-110 transition-transform duration-700 select-none italic" style={{ fontFamily: 'serif' }}>
           &
         </span>
         
-        {/* Right S (Gold) */}
-        <span className="absolute right-2 text-5xl font-black text-gold leading-none translate-x-1 group-hover:translate-x-2 transition-transform duration-700 drop-shadow-[0_4px_10px_rgba(212,175,55,0.3)] select-none italic" style={{ fontFamily: 'serif' }}>
+        {/* Right S (Black) */}
+        <span className="absolute right-2 text-5xl font-black text-black leading-none translate-x-1 group-hover:translate-x-2 transition-transform duration-700 drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] select-none italic" style={{ fontFamily: 'serif' }}>
           S
         </span>
       </div>
       
       <div className="mt-1 relative overflow-hidden px-2">
-        <span className="text-[10px] font-black tracking-[0.4em] text-gold uppercase whitespace-nowrap drop-shadow-md group-hover:tracking-[0.5em] transition-all duration-700">
+        <span className="text-[10px] font-black tracking-[0.4em] text-black uppercase whitespace-nowrap group-hover:tracking-[0.5em] transition-all duration-700">
           SLICE & SPICE
         </span>
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
       </div>
     </div>
   )
