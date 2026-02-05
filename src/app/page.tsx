@@ -46,7 +46,7 @@ export default function Home() {
               alt="Slice and Spice Experience" 
               fill 
               priority
-              className="object-cover opacity-60 scale-105 animate-in fade-in zoom-in duration-1000"
+              className="object-cover opacity-70 scale-105 animate-in fade-in zoom-in duration-1000"
               data-ai-hint={heroImage.imageHint}
             />
             {/* Cinematic Gradient Overlays */}
@@ -72,8 +72,8 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-500">
-            <button className="gold-gradient text-primary-foreground text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black shadow-2xl hover:scale-105 transition-all duration-300 uppercase tracking-widest border-none flex items-center justify-center gap-2 cursor-pointer">
-              <Link href="/menu" className="flex items-center gap-2 no-underline text-primary-foreground">
+            <button className="gold-gradient text-primary-foreground text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black shadow-2xl hover:scale-105 transition-all duration-300 uppercase tracking-widest border-none flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden group">
+              <Link href="/menu" className="flex items-center gap-2 no-underline text-primary-foreground relative z-10">
                 Order Now <ArrowRight className="w-5 h-5 text-primary-foreground" />
               </Link>
             </button>

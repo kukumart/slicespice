@@ -66,15 +66,19 @@
 }
 
 .gold-gradient {
-  background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #FFD700 100%);
+  background: linear-gradient(135deg, #FFD700 0%, #FFFACD 25%, #D4AF37 50%, #FFFACD 75%, #FFD700 100%);
 }
 
 .gold-highlight {
   @apply gold-gradient text-primary-foreground px-4 py-1 rounded-xl inline-block shadow-lg shadow-primary/10 font-bold;
+  background-size: 200% auto;
+  animation: highlight-shimmer 3s linear infinite;
 }
 
 .text-gold {
   @apply bg-clip-text text-transparent gold-gradient;
+  background-size: 200% auto;
+  animation: highlight-shimmer 3s linear infinite;
 }
 
 .gold-glow {
@@ -93,8 +97,7 @@
 
 @keyframes highlight-shimmer {
   0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 .animate-float {
@@ -102,6 +105,6 @@
 }
 
 .animate-masterpiece {
-  animation: float 4s ease-in-out infinite, highlight-shimmer 3s ease infinite;
+  animation: float 4s ease-in-out infinite, highlight-shimmer 3s linear infinite;
   background-size: 200% 200%;
 }
