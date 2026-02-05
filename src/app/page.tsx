@@ -3,7 +3,7 @@ import { GlassCard } from "@/components/glass-card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
-import { Truck, Clock, ShieldCheck, ChevronRight, Star, ArrowRight, Share2 } from "lucide-react"
+import { Truck, Clock, ShieldCheck, ChevronRight, Star, ArrowRight, Share2, Sparkles } from "lucide-react"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
 import { ShareDialog } from "@/components/share-dialog"
 
@@ -17,17 +17,17 @@ export default function Home() {
 
   const features = [
     { 
-      icon: <Clock className="w-6 h-6 text-primary-foreground" />, 
+      icon: <Clock className="w-8 h-8 text-primary-foreground" />, 
       title: "30 Min Delivery", 
       desc: "Freshness guaranteed at your doorstep within thirty minutes." 
     },
     { 
-      icon: <ShieldCheck className="w-6 h-6 text-primary-foreground" />, 
+      icon: <ShieldCheck className="w-8 h-8 text-primary-foreground" />, 
       title: "Quality First", 
       desc: "Only premium, organic ingredients sourced from local farms." 
     },
     { 
-      icon: <Truck className="w-6 h-6 text-primary-foreground" />, 
+      icon: <Truck className="w-8 h-8 text-primary-foreground" />, 
       title: "Eco-Delivery", 
       desc: "Carbon-neutral delivery in 100% biodegradable packaging." 
     },
@@ -46,60 +46,62 @@ export default function Home() {
               alt="Slice and Spice Experience" 
               fill 
               priority
-              className="object-cover opacity-70 scale-105 animate-in fade-in zoom-in duration-1000"
+              className="object-cover opacity-60 scale-105 animate-in fade-in zoom-in duration-[2000ms]"
               data-ai-hint={heroImage.imageHint}
             />
             {/* Cinematic Gradient Overlays */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-background" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-transparent to-background" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
+            <div className="absolute inset-0 bg-black/20" />
           </div>
         )}
 
-        <div className="relative z-10 max-w-7xl mx-auto text-center space-y-12 py-20">
-          <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-xs md:text-sm font-black tracking-[0.3em] uppercase text-primary mx-auto glass backdrop-blur-md border-primary/20 shadow-2xl">
-            <Star className="w-4 h-4 fill-primary" />
-            The Gold Standard of Fast Food
+        <div className="relative z-10 max-w-7xl mx-auto text-center space-y-16 py-20 px-4">
+          <div className="inline-flex items-center gap-3 px-8 py-3 rounded-full text-sm font-black tracking-[0.4em] uppercase text-primary mx-auto glass backdrop-blur-2xl border-primary/30 shadow-[0_0_50px_rgba(255,215,0,0.15)] animate-in fade-in slide-in-from-top-4 duration-1000">
+            <Star className="w-5 h-5 fill-primary" />
+            The Gold Standard Experience
           </div>
           
-          <div className="space-y-6">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[1.1] uppercase animate-in fade-in slide-in-from-bottom-8 duration-1000 drop-shadow-2xl">
-              CRAVE THE <span className="gold-highlight italic text-primary-foreground">SLICE</span><br />
-              LOVE THE <span className="gold-highlight italic text-primary-foreground">SPICE</span>
+          <div className="space-y-8">
+            <h1 className="text-7xl md:text-9xl lg:text-[11rem] font-black tracking-tighter leading-[0.85] uppercase animate-in fade-in slide-in-from-bottom-12 duration-1000 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              CRAVE THE <span className="gold-highlight italic text-primary-foreground px-8 py-2">SLICE</span><br />
+              LOVE THE <span className="gold-highlight italic text-primary-foreground px-8 py-2">SPICE</span>
             </h1>
-            <p className="text-lg md:text-2xl text-white max-w-3xl mx-auto leading-relaxed font-black px-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-200 drop-shadow-lg">
-              Experience a premium symphony of artisanal sourdough pizzas and bold exotic spices, crafted for the modern palate.
+            <p className="text-xl md:text-3xl text-white/90 max-w-4xl mx-auto leading-relaxed font-black animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-300 drop-shadow-2xl uppercase tracking-tight">
+              A premium symphony of artisanal sourdough pizzas and bold exotic spices, crafted for the modern foodie.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-500">
-            <button className="gold-gradient text-primary-foreground text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black shadow-2xl hover:scale-105 transition-all duration-300 uppercase tracking-widest border-none flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden group">
-              <Link href="/menu" className="flex items-center gap-2 no-underline text-primary-foreground relative z-10">
-                Order Now <ArrowRight className="w-5 h-5 text-primary-foreground" />
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-10 animate-in fade-in slide-in-from-bottom-20 duration-1000 delay-600">
+            <button className="gold-gradient text-primary-foreground text-xl px-16 py-10 rounded-[2.5rem] w-full sm:w-auto font-black shadow-[0_30px_70px_rgba(255,215,0,0.3)] hover:scale-110 active:scale-95 transition-all duration-500 uppercase tracking-widest border-none flex items-center justify-center gap-3 cursor-pointer group">
+              <Link href="/menu" className="flex items-center gap-3 no-underline text-primary-foreground">
+                START SELECTION <ArrowRight className="w-7 h-7 text-primary-foreground group-hover:translate-x-2 transition-transform duration-500" />
               </Link>
             </button>
-            <Button asChild variant="outline" size="lg" className="glass border-white/20 text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-bold hover:bg-white/10 transition-all text-white backdrop-blur-md uppercase tracking-widest">
-              <Link href="/about">Our Philosophy</Link>
+            <Button asChild variant="outline" size="lg" className="glass border-white/30 text-xl px-16 py-10 rounded-[2.5rem] w-full sm:w-auto font-black hover:bg-white/10 transition-all text-white backdrop-blur-2xl uppercase tracking-widest hover:border-white/50">
+              <Link href="/about">PHILOSOPHY</Link>
             </Button>
           </div>
         </div>
 
-        {/* Ambient Glows */}
-        <div className="absolute top-1/4 -left-64 w-[50rem] h-[50rem] bg-primary/10 rounded-full blur-[140px]" />
-        <div className="absolute bottom-0 -right-64 w-[50rem] h-[50rem] bg-primary/10 rounded-full blur-[140px]" />
+        {/* Ambient Premium Glows */}
+        <div className="absolute top-1/3 -left-96 w-[60rem] h-[60rem] bg-primary/20 rounded-full blur-[180px] opacity-30 animate-pulse" />
+        <div className="absolute bottom-0 -right-96 w-[60rem] h-[60rem] bg-primary/20 rounded-full blur-[180px] opacity-30 animate-pulse" />
       </section>
 
       {/* Value Propositions */}
-      <section className="py-24 px-4 bg-background">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="py-32 px-4 bg-background relative overflow-hidden">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {features.map((f, i) => (
-              <GlassCard key={i} className="p-12 flex flex-col items-center text-center gap-6 h-full border-white/5 hover:border-primary/30">
-                <div className="w-16 h-16 rounded-2xl gold-gradient flex items-center justify-center text-primary-foreground shadow-lg">
+              <GlassCard key={i} className="p-16 flex flex-col items-center text-center gap-10">
+                <div className="w-24 h-24 rounded-3xl gold-gradient flex items-center justify-center text-primary-foreground shadow-2xl rotate-3 group-hover:rotate-12 transition-transform duration-700">
                   {f.icon}
                 </div>
-                <div className="space-y-3">
-                  <h3 className="text-2xl font-black tracking-tight uppercase">{f.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm font-medium">{f.desc}</p>
+                <div className="space-y-4">
+                  <h3 className="text-3xl font-black tracking-tight uppercase">{f.title}</h3>
+                  <div className="h-1 w-12 gold-gradient mx-auto rounded-full group-hover:w-24 transition-all duration-700" />
+                  <p className="text-muted-foreground leading-relaxed text-sm font-medium uppercase tracking-widest opacity-80 pt-4">{f.desc}</p>
                 </div>
               </GlassCard>
             ))}
@@ -108,35 +110,39 @@ export default function Home() {
       </section>
 
       {/* Featured Items Section */}
-      <section className="py-32 px-4 bg-background">
-        <div className="max-w-7xl mx-auto space-y-16">
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-               <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase">Trending <span className="gold-highlight italic animate-masterpiece text-primary-foreground">Masterpieces</span></h2>
-               <Link href="/menu" className="hidden md:flex items-center gap-2 text-gold font-black uppercase tracking-widest text-sm hover:underline">
-                  Full Menu <ChevronRight className="w-4 h-4 text-gold" />
-               </Link>
+      <section className="py-40 px-4 bg-background border-y border-white/5">
+        <div className="max-w-7xl mx-auto space-y-24">
+          <div className="space-y-10 text-center md:text-left relative">
+            <div className="space-y-4">
+              <p className="text-gold font-black uppercase tracking-[0.5em] text-xs">Curated Selection</p>
+              <h2 className="text-6xl md:text-9xl font-black tracking-tighter uppercase leading-[0.9]">Trending <span className="gold-highlight italic animate-masterpiece text-primary-foreground">Masterpieces</span></h2>
             </div>
-            <div className="h-2 w-48 gold-gradient rounded-full" />
-            <p className="text-muted-foreground text-lg max-w-2xl font-medium">Discover our most requested creations this season.</p>
+            <p className="text-muted-foreground text-xl md:text-2xl max-w-3xl font-medium">Discover our most requested culinary creations this season.</p>
+            <div className="absolute top-0 right-0 hidden lg:block opacity-5 pointer-events-none">
+              <Sparkles className="w-96 h-96 text-gold" />
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
             {featuredItems.map((item, i) => (
               <Link href="/menu" key={i} className="group block">
-                <GlassCard className="aspect-[16/10] overflow-hidden rounded-[2.5rem]">
+                <GlassCard className="aspect-[16/10] rounded-[3.5rem] overflow-hidden">
                   <Image 
                     src={item.imageUrl!} 
                     alt={item.description!} 
                     fill 
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="object-cover group-hover:scale-110 transition-transform duration-[2000ms]"
                     data-ai-hint={item.imageHint}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                  <div className="absolute bottom-8 left-8 right-8">
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gold mb-2">Signature Series</p>
-                    <h3 className="text-3xl font-black text-white uppercase tracking-tight">{item.label}</h3>
-                    <div className="h-1 w-12 gold-gradient mt-2 group-hover:w-24 transition-all duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-700" />
+                  <div className="absolute bottom-12 left-12 right-12 space-y-4">
+                    <p className="text-[10px] font-black uppercase tracking-[0.5em] text-gold">Elite Signature Series</p>
+                    <div className="flex justify-between items-end gap-6">
+                      <h3 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none">{item.label}</h3>
+                      <div className="w-16 h-16 rounded-full glass flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all duration-700">
+                        <ArrowRight className="w-8 h-8" />
+                      </div>
+                    </div>
                   </div>
                 </GlassCard>
               </Link>
@@ -146,43 +152,43 @@ export default function Home() {
       </section>
 
       {/* Sharing Section */}
-      <section className="py-32 px-4 bg-background">
-        <div className="max-w-5xl mx-auto">
-          <GlassCard className="p-12 md:p-20 text-center space-y-10 border-primary/10 overflow-hidden group/share">
-            <div className="absolute top-0 right-0 p-12 opacity-5 group-hover/share:opacity-10 transition-opacity">
-              <Share2 className="w-64 h-64 text-gold" />
+      <section className="py-40 px-4 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <GlassCard className="p-16 md:p-32 text-center space-y-16 border-primary/20 bg-primary/5 overflow-hidden group/share">
+            <div className="absolute top-0 right-0 p-20 opacity-5 group-hover/share:opacity-10 transition-opacity duration-1000 rotate-12">
+              <Share2 className="w-[30rem] h-[30rem] text-gold" />
             </div>
-            <div className="space-y-4 relative z-10">
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">Share the <span className="gold-highlight italic text-primary-foreground">Spice</span></h2>
-              <p className="text-muted-foreground text-lg max-w-xl mx-auto font-medium">
-                Spread the gold standard with your inner circle. Scan or share the link to invite friends to the Slice & Spice experience.
+            <div className="space-y-8 relative z-10">
+              <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9]">Share the <span className="gold-highlight italic text-primary-foreground">Spice</span></h2>
+              <p className="text-muted-foreground text-xl md:text-2xl max-w-2xl mx-auto font-medium uppercase tracking-tight opacity-80">
+                Invite your inner circle to the gold standard of fast food.
               </p>
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-12 relative z-10">
-               <div className="p-4 bg-white rounded-[2.5rem] shadow-2xl shadow-primary/20 rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-16 relative z-10">
+               <div className="p-8 bg-white rounded-[3rem] shadow-[0_40px_100px_rgba(255,215,0,0.25)] rotate-[-4deg] hover:rotate-0 transition-all duration-700 hover:scale-105">
                   <ShareDialog trigger={
                     <div className="cursor-pointer">
                        <Image 
-                        src="https://picsum.photos/seed/share-qr/200/200" 
+                        src="https://picsum.photos/seed/share-qr/250/250" 
                         alt="Scan to share" 
-                        width={200} 
-                        height={200}
-                        className="rounded-2xl"
+                        width={250} 
+                        height={250}
+                        className="rounded-[2rem]"
                         data-ai-hint="qr code"
                        />
-                       <p className="text-[10px] font-black uppercase tracking-widest text-black mt-3">Scan to experience</p>
+                       <p className="text-[10px] font-black uppercase tracking-[0.4em] text-black mt-6 opacity-60">Scan to initiate</p>
                     </div>
                   } />
                </div>
-               <div className="space-y-6 text-center md:text-left">
-                  <div className="space-y-2">
-                    <p className="font-black uppercase tracking-widest text-xs text-gold">Invite Friends</p>
-                    <p className="text-muted-foreground text-sm font-medium">Get rewards for every new masterpiece lover you bring to the circle.</p>
+               <div className="space-y-10 text-center md:text-left max-w-sm">
+                  <div className="space-y-4">
+                    <p className="font-black uppercase tracking-[0.5em] text-sm text-gold">Elite Referrals</p>
+                    <p className="text-muted-foreground text-lg font-medium leading-relaxed">Unlock artisanal rewards for every new masterpiece lover you bring to the circle.</p>
                   </div>
                   <ShareDialog trigger={
-                    <Button className="gold-gradient text-primary-foreground px-10 py-8 rounded-2xl font-black uppercase tracking-widest shadow-xl hover:scale-105 transition-all border-none">
-                      <Share2 className="w-5 h-5 mr-3 text-primary-foreground" />
-                      Generate Share Link
+                    <Button className="gold-gradient text-primary-foreground px-12 py-10 rounded-[2rem] font-black uppercase tracking-[0.2em] shadow-2xl hover:scale-110 transition-all border-none text-xs">
+                      <Share2 className="w-6 h-6 mr-4 text-primary-foreground" />
+                      Generate Invite Link
                     </Button>
                   } />
                </div>
@@ -192,73 +198,74 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 px-4 bg-background border-t border-white/5">
-        <div className="max-w-4xl mx-auto text-center space-y-10">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">Ready for a <span className="gold-highlight italic text-primary-foreground">Premium</span> Taste?</h2>
-          <p className="text-muted-foreground text-xl max-w-2xl mx-auto font-medium leading-relaxed">
-            Join the elite circle of food lovers who refuse to compromise. Order now and experience the S&S difference.
+      <section className="py-40 px-4 bg-background relative border-t border-white/5">
+        <div className="max-w-5xl mx-auto text-center space-y-16">
+          <div className="space-y-4">
+            <h2 className="text-6xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85]">Ready for the <span className="gold-highlight italic text-primary-foreground">Peak?</span></h2>
+          </div>
+          <p className="text-muted-foreground text-2xl md:text-3xl max-w-3xl mx-auto font-medium leading-relaxed uppercase tracking-tight opacity-90">
+            Join the elite circle of food lovers who refuse to compromise. Your masterpiece is waiting.
           </p>
-          <button className="gold-gradient text-primary-foreground px-16 py-10 rounded-2xl text-xl font-black shadow-2xl hover:scale-105 transition-all uppercase tracking-widest border-none cursor-pointer">
-            <Link href="/menu" className="no-underline text-primary-foreground">START YOUR ORDER</Link>
+          <button className="gold-gradient text-primary-foreground px-20 py-12 rounded-[3rem] text-2xl font-black shadow-[0_40px_100px_rgba(255,215,0,0.3)] hover:scale-110 transition-all uppercase tracking-widest border-none cursor-pointer group">
+            <Link href="/menu" className="no-underline text-primary-foreground flex items-center gap-4">
+              START ORDER <ArrowRight className="w-8 h-8 group-hover:translate-x-3 transition-transform duration-500" />
+            </Link>
           </button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-24 px-4 bg-black border-t border-white/5">
+      <footer className="py-32 px-4 bg-black border-t border-white/10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
-            <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center font-black text-primary-foreground text-xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-32">
+            <div className="space-y-10">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center font-black text-primary-foreground text-3xl shadow-2xl">
                   S&S
                 </div>
-                <span className="font-black text-2xl tracking-tighter uppercase text-foreground">
-                  <span className="bg-primary text-primary-foreground px-2 py-0.5 rounded-lg mr-1 inline-block">SLICE</span>&SPICE
+                <span className="font-black text-3xl tracking-tighter uppercase text-white">
+                  SLICE<span className="text-gold">&</span>SPICE
                 </span>
               </div>
-              <p className="text-muted-foreground text-sm font-medium leading-relaxed">
-                Defining the new standard of premium fast food through artisanal precision and bold flavor innovation.
+              <p className="text-muted-foreground text-lg font-medium leading-relaxed opacity-70">
+                The global benchmark for premium fast food. Artisanal precision meets bold, ground-breaking flavor innovation.
               </p>
             </div>
             
-            <div className="space-y-6">
-              <h4 className="font-black uppercase tracking-[0.2em] text-xs text-gold">Curation</h4>
-              <div className="h-px w-full bg-white/10" />
-              <ul className="space-y-4 text-sm font-bold uppercase tracking-widest text-muted-foreground">
-                <li><Link href="/menu" className="hover:text-primary transition-colors">Menu</Link></li>
-                <li><Link href="/about" className="hover:text-primary transition-colors">About</Link></li>
-                <li><Link href="/location" className="hover:text-primary transition-colors">Location</Link></li>
+            <div className="space-y-10">
+              <h4 className="font-black uppercase tracking-[0.4em] text-xs text-gold">Curation</h4>
+              <ul className="space-y-6 text-sm font-black uppercase tracking-[0.2em] text-muted-foreground">
+                <li><Link href="/menu" className="hover:text-gold transition-colors">Menu Stream</Link></li>
+                <li><Link href="/about" className="hover:text-gold transition-colors">Our Ethos</Link></li>
+                <li><Link href="/location" className="hover:text-gold transition-colors">Hub Locator</Link></li>
               </ul>
             </div>
 
-            <div className="space-y-6">
-              <h4 className="font-black uppercase tracking-[0.2em] text-xs text-gold">Company</h4>
-              <div className="h-px w-full bg-white/10" />
-              <ul className="space-y-4 text-sm font-bold uppercase tracking-widest text-muted-foreground">
-                <li><Link href="#" className="hover:text-primary transition-colors">Philosophy</Link></li>
-                <li><Link href="#" className="hover:text-primary transition-colors">Sustainability</Link></li>
-                <li><Link href="#" className="hover:text-primary transition-colors">Privacy</Link></li>
+            <div className="space-y-10">
+              <h4 className="font-black uppercase tracking-[0.4em] text-xs text-gold">Corporate</h4>
+              <ul className="space-y-6 text-sm font-black uppercase tracking-[0.2em] text-muted-foreground">
+                <li><Link href="#" className="hover:text-gold transition-colors">Franchise Inquiry</Link></li>
+                <li><Link href="#" className="hover:text-gold transition-colors">Sustainability</Link></li>
+                <li><Link href="#" className="hover:text-gold transition-colors">Privacy Protocols</Link></li>
               </ul>
             </div>
 
-            <div className="space-y-6">
-              <h4 className="font-black uppercase tracking-[0.2em] text-xs text-gold">Newsletter</h4>
-              <div className="h-px w-full bg-white/10" />
-              <div className="flex gap-2">
+            <div className="space-y-10">
+              <h4 className="font-black uppercase tracking-[0.4em] text-xs text-gold">Elite News</h4>
+              <div className="flex flex-col gap-4">
                 <input 
                   type="email" 
-                  placeholder="Your Email" 
-                  className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 w-full text-sm outline-none focus:border-primary/50 text-white" 
+                  placeholder="Official Email Address" 
+                  className="bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-sm outline-none focus:border-gold/50 text-white transition-all font-bold" 
                 />
-                <button className="gold-gradient text-primary-foreground px-6 rounded-xl font-black uppercase text-xs border-none cursor-pointer">Join</button>
+                <button className="gold-gradient text-primary-foreground py-5 rounded-2xl font-black uppercase text-xs border-none cursor-pointer hover:opacity-90 transition-opacity">JOIN CIRCLE</button>
               </div>
             </div>
           </div>
           
-          <div className="text-center pt-12 border-t border-white/5">
-            <p className="text-muted-foreground text-[10px] tracking-[0.3em] font-black uppercase">
-              © 2024 SLICE & SPICE RESTAURANT GROUP. ALL RIGHTS RESERVED.
+          <div className="text-center pt-20 border-t border-white/10">
+            <p className="text-muted-foreground text-[10px] tracking-[0.5em] font-black uppercase opacity-40">
+              © 2024 SLICE & SPICE RESTAURANT GROUP. DEFINING THE GOLD STANDARD.
             </p>
           </div>
         </div>

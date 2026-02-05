@@ -100,6 +100,11 @@
   100% { background-position: 200% 50%; }
 }
 
+@keyframes slow-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -107,4 +112,13 @@
 .animate-masterpiece {
   animation: float 4s ease-in-out infinite, highlight-shimmer 3s linear infinite;
   background-size: 200% 200%;
+}
+
+.animate-shimmer-gold {
+  background-size: 200% 100%;
+  animation: slow-shimmer 8s linear infinite;
+}
+
+.inner-gold-glow {
+  box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.05);
 }
