@@ -1,22 +1,25 @@
+
 'use server';
 /**
  * @fileOverview AI Food Recommendation Flow for Slice & Spice.
  * 
  * This flow takes user preferences and suggests the best items from the Slice & Spice menu.
- * Includes retry logic to handle transient API quota or rate limit errors.
+ * Enhanced with personalization context and "Chef's Note" output.
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const RecommendFoodInputSchema = z.object({
-  preference: z.string().describe('User preference, e.g., "something spicy", "healthy lunch", "party for 4"'),
+  preference: z.string().describe('User preference, e.g., "something spicy", "healthy lunch"'),
+  userName: z.string().optional().describe('The name of the user for personalization'),
 });
 
 const RecommendFoodOutputSchema = z.object({
   recommendations: z.array(z.object({
     itemId: z.number(),
     reason: z.string().describe('Why this item fits the preference'),
+    chefsNote: z.string().describe('A premium insight from the head chef about this item'),
   })),
   pairingTip: z.string().describe('A suggestion for a drink or spice pairing'),
 });
@@ -28,7 +31,7 @@ const prompt = ai.definePrompt({
   name: 'recommendFoodPrompt',
   input: { schema: RecommendFoodInputSchema },
   output: { schema: RecommendFoodOutputSchema },
-  prompt: `You are the Slice & Spice Taste Assistant. Your goal is to help users find the perfect meal.
+  prompt: `You are the Slice & Spice Head Taste Curator. Your goal is to guide {{#if userName}}{{userName}}{{else}}our guest{{/if}} to the perfect meal masterpiece.
   
   Current Menu Items:
   1. Classic Margherita (Pizza) - $14.99: Fresh basil, buffalo mozzarella.
@@ -42,7 +45,7 @@ const prompt = ai.definePrompt({
 
   User Preference: {{{preference}}}
 
-  Provide 2 recommendations from the menu and a specific pairing tip that highlights our bold flavors. Be enthusiastic and premium in your tone.`,
+  Provide 2 curated recommendations. For each, include a "chefsNote" that explains a technical culinary detail (e.g., about the sourdough fermentation or the truffle oil source). Be sophisticated, authoritative, and welcoming.`,
 });
 
 /**

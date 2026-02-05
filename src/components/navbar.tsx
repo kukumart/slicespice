@@ -1,7 +1,8 @@
+
 "use client"
 
 import Link from "next/link"
-import { ShoppingCart, Menu, X, MapPin, Info, Utensils, User, LogOut, LayoutDashboard } from "lucide-react"
+import { ShoppingCart, Menu, X, MapPin, Info, Utensils, User, LogOut, LayoutDashboard, Settings } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -84,17 +85,27 @@ export function Navbar() {
                     <User className="w-6 h-6 text-gold" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="glass-dark border-white/10 w-56" align="end">
-                  <DropdownMenuLabel className="font-black uppercase tracking-widest text-[10px] text-muted-foreground">My Account</DropdownMenuLabel>
+                <DropdownMenuContent className="glass-dark border-white/10 w-64" align="end">
+                  <DropdownMenuLabel className="font-black uppercase tracking-widest text-[10px] text-muted-foreground p-4">Member Identity</DropdownMenuLabel>
+                  <div className="px-4 pb-4">
+                    <p className="text-xs font-black truncate text-foreground">{user.email || 'Anonymous Member'}</p>
+                    <p className="text-[8px] font-black uppercase tracking-[0.2em] text-gold mt-1">Gold Standard Profile</p>
+                  </div>
                   <DropdownMenuSeparator className="bg-white/5" />
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile" className="cursor-pointer font-bold flex items-center gap-2 py-4 px-4 hover:bg-white/5">
+                      <Settings className="w-4 h-4 text-gold" /> My Selection Vault
+                    </Link>
+                  </DropdownMenuItem>
                   {isAdmin && (
                     <DropdownMenuItem asChild>
-                      <Link href="/admin/dashboard" className="cursor-pointer font-bold flex items-center gap-2 py-3">
-                        <LayoutDashboard className="w-4 h-4 text-gold" /> Admin Dashboard
+                      <Link href="/admin/dashboard" className="cursor-pointer font-bold flex items-center gap-2 py-4 px-4 hover:bg-white/5">
+                        <LayoutDashboard className="w-4 h-4 text-gold" /> Admin Command Center
                       </Link>
                     </DropdownMenuItem>
                   )}
-                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer font-bold text-destructive hover:text-destructive flex items-center gap-2 py-3">
+                  <DropdownMenuSeparator className="bg-white/5" />
+                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer font-bold text-destructive hover:text-destructive flex items-center gap-2 py-4 px-4">
                     <LogOut className="w-4 h-4" /> Sign Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -153,6 +164,16 @@ export function Navbar() {
               {link.name}
             </Link>
           ))}
+          {user && (
+             <Link 
+              href="/profile" 
+              className="text-2xl font-black uppercase tracking-tighter hover:text-gold flex items-center group no-underline text-foreground"
+              onClick={() => setIsOpen(false)}
+            >
+              <span className="w-2 h-2 rounded-full gold-gradient mr-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              My Vault
+            </Link>
+          )}
           <div className="h-px bg-white/5 my-2" />
           <div className="grid grid-cols-2 gap-4">
             {user ? (
