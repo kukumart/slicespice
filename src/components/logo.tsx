@@ -13,7 +13,11 @@ export function Logo({ className, size = "md" }: LogoProps) {
   }
 
   return (
-    <div className={cn("flex flex-col items-center justify-center group pointer-events-auto", scales[size], className)}>
+    <div className={cn(
+      "flex flex-col items-center justify-center group pointer-events-auto bg-background/80 backdrop-blur-md p-4 rounded-3xl border border-white/10 shadow-2xl transition-all duration-500 hover:border-primary/30",
+      scales[size], 
+      className
+    )}>
       <div className="relative h-12 w-24 flex items-center justify-center">
         {/* Left S (Gold) */}
         <span className="absolute left-2 text-5xl font-black text-gold leading-none -translate-x-1 group-hover:-translate-x-2 transition-transform duration-700 drop-shadow-[0_4px_10px_rgba(212,175,55,0.3)] select-none italic" style={{ fontFamily: 'serif' }}>
