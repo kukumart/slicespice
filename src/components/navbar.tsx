@@ -35,8 +35,8 @@ export function Navbar() {
           <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center font-black text-primary-foreground text-2xl shadow-lg group-hover:rotate-12 transition-transform">
             S&S
           </div>
-          <span className="font-headline font-black text-2xl tracking-tighter hidden sm:block">
-            <span className="text-gold">SLICE</span>&SPICE
+          <span className="font-headline font-black text-2xl tracking-tighter hidden sm:block text-foreground">
+            <span className="bg-primary text-primary-foreground px-2 py-0.5 rounded-lg mr-1 inline-block">SLICE</span>&SPICE
           </span>
         </Link>
 

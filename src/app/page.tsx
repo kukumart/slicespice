@@ -165,8 +165,8 @@ export default function Home() {
                 <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center font-black text-primary-foreground text-xl">
                   S&S
                 </div>
-                <span className="font-black text-2xl tracking-tighter uppercase">
-                  <span className="text-gold">SLICE</span>&SPICE
+                <span className="font-black text-2xl tracking-tighter uppercase text-foreground">
+                  <span className="bg-primary text-primary-foreground px-2 py-0.5 rounded-lg mr-1 inline-block">SLICE</span>&SPICE
                 </span>
               </div>
               <p className="text-muted-foreground text-sm font-medium leading-relaxed">
