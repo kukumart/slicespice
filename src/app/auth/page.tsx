@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from "react"
@@ -42,9 +41,9 @@ export default function AuthPage() {
 
     try {
       if (isLogin) {
-        initiateEmailSignIn(auth, email, password)
+        await initiateEmailSignIn(auth, email, password)
       } else {
-        initiateEmailSignUp(auth, email, password)
+        await initiateEmailSignUp(auth, email, password)
       }
     } catch (error: any) {
       toast({
@@ -52,34 +51,40 @@ export default function AuthPage() {
         title: "Auth Error",
         description: error.message,
       })
+    } finally {
       setIsLoading(false)
     }
   }
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true)
     try {
-      initiateGoogleSignIn(auth)
+      await initiateGoogleSignIn(auth)
     } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Google Auth Error",
-        description: error.message,
-      })
+      // Gracefully handle user cancellation
+      if (error.code !== 'auth/popup-closed-by-user') {
+        toast({
+          variant: "destructive",
+          title: "Google Auth Error",
+          description: error.message,
+        })
+      }
+    } finally {
       setIsGoogleLoading(false)
     }
   }
 
-  const handleGuestSignIn = () => {
+  const handleGuestSignIn = async () => {
     setIsGuestLoading(true)
     try {
-      initiateAnonymousSignIn(auth)
+      await initiateAnonymousSignIn(auth)
     } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Guest Access Error",
         description: error.message,
       })
+    } finally {
       setIsGuestLoading(false)
     }
   }
@@ -114,7 +119,7 @@ export default function AuthPage() {
             <div className="grid grid-cols-1 gap-4">
               <Button 
                 onClick={handleGoogleSignIn}
-                disabled={isGoogleLoading || isGuestLoading}
+                disabled={isGoogleLoading || isGuestLoading || isLoading}
                 className="w-full glass h-14 rounded-2xl font-black text-xs border-white/10 uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-3"
               >
                 {isGoogleLoading ? (
@@ -134,7 +139,7 @@ export default function AuthPage() {
 
               <Button 
                 onClick={handleGuestSignIn}
-                disabled={isGoogleLoading || isGuestLoading}
+                disabled={isGoogleLoading || isGuestLoading || isLoading}
                 className="w-full glass h-14 rounded-2xl font-black text-xs border-white/10 uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-3"
               >
                 {isGuestLoading ? (
@@ -180,7 +185,7 @@ export default function AuthPage() {
 
               <Button 
                 type="submit" 
-                disabled={isLoading}
+                disabled={isLoading || isGoogleLoading || isGuestLoading}
                 className="w-full gold-gradient text-primary-foreground h-16 rounded-2xl font-black text-lg border-none uppercase tracking-widest shadow-xl hover:scale-[1.02] transition-all"
               >
                 {isLoading ? (
