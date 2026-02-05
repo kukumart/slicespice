@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/navbar"
 import { GlassCard } from "@/components/glass-card"
-import { MapPin, Phone, Mail, Clock, Navigation, Star } from "lucide-react"
+import { MapPin, Phone, Clock, Navigation, Star } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 
@@ -40,14 +40,13 @@ export default function LocationPage() {
           <Badge className="bg-primary text-primary-foreground font-black px-4 py-1 rounded-lg uppercase tracking-widest mb-4">
             Our Network
           </Badge>
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase">FIND A <span className="gold-highlight">HUB</span></h1>
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase">FIND A <span className="gold-highlight text-primary-foreground">HUB</span></h1>
           <p className="text-muted-foreground text-xl max-w-2xl mx-auto font-medium">
             Visit our flagship restaurant at Waris Mall or discover our specialized express hubs across Nairobi.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* Sidebar: Hub List */}
           <div className="lg:col-span-4 space-y-6">
             <h2 className="text-2xl font-black uppercase tracking-tight flex items-center gap-3">
               <Star className="w-6 h-6 text-gold fill-gold" />
@@ -85,7 +84,7 @@ export default function LocationPage() {
             <GlassCard className="p-8 bg-primary/5 border-primary/20">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full gold-gradient flex items-center justify-center text-primary-foreground shadow-lg">
-                  <Phone className="w-6 h-6" />
+                  <Phone className="w-6 h-6 text-primary-foreground" />
                 </div>
                 <div>
                   <h4 className="font-black uppercase text-xs tracking-widest text-gold">Priority Line</h4>
@@ -95,10 +94,8 @@ export default function LocationPage() {
             </GlassCard>
           </div>
 
-          {/* Main Content: Interactive Map Placeholder */}
           <div className="lg:col-span-8">
             <div className="relative h-[600px] md:h-[700px] rounded-[3rem] overflow-hidden glass group">
-              {/* Map UI Overlay Controls */}
               <div className="absolute top-8 right-8 z-30 flex flex-col gap-2">
                 <Link 
                   href={flagship.mapUrl}
@@ -114,12 +111,10 @@ export default function LocationPage() {
                 </div>
               </div>
 
-              {/* Map Canvas Placeholder */}
               <div className="absolute inset-0 bg-[#0a0a0a] overflow-hidden">
                 <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]" />
                 <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/nairobi-map/1200/800')] opacity-20 grayscale pointer-events-none mix-blend-luminosity" />
                 
-                {/* Flagship Marker */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                    <div className="relative">
                       <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping scale-150" />
@@ -133,7 +128,6 @@ export default function LocationPage() {
                 </div>
               </div>
 
-              {/* Bottom Info Bar */}
               <div className="absolute bottom-8 left-8 right-8 z-30">
                 <GlassCard className="p-6 bg-black/60 backdrop-blur-3xl border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
                   <div className="flex items-center gap-4">

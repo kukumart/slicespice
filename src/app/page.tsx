@@ -12,21 +12,21 @@ export default function Home() {
   const featuredItems = [
     { ...PlaceHolderImages.find(img => img.id === "pizza-margherita"), label: "Classic Pizza Margherita" },
     { ...PlaceHolderImages.find(img => img.id === "burger-beef"), label: "Juicy Classic Beef Burger" },
-  ].filter(img => img.id)
+  ].filter(img => !!img.id)
 
   const features = [
     { 
-      icon: <Clock className="w-6 h-6" />, 
+      icon: <Clock className="w-6 h-6 text-primary-foreground" />, 
       title: "30 Min Delivery", 
       desc: "Freshness guaranteed at your doorstep within thirty minutes." 
     },
     { 
-      icon: <ShieldCheck className="w-6 h-6" />, 
+      icon: <ShieldCheck className="w-6 h-6 text-primary-foreground" />, 
       title: "Quality First", 
       desc: "Only premium, organic ingredients sourced from local farms." 
     },
     { 
-      icon: <Truck className="w-6 h-6" />, 
+      icon: <Truck className="w-6 h-6 text-primary-foreground" />, 
       title: "Eco-Delivery", 
       desc: "Carbon-neutral delivery in 100% biodegradable packaging." 
     },
@@ -38,7 +38,6 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 overflow-hidden">
-        {/* Background Image with Premium Overlay */}
         {heroImage && (
           <div className="absolute inset-0 z-0">
             <Image 
@@ -46,10 +45,10 @@ export default function Home() {
               alt="Slice and Spice Experience" 
               fill 
               priority
-              className="object-cover opacity-60"
+              className="object-cover opacity-40"
               data-ai-hint={heroImage.imageHint}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
           </div>
         )}
 
@@ -61,8 +60,8 @@ export default function Home() {
           
           <div className="space-y-6">
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[1.1] uppercase animate-in fade-in slide-in-from-bottom-8 duration-1000">
-              CRAVE THE <span className="gold-highlight italic">SLICE</span><br />
-              LOVE THE <span className="gold-highlight italic">SPICE</span>
+              CRAVE THE <span className="gold-highlight italic text-primary-foreground">SLICE</span><br />
+              LOVE THE <span className="gold-highlight italic text-primary-foreground">SPICE</span>
             </h1>
             <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium px-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-200">
               Experience a premium symphony of artisanal sourdough pizzas and bold exotic spices, crafted for the modern palate.
@@ -70,9 +69,9 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-500">
-            <button asChild className="gold-gradient text-primary-foreground text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black shadow-2xl hover:scale-105 transition-all duration-300 uppercase tracking-widest border-none flex items-center justify-center gap-2 cursor-pointer">
+            <button className="gold-gradient text-primary-foreground text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black shadow-2xl hover:scale-105 transition-all duration-300 uppercase tracking-widest border-none flex items-center justify-center gap-2 cursor-pointer">
               <Link href="/menu" className="flex items-center gap-2 no-underline text-primary-foreground">
-                Order Now <ArrowRight className="w-5 h-5" />
+                Order Now <ArrowRight className="w-5 h-5 text-primary-foreground" />
               </Link>
             </button>
             <Button asChild variant="outline" size="lg" className="glass border-white/20 text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-bold hover:bg-white/10 transition-all text-white backdrop-blur-md uppercase tracking-widest">
@@ -81,7 +80,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Decorative Gradients */}
         <div className="absolute top-1/4 -left-64 w-[50rem] h-[50rem] bg-primary/5 rounded-full blur-[140px]" />
         <div className="absolute bottom-0 -right-64 w-[50rem] h-[50rem] bg-primary/5 rounded-full blur-[140px]" />
       </section>
@@ -110,9 +108,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-               <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase">Trending <span className="gold-highlight italic animate-masterpiece">Masterpieces</span></h2>
+               <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase">Trending <span className="gold-highlight italic animate-masterpiece text-primary-foreground">Masterpieces</span></h2>
                <Link href="/menu" className="hidden md:flex items-center gap-2 text-gold font-black uppercase tracking-widest text-sm hover:underline">
-                  Full Menu <ChevronRight className="w-4 h-4" />
+                  Full Menu <ChevronRight className="w-4 h-4 text-gold" />
                </Link>
             </div>
             <div className="h-2 w-48 gold-gradient rounded-full" />
@@ -124,16 +122,16 @@ export default function Home() {
               <Link href="/menu" key={i} className="group block">
                 <GlassCard className="aspect-[16/10] overflow-hidden rounded-[2.5rem]">
                   <Image 
-                    src={item!.imageUrl!} 
-                    alt={item!.description!} 
+                    src={item.imageUrl!} 
+                    alt={item.description!} 
                     fill 
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    data-ai-hint={item!.imageHint}
+                    data-ai-hint={item.imageHint}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                   <div className="absolute bottom-8 left-8 right-8">
                     <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gold mb-2">Signature Series</p>
-                    <h3 className="text-3xl font-black text-white uppercase tracking-tight">{item!.label}</h3>
+                    <h3 className="text-3xl font-black text-white uppercase tracking-tight">{item.label}</h3>
                     <div className="h-1 w-12 gold-gradient mt-2 group-hover:w-24 transition-all duration-500" />
                   </div>
                 </GlassCard>
@@ -146,7 +144,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-32 px-4 bg-background border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center space-y-10">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">Ready for a <span className="gold-highlight italic">Premium</span> Taste?</h2>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">Ready for a <span className="gold-highlight italic text-primary-foreground">Premium</span> Taste?</h2>
           <p className="text-muted-foreground text-xl max-w-2xl mx-auto font-medium leading-relaxed">
             Join the elite circle of food lovers who refuse to compromise. Order now and experience the S&S difference.
           </p>

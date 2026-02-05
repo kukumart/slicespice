@@ -52,9 +52,9 @@ export function Navbar() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 gold-gradient group-hover:w-full transition-all duration-300" />
             </Link>
           ))}
-          <Button asChild variant="default" className="rounded-full gold-gradient hover:opacity-90 transition-all font-black px-8 py-6 shadow-xl hover:scale-105 active:scale-95 relative overflow-visible border-none">
+          <Button asChild variant="default" className="rounded-full gold-gradient hover:opacity-90 transition-all font-black px-8 py-6 shadow-xl hover:scale-105 active:scale-95 relative overflow-visible border-none text-primary-foreground">
             <Link href="/order" className="flex items-center text-primary-foreground no-underline">
-              <ShoppingCart className="w-5 h-5 mr-2" />
+              <ShoppingCart className="w-5 h-5 mr-2 text-primary-foreground" />
               ORDER NOW
               {totalItems > 0 && (
                 <Badge className="absolute -top-2 -right-2 bg-foreground text-background font-bold border-2 border-primary rounded-full px-2 py-0.5 min-w-[1.5rem] h-6 flex items-center justify-center">
@@ -99,9 +99,9 @@ export function Navbar() {
             </Link>
           ))}
           <div className="h-px bg-white/5 my-2" />
-          <Button asChild variant="default" className="w-full gold-gradient rounded-[1.25rem] py-8 text-xl font-black border-none">
+          <Button asChild variant="default" className="w-full gold-gradient rounded-[1.25rem] py-8 text-xl font-black border-none text-primary-foreground">
             <Link href="/order" className="flex items-center justify-center text-primary-foreground no-underline">
-              <ShoppingCart className="w-6 h-6 mr-3" />
+              <ShoppingCart className="w-6 h-6 mr-3 text-primary-foreground" />
               ORDER NOW
             </Link>
           </Button>

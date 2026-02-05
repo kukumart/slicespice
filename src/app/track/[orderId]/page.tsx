@@ -10,10 +10,10 @@ import { doc } from "firebase/firestore"
 import { useFirestore, useDoc } from "@/firebase"
 
 const STEPS = [
-  { id: 1, status: "placed", name: "Order Placed", icon: <CheckCircle2 className="w-6 h-6" />, desc: "We've received your order." },
-  { id: 2, status: "preparing", name: "Preparing", icon: <Utensils className="w-6 h-6" />, desc: "Our chefs are crafting your food." },
-  { id: 3, status: "on-the-way", name: "On the way", icon: <Truck className="w-6 h-6" />, desc: "Our rider is heading your way." },
-  { id: 4, status: "delivered", name: "Delivered", icon: <PackageCheck className="w-6 h-6" />, desc: "Enjoy your fresh meal!" },
+  { id: 1, status: "placed", name: "Order Placed", icon: (active: boolean) => <CheckCircle2 className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "We've received your order." },
+  { id: 2, status: "preparing", name: "Preparing", icon: (active: boolean) => <Utensils className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "Our chefs are crafting your food." },
+  { id: 3, status: "on-the-way", name: "On the way", icon: (active: boolean) => <Truck className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "Our rider is heading your way." },
+  { id: 4, status: "delivered", name: "Delivered", icon: (active: boolean) => <PackageCheck className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "Enjoy your fresh meal!" },
 ]
 
 export default function TrackingPage() {
@@ -59,7 +59,7 @@ export default function TrackingPage() {
 
       <div className="max-w-4xl mx-auto space-y-12">
         <div className="text-center space-y-4">
-          <h1 className="text-6xl font-black tracking-tighter uppercase">Tracking Your <span className="gold-highlight italic">Cravings</span></h1>
+          <h1 className="text-6xl font-black tracking-tighter uppercase">Tracking Your <span className="gold-highlight italic text-primary-foreground">Cravings</span></h1>
           <p className="text-muted-foreground font-mono text-sm uppercase tracking-widest">Order Reference: #{orderId.slice(-6).toUpperCase()}</p>
         </div>
 
@@ -68,7 +68,7 @@ export default function TrackingPage() {
             <div className="space-y-2">
               <p className="text-muted-foreground uppercase tracking-[0.2em] text-xs font-black">Estimated Arrival</p>
               <h2 className="text-5xl font-black text-primary-foreground gold-gradient px-6 py-2 rounded-2xl flex items-center gap-4 shadow-xl">
-                <Clock className="w-10 h-10" />
+                <Clock className="w-10 h-10 text-primary-foreground" />
                 25-30 <span className="text-lg text-primary-foreground/70 font-black">MIN</span>
               </h2>
             </div>
@@ -95,11 +95,11 @@ export default function TrackingPage() {
               const isProcessing = step.id === currentStepIndex
               return (
                 <div key={step.id} className={`flex md:flex-col items-start gap-4 transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-20 grayscale'}`}>
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-500 ${isProcessing ? 'gold-gradient text-primary-foreground scale-110 shadow-lg shadow-primary/30 border-none' : 'glass border-white/5'}`}>
-                    {step.icon}
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-500 ${isActive ? 'gold-gradient shadow-lg shadow-primary/30 border-none' : 'glass border-white/5'}`}>
+                    {step.icon(isActive)}
                   </div>
                   <div className="space-y-1">
-                    <p className={`font-black uppercase tracking-tight text-sm ${isProcessing ? 'text-gold' : ''}`}>{step.name}</p>
+                    <p className={`font-black uppercase tracking-tight text-sm ${isActive ? 'text-gold' : ''}`}>{step.name}</p>
                     <p className="text-[10px] text-muted-foreground leading-tight uppercase font-black tracking-widest">{step.desc}</p>
                   </div>
                 </div>
@@ -110,7 +110,7 @@ export default function TrackingPage() {
 
         <div className="text-center">
           <p className="text-muted-foreground text-sm font-medium">
-            Need help with your order? <span className="gold-highlight px-3 py-1 rounded-md cursor-pointer hover:scale-105 transition-all font-black uppercase text-xs tracking-widest">Contact Support</span>
+            Need help with your order? <span className="gold-highlight text-primary-foreground px-3 py-1 rounded-md cursor-pointer hover:scale-105 transition-all font-black uppercase text-xs tracking-widest">Contact Support</span>
           </p>
         </div>
       </div>

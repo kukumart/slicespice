@@ -20,7 +20,7 @@ export default function OrderPage() {
   const router = useRouter()
   const db = useFirestore()
   const { user } = useAuth()
-  const { cart, subtotal, updateQty, removeFromCart, clearCart } = useCart()
+  const { cart, subtotal, updateQty, clearCart } = useCart()
   const [step, setStep] = useState(1) // 1: Cart Summary, 2: Delivery Details
   const [loading, setLoading] = useState(false)
 
@@ -86,13 +86,13 @@ export default function OrderPage() {
 
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center gap-4 mb-12 overflow-x-auto pb-4 scrollbar-hide">
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${step >= 1 ? 'border-primary text-gold bg-primary/5 shadow-lg shadow-primary/5' : 'border-white/10 text-muted-foreground'}`}>
-            <ShoppingBag className="w-4 h-4" />
+          <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${step >= 1 ? 'border-primary text-primary-foreground bg-primary shadow-lg' : 'border-white/10 text-muted-foreground'}`}>
+            <ShoppingBag className={`w-4 h-4 ${step >= 1 ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
             <span className="font-bold whitespace-nowrap uppercase tracking-widest text-xs">Order Review</span>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${step >= 2 ? 'border-primary text-gold bg-primary/5 shadow-lg shadow-primary/5' : 'border-white/10 text-muted-foreground'}`}>
-            <Truck className="w-4 h-4" />
+          <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${step >= 2 ? 'border-primary text-primary-foreground bg-primary shadow-lg' : 'border-white/10 text-muted-foreground'}`}>
+            <Truck className={`w-4 h-4 ${step >= 2 ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
             <span className="font-bold whitespace-nowrap uppercase tracking-widest text-xs">Delivery & Payment</span>
           </div>
         </div>
@@ -191,8 +191,8 @@ export default function OrderPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <label className="relative glass p-6 rounded-2xl cursor-pointer border border-primary/40 bg-primary/5 shadow-inner">
                         <input type="radio" name="payment" className="absolute opacity-0" defaultChecked />
-                        <div className="font-black text-lg uppercase">Cash on Delivery</div>
-                        <div className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Pay when you receive</div>
+                        <div className="font-black text-lg uppercase text-primary-foreground">Cash on Delivery</div>
+                        <div className="text-[10px] text-primary-foreground/70 uppercase font-black tracking-widest">Pay when you receive</div>
                       </label>
                       <label className="relative glass p-6 rounded-2xl cursor-not-allowed border border-white/5 opacity-40">
                         <input type="radio" name="payment" className="absolute opacity-0" disabled />
@@ -207,7 +207,7 @@ export default function OrderPage() {
                       Back to Cart
                     </Button>
                     <Button type="submit" disabled={loading} className="flex-[2] gold-gradient text-primary-foreground py-8 rounded-2xl text-lg font-black shadow-2xl border-none uppercase tracking-widest">
-                      {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : "Confirm & Place Order"}
+                      {loading ? <Loader2 className="w-6 h-6 animate-spin text-primary-foreground" /> : "Confirm & Place Order"}
                     </Button>
                   </div>
                 </form>

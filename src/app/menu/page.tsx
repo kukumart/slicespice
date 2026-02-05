@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
 import Image from "next/image"
 import { useState, useMemo } from "react"
-import { Plus, Minus, Search, Sparkles, Loader2, ShoppingCart } from "lucide-react"
+import { Plus, Minus, Search, Sparkles, Loader2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { useCart } from "@/context/cart-context"
 import { recommendFood, RecommendFoodOutput } from "@/ai/flows/recommend-food-flow"
@@ -85,7 +85,7 @@ export default function MenuPage() {
       <div className="max-w-7xl mx-auto space-y-16">
         <div className="flex flex-col items-center gap-12 text-center">
           <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tight uppercase">Our <span className="gold-highlight italic animate-masterpiece">Masterpieces</span></h1>
+            <h1 className="text-6xl md:text-8xl font-bold tracking-tight uppercase">Our <span className="gold-highlight italic animate-masterpiece text-primary-foreground">Masterpieces</span></h1>
             <p className="text-muted-foreground text-xl max-w-2xl font-medium">Discover a symphony of premium flavors, curated for the modern foodie.</p>
           </div>
           
@@ -104,7 +104,7 @@ export default function MenuPage() {
               <Dialog>
                 <DialogTrigger asChild>
                   <Button size="lg" className="h-16 px-8 rounded-2xl gold-gradient text-primary-foreground font-black shadow-xl hover:scale-105 transition-all border-none">
-                    <Sparkles className="w-5 h-5 mr-2" />
+                    <Sparkles className="w-5 h-5 mr-2 text-primary-foreground" />
                     ASK AI TASTE ASSISTANT
                   </Button>
                 </DialogTrigger>
@@ -127,7 +127,7 @@ export default function MenuPage() {
                       disabled={aiLoading}
                       className="w-full gold-gradient text-primary-foreground h-14 font-black text-lg border-none"
                     >
-                      {aiLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : "GENERATE RECOMMENDATION"}
+                      {aiLoading ? <Loader2 className="w-6 h-6 animate-spin text-primary-foreground" /> : "GENERATE RECOMMENDATION"}
                     </Button>
 
                     {aiResult && (
@@ -244,7 +244,7 @@ export default function MenuPage() {
                           onClick={() => handleAddToCart(item)}
                           className="w-full gold-gradient text-primary-foreground rounded-2xl py-7 font-black shadow-xl hover:scale-[1.02] active:scale-95 transition-all border-none uppercase tracking-widest flex items-center justify-center gap-2"
                         >
-                          <Plus className="w-5 h-5" />
+                          <Plus className="w-5 h-5 text-primary-foreground" />
                           ADD TO CART
                         </Button>
                       )}
