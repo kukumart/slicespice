@@ -35,8 +35,8 @@ export function Logo({ className, size = "md" }: LogoProps) {
         </span>
       </div>
       
-      <div className="mt-1 relative overflow-hidden px-2">
-        <span className="text-[10px] font-black tracking-[0.4em] text-black uppercase whitespace-nowrap group-hover:tracking-[0.5em] transition-all duration-700">
+      <div className="mt-2 relative overflow-hidden px-2">
+        <span className="text-xs font-black tracking-[0.25em] text-black uppercase whitespace-nowrap group-hover:tracking-[0.3em] transition-all duration-700 block">
           SLICE & SPICE
         </span>
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
