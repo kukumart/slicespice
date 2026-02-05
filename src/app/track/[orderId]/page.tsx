@@ -59,7 +59,7 @@ export default function TrackingPage() {
 
       <div className="max-w-4xl mx-auto space-y-12">
         <div className="text-center space-y-4">
-          <h1 className="text-6xl font-black tracking-tighter uppercase">Tracking Your <span className="gold-highlight">Cravings</span></h1>
+          <h1 className="text-6xl font-black tracking-tighter uppercase">Tracking Your <span className="gold-highlight italic">Cravings</span></h1>
           <p className="text-muted-foreground font-mono text-sm uppercase tracking-widest">Order Reference: #{orderId.slice(-6).toUpperCase()}</p>
         </div>
 
@@ -73,7 +73,7 @@ export default function TrackingPage() {
               </h2>
             </div>
             <div className="glass p-6 rounded-2xl flex items-center gap-4 border-white/10 bg-white/5">
-              <div className="w-12 h-12 rounded-full gold-gradient text-primary-foreground flex items-center justify-center font-black">SJ</div>
+              <div className="w-12 h-12 rounded-full gold-gradient text-primary-foreground flex items-center justify-center font-black">SS</div>
               <div>
                 <p className="font-black uppercase tracking-tight">Express Rider</p>
                 <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">En route to {order.customerName}</p>

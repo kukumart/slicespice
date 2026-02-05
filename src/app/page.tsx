@@ -43,13 +43,13 @@ export default function Home() {
           <div className="absolute inset-0 z-0">
             <Image 
               src={heroImage.imageUrl} 
-              alt="Slice and Juice Experience" 
+              alt="Slice and Spice Experience" 
               fill 
               priority
-              className="object-cover opacity-40"
+              className="object-cover opacity-60"
               data-ai-hint={heroImage.imageHint}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/40 to-background" />
           </div>
         )}
 
@@ -60,21 +60,21 @@ export default function Home() {
           </div>
           
           <div className="space-y-6">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[1.1]">
-              CRAVE THE <span className="gold-highlight">SLICE</span><br />
-              LOVE THE <span className="gold-highlight">JUICE</span>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[1.1] uppercase animate-in fade-in slide-in-from-bottom-8 duration-1000">
+              CRAVE THE <span className="gold-highlight italic">SLICE</span><br />
+              LOVE THE <span className="gold-highlight italic">SPICE</span>
             </h1>
-            <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium px-4">
-              Experience a premium symphony of artisanal sourdough pizzas and cold-pressed organic juices, crafted for the modern palate.
+            <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium px-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-200">
+              Experience a premium symphony of artisanal sourdough pizzas and bold exotic spices, crafted for the modern palate.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
-            <Button asChild size="lg" className="gold-gradient text-primary-foreground text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black shadow-2xl hover:scale-105 transition-all duration-300 uppercase tracking-widest border-none">
-              <Link href="/menu" className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-500">
+            <button asChild className="gold-gradient text-primary-foreground text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black shadow-2xl hover:scale-105 transition-all duration-300 uppercase tracking-widest border-none flex items-center justify-center gap-2 cursor-pointer">
+              <Link href="/menu" className="flex items-center gap-2 no-underline text-primary-foreground">
                 Order Now <ArrowRight className="w-5 h-5" />
               </Link>
-            </Button>
+            </button>
             <Button asChild variant="outline" size="lg" className="glass border-white/20 text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-bold hover:bg-white/10 transition-all text-white backdrop-blur-md uppercase tracking-widest">
               <Link href="/about">Our Philosophy</Link>
             </Button>
@@ -110,7 +110,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-               <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase">Trending <span className="gold-highlight">Masterpieces</span></h2>
+               <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase">Trending <span className="gold-highlight italic">Masterpieces</span></h2>
                <Link href="/menu" className="hidden md:flex items-center gap-2 text-gold font-black uppercase tracking-widest text-sm hover:underline">
                   Full Menu <ChevronRight className="w-4 h-4" />
                </Link>
@@ -132,6 +132,7 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                   <div className="absolute bottom-8 left-8 right-8">
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gold mb-2">Signature Series</p>
                     <h3 className="text-3xl font-black text-white uppercase tracking-tight">{item!.label}</h3>
                     <div className="h-1 w-12 gold-gradient mt-2 group-hover:w-24 transition-all duration-500" />
                   </div>
@@ -145,13 +146,13 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-32 px-4 bg-background border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center space-y-10">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">Ready for a <span className="gold-highlight">Premium</span> Taste?</h2>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">Ready for a <span className="gold-highlight italic">Premium</span> Taste?</h2>
           <p className="text-muted-foreground text-xl max-w-2xl mx-auto font-medium leading-relaxed">
-            Join the elite circle of food lovers who refuse to compromise. Order now and experience the S&J difference.
+            Join the elite circle of food lovers who refuse to compromise. Order now and experience the S&S difference.
           </p>
-          <Button asChild size="lg" className="gold-gradient text-primary-foreground px-16 py-10 rounded-2xl text-xl font-black shadow-2xl hover:scale-105 transition-all uppercase tracking-widest border-none">
-            <Link href="/menu">START YOUR ORDER</Link>
-          </Button>
+          <button className="gold-gradient text-primary-foreground px-16 py-10 rounded-2xl text-xl font-black shadow-2xl hover:scale-105 transition-all uppercase tracking-widest border-none cursor-pointer">
+            <Link href="/menu" className="no-underline text-primary-foreground">START YOUR ORDER</Link>
+          </button>
         </div>
       </section>
 
@@ -162,14 +163,14 @@ export default function Home() {
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center font-black text-primary-foreground text-xl">
-                  S&J
+                  S&S
                 </div>
                 <span className="font-black text-2xl tracking-tighter uppercase">
-                  <span className="text-gold">SLICE</span>&JUICE
+                  <span className="text-gold">SLICE</span>&SPICE
                 </span>
               </div>
               <p className="text-muted-foreground text-sm font-medium leading-relaxed">
-                Defining the new standard of premium fast food through artisanal precision and sustainable integrity.
+                Defining the new standard of premium fast food through artisanal precision and bold flavor innovation.
               </p>
             </div>
             
@@ -200,16 +201,16 @@ export default function Home() {
                 <input 
                   type="email" 
                   placeholder="Your Email" 
-                  className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 w-full text-sm outline-none focus:border-primary/50" 
+                  className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 w-full text-sm outline-none focus:border-primary/50 text-white" 
                 />
-                <Button className="gold-gradient text-primary-foreground px-6 rounded-xl font-black uppercase text-xs border-none">Join</Button>
+                <button className="gold-gradient text-primary-foreground px-6 rounded-xl font-black uppercase text-xs border-none cursor-pointer">Join</button>
               </div>
             </div>
           </div>
           
           <div className="text-center pt-12 border-t border-white/5">
             <p className="text-muted-foreground text-[10px] tracking-[0.3em] font-black uppercase">
-              © 2024 SLICE & JUICE RESTAURANT GROUP. ALL RIGHTS RESERVED.
+              © 2024 SLICE & SPICE RESTAURANT GROUP. ALL RIGHTS RESERVED.
             </p>
           </div>
         </div>

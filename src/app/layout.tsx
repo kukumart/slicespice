@@ -1,4 +1,3 @@
-
 import type {Metadata} from 'next';
 import './globals.css';
 import { CartProvider } from '@/context/cart-context';
@@ -6,8 +5,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 export const metadata: Metadata = {
-  title: 'Slice & Juice | Premium Fast Food Delivery',
-  description: 'Experience the ultimate taste with Slice & Juice restaurant. Pizza, Burgers, and Refreshing Juices delivered to your doorstep.',
+  title: 'Slice & Spice | Premium Fast Food Delivery',
+  description: 'Experience the ultimate taste with Slice & Spice restaurant. Pizza, Burgers, and Exotic Spices delivered to your doorstep.',
 };
 
 export default function RootLayout({

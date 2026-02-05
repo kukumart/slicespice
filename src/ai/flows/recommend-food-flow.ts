@@ -1,8 +1,8 @@
 'use server';
 /**
- * @fileOverview AI Food Recommendation Flow.
+ * @fileOverview AI Food Recommendation Flow for Slice & Spice.
  * 
- * This flow takes user preferences and suggests the best items from the Slice & Juice menu.
+ * This flow takes user preferences and suggests the best items from the Slice & Spice menu.
  */
 
 import { ai } from '@/ai/genkit';
@@ -17,7 +17,7 @@ const RecommendFoodOutputSchema = z.object({
     itemId: z.number(),
     reason: z.string().describe('Why this item fits the preference'),
   })),
-  pairingTip: z.string().describe('A suggestion for a juice pairing'),
+  pairingTip: z.string().describe('A suggestion for a drink or spice pairing'),
 });
 
 export type RecommendFoodInput = z.infer<typeof RecommendFoodInputSchema>;
@@ -27,7 +27,7 @@ const prompt = ai.definePrompt({
   name: 'recommendFoodPrompt',
   input: { schema: RecommendFoodInputSchema },
   output: { schema: RecommendFoodOutputSchema },
-  prompt: `You are the Slice & Juice Taste Assistant. Your goal is to help users find the perfect meal.
+  prompt: `You are the Slice & Spice Taste Assistant. Your goal is to help users find the perfect meal.
   
   Current Menu Items:
   1. Classic Margherita (Pizza) - $14.99: Fresh basil, buffalo mozzarella.
@@ -41,7 +41,7 @@ const prompt = ai.definePrompt({
 
   User Preference: {{{preference}}}
 
-  Provide 2 recommendations from the menu and a specific juice pairing tip. Be enthusiastic and premium in your tone.`,
+  Provide 2 recommendations from the menu and a specific pairing tip that highlights our bold flavors. Be enthusiastic and premium in your tone.`,
 });
 
 export async function recommendFood(input: RecommendFoodInput): Promise<RecommendFoodOutput> {
