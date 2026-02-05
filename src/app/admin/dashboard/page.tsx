@@ -18,14 +18,14 @@ import {
   useCollection,
   useAuth,
   useDoc,
-  useMemoFirebase
+  useMemoFirebase,
+  updateDocumentNonBlocking
 } from "@/firebase"
 import { 
   collection, 
   query, 
   orderBy, 
-  doc, 
-  updateDoc 
+  doc
 } from "firebase/firestore"
 import { 
   Loader2, 
@@ -38,8 +38,6 @@ import {
   ShieldAlert
 } from "lucide-react"
 import { useMemo } from "react"
-import { errorEmitter } from "@/firebase/error-emitter"
-import { FirestorePermissionError } from "@/firebase/errors"
 import Link from "next/link"
 
 const STATUS_CONFIG = {
@@ -64,15 +62,8 @@ export default function AdminDashboard() {
     if (!config || !config.next) return
 
     const orderRef = doc(db, "orders", orderId)
-    updateDoc(orderRef, { status: config.next })
-      .catch(async (error) => {
-        const permissionError = new FirestorePermissionError({
-          path: `orders/${orderId}`,
-          operation: 'update',
-          requestResourceData: { status: config.next },
-        })
-        errorEmitter.emit('permission-error', permissionError)
-      })
+    // Non-blocking mutation with proper error handling through central emitter
+    updateDocumentNonBlocking(orderRef, { status: config.next })
   }
 
   const stats = useMemo(() => {

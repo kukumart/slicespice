@@ -2,12 +2,12 @@
 
 import Link from "next/link"
 import { ShoppingCart, Menu, X, MapPin, Info, Utensils, User, LogOut, LayoutDashboard } from "lucide-react"
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useCart } from "@/context/cart-context"
 import { Badge } from "@/components/ui/badge"
-import { useAuth, useDoc, useFirestore } from "@/firebase"
+import { useAuth, useDoc, useFirestore, useMemoFirebase } from "@/firebase"
 import { doc } from "firebase/firestore"
 import { ShareDialog } from "./share-dialog"
 import {
@@ -26,7 +26,7 @@ export function Navbar() {
   const { auth, user } = useAuth()
   const db = useFirestore()
 
-  const adminRef = useMemo(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
+  const adminRef = useMemoFirebase(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
   const { data: adminRole } = useDoc(adminRef)
   const isAdmin = !!adminRole
 

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { PlaceHolderImages } from "@/lib/placeholder-images"
 import Image from "next/image"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Plus, Minus, Search, Sparkles, Loader2, ShoppingCart, ArrowRight } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { useCart } from "@/context/cart-context"
@@ -41,9 +41,15 @@ export default function MenuPage() {
   const [aiPreference, setAiPreference] = useState("")
   const [aiLoading, setAiLoading] = useState(false)
   const [aiResult, setAiResult] = useState<RecommendFoodOutput | null>(null)
+  const [mounted, setMounted] = useState(false)
   
   const { addToCart, updateQty, cart, totalItems, subtotal } = useCart()
   const { toast } = useToast()
+
+  // Defer Dialog rendering to prevent hydration mismatch for ARIA attributes
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const filteredItems = useMemo(() => {
     return MENU_ITEMS.filter(item => {
@@ -109,72 +115,74 @@ export default function MenuPage() {
                 />
               </div>
 
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button size="lg" className="h-16 px-8 rounded-2xl gold-gradient text-black font-black shadow-xl hover:scale-105 transition-all border-none">
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    ASK AI TASTE ASSISTANT
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="glass-dark border-white/10 text-foreground max-w-lg">
-                  <DialogHeader>
-                    <DialogTitle className="text-3xl font-black uppercase tracking-tight">AI Taste <span className="text-gold">Assistant</span></DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-6 pt-4">
-                    <div className="space-y-2">
-                      <p className="text-sm font-black text-muted-foreground uppercase tracking-widest">Describe your mood or craving</p>
-                      <Input 
-                        placeholder="e.g. Something spicy and a cold drink..." 
-                        className="glass border-white/10 h-14"
-                        value={aiPreference}
-                        onChange={(e) => setAiPreference(e.target.value)}
-                      />
-                    </div>
-                    <Button 
-                      onClick={handleAiRecommend} 
-                      disabled={aiLoading}
-                      className="w-full gold-gradient text-black h-14 font-black text-lg border-none"
-                    >
-                      {aiLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : "GENERATE RECOMMENDATION"}
+              {mounted && (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button size="lg" className="h-16 px-8 rounded-2xl gold-gradient text-black font-black shadow-xl hover:scale-105 transition-all border-none">
+                      <Sparkles className="w-5 h-5 mr-2" />
+                      ASK AI TASTE ASSISTANT
                     </Button>
-
-                    {aiResult && (
-                      <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <div className="space-y-4">
-                          {aiResult.recommendations.map((rec, i) => {
-                            const item = MENU_ITEMS.find(m => m.id === rec.itemId)
-                            return item ? (
-                              <div key={i} className="glass p-5 rounded-xl border-primary/20 bg-white/5">
-                                <div className="flex justify-between items-start mb-3">
-                                  <h4 className="font-black text-gold uppercase text-lg tracking-tight">{item.name}</h4>
-                                  <span className="font-black text-gold text-sm">${item.price}</span>
-                                </div>
-                                <div className="p-3 bg-primary/10 rounded-lg border border-primary/20 mb-4">
-                                  <p className="text-xs text-foreground leading-relaxed font-black italic">"{rec.reason}"</p>
-                                </div>
-                                <Button 
-                                  size="sm" 
-                                  className="gold-gradient text-black font-black h-10 border-none w-full shadow-lg"
-                                  onClick={() => handleAddToCart(item)}
-                                >
-                                  ADD TO SELECTION
-                                </Button>
-                              </div>
-                            ) : null
-                          })}
-                        </div>
-                        <div className="p-5 gold-gradient rounded-xl shadow-2xl relative overflow-hidden group">
-                          <div className="absolute top-0 right-0 p-2 opacity-20">
-                            <Sparkles className="w-8 h-8 text-black" />
-                          </div>
-                          <p className="text-[10px] font-black text-black uppercase tracking-[0.2em] mb-1">Expert Spice Pairing</p>
-                          <p className="text-sm font-bold text-black italic leading-relaxed">{aiResult.pairingTip}</p>
-                        </div>
+                  </DialogTrigger>
+                  <DialogContent className="glass-dark border-white/10 text-foreground max-w-lg">
+                    <DialogHeader>
+                      <DialogTitle className="text-3xl font-black uppercase tracking-tight">AI Taste <span className="text-gold">Assistant</span></DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-6 pt-4">
+                      <div className="space-y-2">
+                        <p className="text-sm font-black text-muted-foreground uppercase tracking-widest">Describe your mood or craving</p>
+                        <Input 
+                          placeholder="e.g. Something spicy and a cold drink..." 
+                          className="glass border-white/10 h-14"
+                          value={aiPreference}
+                          onChange={(e) => setAiPreference(e.target.value)}
+                        />
                       </div>
-                    )}
-                  </div>
-                </DialogContent>
-              </Dialog>
+                      <Button 
+                        onClick={handleAiRecommend} 
+                        disabled={aiLoading}
+                        className="w-full gold-gradient text-black h-14 font-black text-lg border-none"
+                      >
+                        {aiLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : "GENERATE RECOMMENDATION"}
+                      </Button>
+
+                      {aiResult && (
+                        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                          <div className="space-y-4">
+                            {aiResult.recommendations.map((rec, i) => {
+                              const item = MENU_ITEMS.find(m => m.id === rec.itemId)
+                              return item ? (
+                                <div key={i} className="glass p-5 rounded-xl border-primary/20 bg-white/5">
+                                  <div className="flex justify-between items-start mb-3">
+                                    <h4 className="font-black text-gold uppercase text-lg tracking-tight">{item.name}</h4>
+                                    <span className="font-black text-gold text-sm">${item.price}</span>
+                                  </div>
+                                  <div className="p-3 bg-primary/10 rounded-lg border border-primary/20 mb-4">
+                                    <p className="text-xs text-foreground leading-relaxed font-black italic">"{rec.reason}"</p>
+                                  </div>
+                                  <Button 
+                                    size="sm" 
+                                    className="gold-gradient text-black font-black h-10 border-none w-full shadow-lg"
+                                    onClick={() => handleAddToCart(item)}
+                                  >
+                                    ADD TO SELECTION
+                                  </Button>
+                                </div>
+                              ) : null
+                            })}
+                          </div>
+                          <div className="p-5 gold-gradient rounded-xl shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-2 opacity-20">
+                              <Sparkles className="w-8 h-8 text-black" />
+                            </div>
+                            <p className="text-[10px] font-black text-black uppercase tracking-[0.2em] mb-1">Expert Spice Pairing</p>
+                            <p className="text-sm font-bold text-black italic leading-relaxed">{aiResult.pairingTip}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              )}
             </div>
 
             <div className="flex flex-wrap justify-center gap-4">
