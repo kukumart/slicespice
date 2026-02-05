@@ -49,7 +49,12 @@ service cloud.firestore {
     }
 
     match /roles_admin/{userId} {
-      allow get, list, create, update, delete: if isAdmin();
+      /**
+       * @description Allows users to read their own admin status to facilitate UI logic.
+       * Admin management is restricted to existing admins.
+       */
+      allow get: if isOwner(userId) || isAdmin();
+      allow list, create, update, delete: if isAdmin();
     }
 
     match /orders/{orderId} {
