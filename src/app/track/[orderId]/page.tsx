@@ -1,10 +1,11 @@
+
 "use client"
 
 import { Navbar } from "@/components/navbar"
 import { GlassCard } from "@/components/glass-card"
 import { Progress } from "@/components/ui/progress"
 import { useParams } from "next/navigation"
-import { Clock, CheckCircle2, Truck, Utensils, PackageCheck, Loader2 } from "lucide-react"
+import { Clock, CheckCircle2, Truck, Utensils, PackageCheck, Loader2, Bike } from "lucide-react"
 import { useEffect, useState, useMemo } from "react"
 import { doc } from "firebase/firestore"
 import { useFirestore, useDoc } from "@/firebase"
@@ -15,6 +16,12 @@ const STEPS = [
   { id: 3, status: "on-the-way", name: "On the way", icon: (active: boolean) => <Truck className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "Our rider is heading your way." },
   { id: 4, status: "delivered", name: "Delivered", icon: (active: boolean) => <PackageCheck className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "Enjoy your fresh meal!" },
 ]
+
+const PROVIDER_NAMES: Record<string, string> = {
+  'own': 'S&S Express Rider',
+  'uber-eats': 'Uber Eats Courier',
+  'bolt': 'Bolt Food Courier'
+}
 
 export default function TrackingPage() {
   const { orderId } = useParams()
@@ -73,9 +80,11 @@ export default function TrackingPage() {
               </h2>
             </div>
             <div className="glass p-6 rounded-2xl flex items-center gap-4 border-white/10 bg-white/5">
-              <div className="w-12 h-12 rounded-full gold-gradient text-primary-foreground flex items-center justify-center font-black">SS</div>
+              <div className="w-12 h-12 rounded-full gold-gradient text-primary-foreground flex items-center justify-center font-black">
+                {order.deliveryProvider === 'own' ? 'SS' : order.deliveryProvider.charAt(0).toUpperCase()}
+              </div>
               <div>
-                <p className="font-black uppercase tracking-tight">Express Rider</p>
+                <p className="font-black uppercase tracking-tight">{PROVIDER_NAMES[order.deliveryProvider] || 'Partner Rider'}</p>
                 <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">En route to {order.customerName}</p>
               </div>
             </div>

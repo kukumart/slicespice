@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -7,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
-import { ShoppingBag, Truck, CreditCard, ChevronRight, Minus, Plus, Trash2, ArrowLeft, Loader2 } from "lucide-react"
+import { ShoppingBag, Truck, CreditCard, ChevronRight, Minus, Plus, Trash2, ArrowLeft, Loader2, Bike } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/context/cart-context"
 import Link from "next/link"
@@ -16,6 +17,12 @@ import { useFirestore, useAuth } from "@/firebase"
 import { errorEmitter } from "@/firebase/error-emitter"
 import { FirestorePermissionError } from "@/firebase/errors"
 
+const DELIVERY_PROVIDERS = [
+  { id: 'own', name: 'S&S Express', desc: 'Our priority riders', icon: <Bike className="w-5 h-5" /> },
+  { id: 'uber-eats', name: 'Uber Eats', desc: 'Standard partner delivery', icon: <Truck className="w-5 h-5" /> },
+  { id: 'bolt', name: 'Bolt Food', desc: 'Standard partner delivery', icon: <Truck className="w-5 h-5" /> },
+]
+
 export default function OrderPage() {
   const router = useRouter()
   const db = useFirestore()
@@ -23,8 +30,9 @@ export default function OrderPage() {
   const { cart, subtotal, updateQty, clearCart } = useCart()
   const [step, setStep] = useState(1) // 1: Cart Summary, 2: Delivery Details
   const [loading, setLoading] = useState(false)
+  const [deliveryProvider, setDeliveryProvider] = useState('own')
 
-  const deliveryFee = cart.length > 0 ? 3.50 : 0
+  const deliveryFee = cart.length > 0 ? (deliveryProvider === 'own' ? 2.50 : 3.50) : 0
   const total = subtotal + deliveryFee
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
@@ -37,6 +45,7 @@ export default function OrderPage() {
       items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty })),
       total: total,
       status: "placed",
+      deliveryProvider: deliveryProvider,
       createdAt: serverTimestamp(),
       deliveryAddress: formData.get("address") as string,
       customerName: formData.get("name") as string,
@@ -163,27 +172,55 @@ export default function OrderPage() {
             ) : (
               <GlassCard className="p-8 space-y-8">
                 <h2 className="text-3xl font-black uppercase tracking-tight">Delivery <span className="text-gold">Details</span></h2>
-                <form onSubmit={handlePlaceOrder} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Full Name</Label>
-                      <Input name="name" className="glass h-14 border-white/10 focus:border-primary/50 font-bold" placeholder="John Doe" required />
+                <form onSubmit={handlePlaceOrder} className="space-y-10">
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Full Name</Label>
+                        <Input name="name" className="glass h-14 border-white/10 focus:border-primary/50 font-bold" placeholder="John Doe" required />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Phone Number</Label>
+                        <Input name="phone" className="glass h-14 border-white/10 focus:border-primary/50 font-bold" placeholder="+254..." required />
+                      </div>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Phone Number</Label>
-                      <Input name="phone" className="glass h-14 border-white/10 focus:border-primary/50 font-bold" placeholder="+254..." required />
+                      <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Delivery Address</Label>
+                      <Input name="address" className="glass h-14 border-white/10 focus:border-primary/50 font-bold" placeholder="Street Name, Building No." required />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Delivery Note (Optional)</Label>
+                      <Textarea name="note" className="glass min-h-[100px] border-white/10 focus:border-primary/50 font-bold" placeholder="Gate code, floor, or specific instructions..." />
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Delivery Address</Label>
-                    <Input name="address" className="glass h-14 border-white/10 focus:border-primary/50 font-bold" placeholder="Street Name, Building No." required />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-muted-foreground uppercase tracking-widest text-[10px] font-black">Delivery Note (Optional)</Label>
-                    <Textarea name="note" className="glass min-h-[100px] border-white/10 focus:border-primary/50 font-bold" placeholder="Gate code, floor, or specific instructions..." />
+
+                  <div className="space-y-6">
+                    <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
+                      <Bike className="w-5 h-5 text-gold" />
+                      Delivery Partner
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      {DELIVERY_PROVIDERS.map((provider) => (
+                        <label 
+                          key={provider.id} 
+                          className={`relative glass p-6 rounded-2xl cursor-pointer border transition-all ${
+                            deliveryProvider === provider.id ? 'border-primary/40 bg-primary/5 shadow-inner' : 'border-white/5 opacity-60 hover:opacity-100'
+                          }`}
+                          onClick={() => setDeliveryProvider(provider.id)}
+                        >
+                          <input type="radio" name="provider" className="absolute opacity-0" checked={deliveryProvider === provider.id} onChange={() => {}} />
+                          <div className={`flex items-center gap-2 font-black text-lg uppercase ${deliveryProvider === provider.id ? 'text-primary-foreground' : 'text-foreground'}`}>
+                            {provider.icon} {provider.name}
+                          </div>
+                          <div className={`text-[9px] uppercase font-black tracking-widest mt-1 ${deliveryProvider === provider.id ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                            {provider.desc}
+                          </div>
+                        </label>
+                      ))}
+                    </div>
                   </div>
                   
-                  <div className="space-y-4 pt-4">
+                  <div className="space-y-4">
                     <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2">
                       <CreditCard className="w-5 h-5 text-gold" />
                       Payment Method

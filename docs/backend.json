@@ -37,10 +37,14 @@
           "type": "string",
           "enum": ["placed", "preparing", "on-the-way", "delivered"]
         },
+        "deliveryProvider": {
+          "type": "string",
+          "enum": ["own", "uber-eats", "bolt"]
+        },
         "createdAt": { "type": "string", "format": "date-time" },
         "deliveryAddress": { "type": "string" }
       },
-      "required": ["userId", "items", "total", "status", "createdAt"]
+      "required": ["userId", "items", "total", "status", "createdAt", "deliveryProvider"]
     }
   },
   "auth": {
