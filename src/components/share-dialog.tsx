@@ -22,10 +22,14 @@ interface ShareDialogProps {
 export function ShareDialog({ trigger }: ShareDialogProps) {
   const [url, setUrl] = useState("")
   const [copied, setCopied] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const { toast } = useToast()
 
   useEffect(() => {
-    setUrl(window.location.origin)
+    setMounted(true)
+    if (typeof window !== "undefined") {
+      setUrl(window.location.origin)
+    }
   }, [])
 
   const handleCopy = () => {
@@ -42,14 +46,24 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
   // QR generation API URL
   const qrCodeUrl = url ? `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}` : ""
 
+  const defaultTrigger = (
+    <Button variant="ghost" className="h-12 w-12 rounded-2xl glass hover:bg-white/10 group">
+      <Share2 className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />
+    </Button>
+  )
+
+  const effectiveTrigger = trigger || defaultTrigger
+
+  // Avoid hydration mismatch by rendering only the trigger on server and first client pass.
+  // This prevents Radix UI from generating mismatched auto-generated IDs.
+  if (!mounted) {
+    return effectiveTrigger
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {trigger || (
-          <Button variant="ghost" className="h-12 w-12 rounded-2xl glass hover:bg-white/10 group">
-            <Share2 className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />
-          </Button>
-        )}
+        {effectiveTrigger}
       </DialogTrigger>
       <DialogContent className="glass-dark border-white/10 text-foreground max-w-sm">
         <DialogHeader>
