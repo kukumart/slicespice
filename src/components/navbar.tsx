@@ -1,17 +1,34 @@
+
 "use client"
 
 import Link from "next/link"
-import { ShoppingCart, Menu, X, MapPin, Info, Utensils } from "lucide-react"
-import { useState, useEffect } from "react"
+import { ShoppingCart, Menu, X, MapPin, Info, Utensils, User, LogOut, LayoutDashboard } from "lucide-react"
+import { useState, useEffect, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useCart } from "@/context/cart-context"
 import { Badge } from "@/components/ui/badge"
+import { useAuth, useDoc, useFirestore } from "@/firebase"
+import { doc } from "firebase/firestore"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { totalItems } = useCart()
+  const { auth, user } = useAuth()
+  const db = useFirestore()
+
+  const adminRef = useMemo(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
+  const { data: adminRole } = useDoc(adminRef)
+  const isAdmin = !!adminRole
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -24,6 +41,10 @@ export function Navbar() {
     { name: "About", href: "/about", icon: <Info className="w-4 h-4 mr-2" /> },
     { name: "Location", href: "/location", icon: <MapPin className="w-4 h-4 mr-2" /> },
   ]
+
+  const handleLogout = () => {
+    auth.signOut()
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-6 pointer-events-none">
@@ -52,17 +73,48 @@ export function Navbar() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 gold-gradient group-hover:w-full transition-all duration-300" />
             </Link>
           ))}
-          <Button asChild variant="default" className="rounded-full gold-gradient hover:opacity-90 transition-all font-black px-8 py-6 shadow-xl hover:scale-105 active:scale-95 relative overflow-visible border-none text-primary-foreground">
-            <Link href="/order" className="flex items-center text-primary-foreground no-underline">
-              <ShoppingCart className="w-5 h-5 mr-2 text-primary-foreground" />
-              ORDER NOW
-              {totalItems > 0 && (
-                <Badge className="absolute -top-2 -right-2 bg-foreground text-background font-bold border-2 border-primary rounded-full px-2 py-0.5 min-w-[1.5rem] h-6 flex items-center justify-center">
-                  {totalItems}
-                </Badge>
-              )}
-            </Link>
-          </Button>
+
+          <div className="flex items-center gap-4">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-12 w-12 rounded-2xl glass hover:bg-white/10">
+                    <User className="w-6 h-6 text-gold" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="glass-dark border-white/10 w-56" align="end">
+                  <DropdownMenuLabel className="font-black uppercase tracking-widest text-[10px] text-muted-foreground">My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator className="bg-white/5" />
+                  {isAdmin && (
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin/dashboard" className="cursor-pointer font-bold flex items-center gap-2 py-3">
+                        <LayoutDashboard className="w-4 h-4 text-gold" /> Admin Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer font-bold text-destructive hover:text-destructive flex items-center gap-2 py-3">
+                    <LogOut className="w-4 h-4" /> Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button asChild variant="ghost" className="h-12 px-6 rounded-2xl glass hover:bg-white/10 font-black uppercase tracking-widest text-xs">
+                <Link href="/auth">Sign In</Link>
+              </Button>
+            )}
+
+            <Button asChild variant="default" className="rounded-2xl gold-gradient hover:opacity-90 transition-all font-black px-8 py-6 shadow-xl hover:scale-105 active:scale-95 relative overflow-visible border-none text-primary-foreground">
+              <Link href="/order" className="flex items-center text-primary-foreground no-underline">
+                <ShoppingCart className="w-5 h-5 mr-2 text-primary-foreground" />
+                ORDER
+                {totalItems > 0 && (
+                  <Badge className="absolute -top-2 -right-2 bg-foreground text-background font-bold border-2 border-primary rounded-full px-2 py-0.5 min-w-[1.5rem] h-6 flex items-center justify-center">
+                    {totalItems}
+                  </Badge>
+                )}
+              </Link>
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Toggle */}
@@ -99,12 +151,23 @@ export function Navbar() {
             </Link>
           ))}
           <div className="h-px bg-white/5 my-2" />
-          <Button asChild variant="default" className="w-full gold-gradient rounded-[1.25rem] py-8 text-xl font-black border-none text-primary-foreground">
-            <Link href="/order" className="flex items-center justify-center text-primary-foreground no-underline">
-              <ShoppingCart className="w-6 h-6 mr-3 text-primary-foreground" />
-              ORDER NOW
-            </Link>
-          </Button>
+          <div className="grid grid-cols-2 gap-4">
+            {user ? (
+               <Button onClick={handleLogout} variant="outline" className="glass rounded-[1.25rem] py-8 text-lg font-black uppercase tracking-widest text-destructive">
+                LOGOUT
+               </Button>
+            ) : (
+              <Button asChild variant="outline" className="glass rounded-[1.25rem] py-8 text-lg font-black uppercase tracking-widest">
+                <Link href="/auth">LOGIN</Link>
+              </Button>
+            )}
+            <Button asChild variant="default" className="gold-gradient rounded-[1.25rem] py-8 text-lg font-black border-none text-primary-foreground">
+              <Link href="/order" className="flex items-center justify-center text-primary-foreground no-underline">
+                <ShoppingCart className="w-6 h-6 mr-3 text-primary-foreground" />
+                ORDER
+              </Link>
+            </Button>
+          </div>
         </div>
       )}
     </nav>

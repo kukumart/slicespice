@@ -15,7 +15,9 @@ import {
 } from "@/components/ui/table"
 import { 
   useFirestore, 
-  useCollection 
+  useCollection,
+  useAuth,
+  useDoc
 } from "@/firebase"
 import { 
   collection, 
@@ -27,16 +29,17 @@ import {
 import { 
   Loader2, 
   Clock, 
-  CheckCircle2, 
   Truck, 
   Utensils, 
   PackageCheck,
   LayoutDashboard,
-  Filter
+  Filter,
+  ShieldAlert
 } from "lucide-react"
 import { useMemo } from "react"
 import { errorEmitter } from "@/firebase/error-emitter"
 import { FirestorePermissionError } from "@/firebase/errors"
+import Link from "next/link"
 
 const STATUS_CONFIG = {
   placed: { label: "Placed", icon: Clock, color: "bg-blue-500/10 text-blue-500", next: "preparing" },
@@ -46,9 +49,14 @@ const STATUS_CONFIG = {
 }
 
 export default function AdminDashboard() {
+  const { user, isUserLoading } = useAuth()
   const db = useFirestore()
+  
+  const adminRef = useMemo(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
+  const { data: adminRole, isLoading: isAdminCheckLoading } = useDoc(adminRef)
+  
   const ordersQuery = useMemo(() => query(collection(db, "orders"), orderBy("createdAt", "desc")), [db])
-  const { data: orders, loading } = useCollection(ordersQuery)
+  const { data: orders, isLoading: isOrdersLoading } = useCollection(ordersQuery)
 
   const handleUpdateStatus = (orderId: string, currentStatus: string) => {
     const config = STATUS_CONFIG[currentStatus as keyof typeof STATUS_CONFIG]
@@ -75,10 +83,30 @@ export default function AdminDashboard() {
     }
   }, [orders])
 
-  if (loading) {
+  if (isUserLoading || isAdminCheckLoading) {
     return (
       <main className="min-h-screen bg-background pt-32 pb-24 flex items-center justify-center">
         <Loader2 className="w-12 h-12 text-gold animate-spin" />
+      </main>
+    )
+  }
+
+  if (!user || !adminRole) {
+    return (
+      <main className="min-h-screen bg-background pt-32 pb-24 px-4 flex items-center justify-center">
+        <Navbar />
+        <GlassCard className="max-w-md p-12 text-center space-y-6">
+          <div className="w-20 h-20 glass rounded-full flex items-center justify-center mx-auto text-destructive animate-pulse">
+            <ShieldAlert className="w-10 h-10" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-3xl font-black uppercase tracking-tight">Access Denied</h2>
+            <p className="text-muted-foreground text-sm font-medium">This command center is reserved for authorized Slice & Spice staff only.</p>
+          </div>
+          <Button asChild className="gold-gradient text-primary-foreground w-full py-7 font-black rounded-2xl border-none uppercase tracking-widest">
+            <Link href="/auth">Authenticate Now</Link>
+          </Button>
+        </GlassCard>
       </main>
     )
   }
@@ -124,75 +152,81 @@ export default function AdminDashboard() {
           </div>
           
           <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="border-white/5 hover:bg-transparent uppercase font-black text-[10px] tracking-widest text-muted-foreground">
-                  <TableHead className="w-[100px]">Order ID</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Items</TableHead>
-                  <TableHead>Total</TableHead>
-                  <TableHead>Provider</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {orders?.map((order: any) => {
-                  const status = STATUS_CONFIG[order.status as keyof typeof STATUS_CONFIG]
-                  return (
-                    <TableRow key={order.id} className="border-white/5 hover:bg-white/5 transition-colors">
-                      <TableCell className="font-mono text-xs font-black text-gold">
-                        #{order.id.slice(-6).toUpperCase()}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col">
-                          <span className="font-black uppercase text-xs">{order.customerName}</span>
-                          <span className="text-[10px] text-muted-foreground">{order.customerPhone}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col gap-1">
-                          {order.items?.map((item: any, i: number) => (
-                            <span key={i} className="text-[10px] font-medium text-muted-foreground">
-                              {item.qty}x {item.name}
-                            </span>
-                          ))}
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-black text-sm">${order.total?.toFixed(2)}</TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="text-[10px] font-black uppercase tracking-tighter border-white/10">
-                          {order.deliveryProvider}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {status && (
-                          <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${status.color}`}>
-                            <status.icon className="w-3 h-3" />
-                            {status.label}
+            {isOrdersLoading ? (
+              <div className="p-20 flex justify-center">
+                <Loader2 className="w-8 h-8 text-gold animate-spin" />
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-white/5 hover:bg-transparent uppercase font-black text-[10px] tracking-widest text-muted-foreground">
+                    <TableHead className="w-[100px]">Order ID</TableHead>
+                    <TableHead>Customer</TableHead>
+                    <TableHead>Items</TableHead>
+                    <TableHead>Total</TableHead>
+                    <TableHead>Provider</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {orders?.map((order: any) => {
+                    const status = STATUS_CONFIG[order.status as keyof typeof STATUS_CONFIG]
+                    return (
+                      <TableRow key={order.id} className="border-white/5 hover:bg-white/5 transition-colors">
+                        <TableCell className="font-mono text-xs font-black text-gold">
+                          #{order.id.slice(-6).toUpperCase()}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col">
+                            <span className="font-black uppercase text-xs">{order.customerName}</span>
+                            <span className="text-[10px] text-muted-foreground">{order.customerPhone}</span>
                           </div>
-                        )}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        {status?.next ? (
-                          <Button 
-                            onClick={() => handleUpdateStatus(order.id, order.status)}
-                            className="gold-gradient text-primary-foreground text-[10px] font-black uppercase tracking-widest h-8 px-4 border-none shadow-lg hover:scale-105 active:scale-95 transition-all"
-                          >
-                            Move to {STATUS_CONFIG[status.next as keyof typeof STATUS_CONFIG].label}
-                          </Button>
-                        ) : (
-                          <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic opacity-50">Completed</span>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col gap-1">
+                            {order.items?.map((item: any, i: number) => (
+                              <span key={i} className="text-[10px] font-medium text-muted-foreground">
+                                {item.qty}x {item.name}
+                              </span>
+                            ))}
+                          </div>
+                        </TableCell>
+                        <TableCell className="font-black text-sm">${order.total?.toFixed(2)}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-[10px] font-black uppercase tracking-tighter border-white/10">
+                            {order.deliveryProvider}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          {status && (
+                            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${status.color}`}>
+                              <status.icon className="w-3 h-3" />
+                              {status.label}
+                            </div>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {status?.next ? (
+                            <Button 
+                              onClick={() => handleUpdateStatus(order.id, order.status)}
+                              className="gold-gradient text-primary-foreground text-[10px] font-black uppercase tracking-widest h-8 px-4 border-none shadow-lg hover:scale-105 active:scale-95 transition-all"
+                            >
+                              Move to {STATUS_CONFIG[status.next as keyof typeof STATUS_CONFIG].label}
+                            </Button>
+                          ) : (
+                            <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest italic opacity-50">Completed</span>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            )}
           </div>
           
-          {(!orders || orders.length === 0) && (
+          {(!orders || orders.length === 0) && !isOrdersLoading && (
             <div className="p-20 text-center space-y-4">
               <div className="w-16 h-16 glass rounded-full flex items-center justify-center mx-auto text-muted-foreground">
                 <LayoutDashboard className="w-8 h-8" />
