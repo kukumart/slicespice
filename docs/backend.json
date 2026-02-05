@@ -1,63 +1,94 @@
-
 {
   "entities": {
-    "UserProfile": {
-      "title": "User Profile",
-      "description": "Store user-specific information and delivery preferences.",
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
       "type": "object",
+      "description": "Represents a user of the Slice & Juice application.",
       "properties": {
-        "uid": { "type": "string" },
-        "email": { "type": "string", "format": "email" },
-        "displayName": { "type": "string" },
-        "phoneNumber": { "type": "string" },
-        "address": { "type": "string" }
-      },
-      "required": ["uid", "email"]
-    },
-    "Order": {
-      "title": "Order",
-      "description": "Represents a customer food order.",
-      "type": "object",
-      "properties": {
-        "userId": { "type": "string" },
-        "items": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "id": { "type": "number" },
-              "name": { "type": "string" },
-              "price": { "type": "number" },
-              "qty": { "type": "number" }
-            }
-          }
-        },
-        "total": { "type": "number" },
-        "status": {
+        "id": {
           "type": "string",
-          "enum": ["placed", "preparing", "on-the-way", "delivered"]
+          "description": "Unique identifier for the user.",
+          "format": "uuid"
         },
-        "deliveryProvider": {
+        "firstName": {
           "type": "string",
-          "enum": ["own", "uber-eats", "bolt"]
+          "description": "The first name of the user."
         },
-        "createdAt": { "type": "string", "format": "date-time" },
-        "deliveryAddress": { "type": "string" }
+        "lastName": {
+          "type": "string",
+          "description": "The last name of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the user.",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string",
+          "description": "The phone number of the user."
+        },
+        "address": {
+          "type": "string",
+          "description": "The address of the user."
+        },
+        "role": {
+          "type": "string",
+          "description": "The role of the user (e.g., 'admin', 'customer')."
+        }
       },
-      "required": ["userId", "items", "total", "status", "createdAt", "deliveryProvider"]
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email",
+        "phone",
+        "address",
+        "role"
+      ]
     }
   },
   "auth": {
-    "providers": ["google.com", "password"]
+    "providers": [
+      "password",
+      "anonymous"
+    ]
   },
   "firestore": {
-    "/users/{userId}": {
-      "schema": "UserProfile",
-      "description": "User profile documents"
-    },
-    "/orders/{orderId}": {
-      "schema": "Order",
-      "description": "Customer order history"
-    }
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile information.  Includes the 'role' field for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{userId}",
+        "definition": {
+          "entityName": "adminRole",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Indicates whether a user has admin privileges. Existence of a document at this path grants admin access.  Content of document is irrelevant.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user who might be an admin."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "This design prioritizes security and scalability for the Slice & Juice application, particularly around user authentication and authorization. It leverages Structural Segregation and Authorization Independence to simplify security rules and enable robust data access control. The key collections are `/users` for user profiles, `/roles_admin` for admin role assignments.  The design emphasizes denormalization to avoid hierarchical `get()` calls in security rules, ensuring atomic operations. Path-based ownership secures user-specific data, while existence checks for admin roles simplify admin authorization.\n\n**Authorization Independence:** The `users` collection stores the `role` property directly within the user document. This eliminates the need for security rules to fetch user roles from a separate location, enabling atomic operations and simplifying rule logic.\n\n**QAPs (Rules are not Filters):**\n*   The separation of user roles into a distinct collection (`/roles_admin`) and the role property in the user collection enables secure `list` operations. Listing of users can be secured based on their role. Existence checks on `/roles_admin/{userId}` can determine admin privileges.\n\n"
   }
 }
