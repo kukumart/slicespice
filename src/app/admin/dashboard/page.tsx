@@ -17,7 +17,8 @@ import {
   useFirestore, 
   useCollection,
   useAuth,
-  useDoc
+  useDoc,
+  useMemoFirebase
 } from "@/firebase"
 import { 
   collection, 
@@ -52,10 +53,10 @@ export default function AdminDashboard() {
   const { user, isUserLoading } = useAuth()
   const db = useFirestore()
   
-  const adminRef = useMemo(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
+  const adminRef = useMemoFirebase(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
   const { data: adminRole, isLoading: isAdminCheckLoading } = useDoc(adminRef)
   
-  const ordersQuery = useMemo(() => query(collection(db, "orders"), orderBy("createdAt", "desc")), [db])
+  const ordersQuery = useMemoFirebase(() => query(collection(db, "orders"), orderBy("createdAt", "desc")), [db])
   const { data: orders, isLoading: isOrdersLoading } = useCollection(ordersQuery)
 
   const handleUpdateStatus = (orderId: string, currentStatus: string) => {
@@ -103,7 +104,7 @@ export default function AdminDashboard() {
             <h2 className="text-3xl font-black uppercase tracking-tight">Access Denied</h2>
             <p className="text-muted-foreground text-sm font-medium">This command center is reserved for authorized Slice & Spice staff only.</p>
           </div>
-          <Button asChild className="gold-gradient text-primary-foreground w-full py-7 font-black rounded-2xl border-none uppercase tracking-widest">
+          <Button asChild className="gold-gradient text-black w-full py-7 font-black rounded-2xl border-none uppercase tracking-widest">
             <Link href="/auth">Authenticate Now</Link>
           </Button>
         </GlassCard>
@@ -118,7 +119,7 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div className="space-y-4">
-            <h1 className="text-6xl font-black tracking-tighter uppercase">Command <span className="gold-highlight italic text-primary-foreground">Center</span></h1>
+            <h1 className="text-6xl font-black tracking-tighter uppercase">Command <span className="gold-highlight italic text-black">Center</span></h1>
             <p className="text-muted-foreground font-medium uppercase tracking-[0.2em] text-xs flex items-center gap-2">
               <LayoutDashboard className="w-4 h-4 text-gold" /> Real-time Order Stream
             </p>
@@ -142,9 +143,9 @@ export default function AdminDashboard() {
 
         <GlassCard className="border-white/5 overflow-hidden" hover={false}>
           <div className="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
-             <h2 className="font-black uppercase tracking-widest text-sm flex items-center gap-2">
+             <h2 className="font-black uppercase tracking-widest text-sm flex items-center gap-2 text-foreground">
                Recent Orders
-               <Badge className="bg-primary text-primary-foreground font-black ml-2">{orders?.length || 0}</Badge>
+               <Badge className="bg-primary text-black font-black ml-2">{orders?.length || 0}</Badge>
              </h2>
              <Button variant="ghost" size="sm" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
                <Filter className="w-3 h-3 mr-2" /> Filter
@@ -179,7 +180,7 @@ export default function AdminDashboard() {
                         </TableCell>
                         <TableCell>
                           <div className="flex flex-col">
-                            <span className="font-black uppercase text-xs">{order.customerName}</span>
+                            <span className="font-black uppercase text-xs text-foreground">{order.customerName}</span>
                             <span className="text-[10px] text-muted-foreground">{order.customerPhone}</span>
                           </div>
                         </TableCell>
@@ -192,9 +193,9 @@ export default function AdminDashboard() {
                             ))}
                           </div>
                         </TableCell>
-                        <TableCell className="font-black text-sm">${order.total?.toFixed(2)}</TableCell>
+                        <TableCell className="font-black text-sm text-foreground">${order.total?.toFixed(2)}</TableCell>
                         <TableCell>
-                          <Badge variant="outline" className="text-[10px] font-black uppercase tracking-tighter border-white/10">
+                          <Badge variant="outline" className="text-[10px] font-black uppercase tracking-tighter border-white/10 text-foreground">
                             {order.deliveryProvider}
                           </Badge>
                         </TableCell>
@@ -210,7 +211,7 @@ export default function AdminDashboard() {
                           {status?.next ? (
                             <Button 
                               onClick={() => handleUpdateStatus(order.id, order.status)}
-                              className="gold-gradient text-primary-foreground text-[10px] font-black uppercase tracking-widest h-8 px-4 border-none shadow-lg hover:scale-105 active:scale-95 transition-all"
+                              className="gold-gradient text-black text-[10px] font-black uppercase tracking-widest h-8 px-4 border-none shadow-lg hover:scale-105 active:scale-95 transition-all"
                             >
                               Move to {STATUS_CONFIG[status.next as keyof typeof STATUS_CONFIG].label}
                             </Button>
