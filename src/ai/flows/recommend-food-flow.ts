@@ -3,6 +3,7 @@
  * @fileOverview AI Food Recommendation Flow for Slice & Spice.
  * 
  * This flow takes user preferences and suggests the best items from the Slice & Spice menu.
+ * Includes retry logic to handle transient API quota or rate limit errors.
  */
 
 import { ai } from '@/ai/genkit';
@@ -44,8 +45,26 @@ const prompt = ai.definePrompt({
   Provide 2 recommendations from the menu and a specific pairing tip that highlights our bold flavors. Be enthusiastic and premium in your tone.`,
 });
 
+/**
+ * Helper to retry a function if it fails due to rate limits or quota issues.
+ */
+async function retryWithBackoff<T>(fn: () => Promise<T>, retries = 2, delay = 2000): Promise<T> {
+  try {
+    return await fn();
+  } catch (error: any) {
+    const errorMessage = error.message?.toLowerCase() || '';
+    const isRetryable = errorMessage.includes('429') || errorMessage.includes('quota') || errorMessage.includes('rate limit');
+    
+    if (retries > 0 && isRetryable) {
+      await new Promise(resolve => setTimeout(resolve, delay));
+      return retryWithBackoff(fn, retries - 1, delay * 1.5);
+    }
+    throw error;
+  }
+}
+
 export async function recommendFood(input: RecommendFoodInput): Promise<RecommendFoodOutput> {
-  const { output } = await prompt(input);
-  if (!output) throw new Error('AI failed to generate recommendation');
-  return output;
+  const result = await retryWithBackoff(() => prompt(input));
+  if (!result.output) throw new Error('AI failed to generate recommendation');
+  return result.output;
 }

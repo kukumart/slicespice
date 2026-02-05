@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -69,11 +68,17 @@ export default function MenuPage() {
   const handleAiRecommend = async () => {
     if (!aiPreference) return
     setAiLoading(true)
+    setAiResult(null)
     try {
       const result = await recommendFood({ preference: aiPreference })
       setAiResult(result)
-    } catch (error) {
-      console.error(error)
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Assistant is Busy",
+        description: "The Taste Assistant is receiving a high volume of requests. Please wait a moment and try again.",
+        className: "glass-dark border-destructive/20",
+      })
     } finally {
       setAiLoading(false)
     }
