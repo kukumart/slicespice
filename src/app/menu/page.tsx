@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -136,15 +137,17 @@ export default function MenuPage() {
                           {aiResult.recommendations.map((rec, i) => {
                             const item = MENU_ITEMS.find(m => m.id === rec.itemId)
                             return item ? (
-                              <div key={i} className="glass p-4 rounded-xl border-primary/20 bg-primary/5">
-                                <div className="flex justify-between items-start mb-2">
-                                  <h4 className="font-black text-gold uppercase">{item.name}</h4>
-                                  <span className="font-bold text-xs">${item.price}</span>
+                              <div key={i} className="glass p-5 rounded-xl border-primary/20 bg-white/5">
+                                <div className="flex justify-between items-start mb-3">
+                                  <h4 className="font-black text-gold uppercase text-lg tracking-tight">{item.name}</h4>
+                                  <span className="font-black text-gold text-sm">${item.price}</span>
                                 </div>
-                                <p className="text-sm text-muted-foreground italic">"{rec.reason}"</p>
+                                <div className="p-3 bg-primary/10 rounded-lg border border-primary/20 mb-4">
+                                  <p className="text-xs text-foreground leading-relaxed font-medium italic">"{rec.reason}"</p>
+                                </div>
                                 <Button 
                                   size="sm" 
-                                  className="mt-3 gold-gradient text-primary-foreground font-black h-8 border-none w-full"
+                                  className="gold-gradient text-primary-foreground font-black h-10 border-none w-full shadow-lg"
                                   onClick={() => handleAddToCart(item)}
                                 >
                                   ADD TO SELECTION
@@ -153,9 +156,12 @@ export default function MenuPage() {
                             ) : null
                           })}
                         </div>
-                        <div className="p-4 border-l-4 border-gold bg-white/5 rounded-r-xl">
-                          <p className="text-xs font-black text-gold uppercase tracking-widest mb-1">Spice Pairing Tip</p>
-                          <p className="text-sm italic">{aiResult.pairingTip}</p>
+                        <div className="p-5 gold-gradient rounded-xl shadow-2xl relative overflow-hidden group">
+                          <div className="absolute top-0 right-0 p-2 opacity-20">
+                            <Sparkles className="w-8 h-8 text-primary-foreground" />
+                          </div>
+                          <p className="text-[10px] font-black text-primary-foreground uppercase tracking-[0.2em] mb-1">Expert Spice Pairing</p>
+                          <p className="text-sm font-bold text-primary-foreground italic leading-relaxed">{aiResult.pairingTip}</p>
                         </div>
                       </div>
                     )}
