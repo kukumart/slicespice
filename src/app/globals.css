@@ -4,47 +4,36 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 13%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
+    --background: 0 0% 12%; /* #1e1e1e - softer than pure black */
+    --foreground: 0 0% 100%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 100%;
     --primary: 45 100% 50%;
     --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 13%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
     --accent: 45 100% 50%;
     --accent-foreground: 0 0% 0%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
     --ring: 45 100% 50%;
-    --radius: 1rem;
-  }
-  .dark {
-    --background: 0 0% 3%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 3%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 45 100% 50%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 45 100% 50%;
-    --accent-foreground: 0 0% 0%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 12%;
-    --input: 0 0% 12%;
-    --ring: 45 100% 50%;
+    --radius: 1.5rem;
+
+    /* Fluid Type Scale */
+    --text-display: clamp(2.5rem, 1.5rem + 5vw, 6rem);
+    --text-h1:      clamp(2rem, 1.25rem + 4vw, 4.5rem);
+    --text-h2:      clamp(1.75rem, 1rem + 3vw, 3.5rem);
+    --text-h3:      clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    --text-body:    clamp(0.95rem, 0.85rem + 0.5vw, 1.125rem);
+    
+    --leading-tight: 1.1;
+    --leading-base:  1.6;
   }
 }
 
@@ -53,11 +42,17 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased text-lg md:text-xl;
+    @apply bg-background text-foreground font-body antialiased;
+    font-size: var(--text-body);
+    line-height: var(--leading-base);
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-black uppercase tracking-tighter leading-[0.85];
+    @apply font-black uppercase tracking-tighter;
+    line-height: var(--leading-tight);
   }
+  h1 { font-size: var(--text-h1); }
+  h2 { font-size: var(--text-h2); }
+  h3 { font-size: var(--text-h3); }
 }
 
 .glass {
