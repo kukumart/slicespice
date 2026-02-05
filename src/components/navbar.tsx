@@ -1,8 +1,7 @@
-
 "use client"
 
 import Link from "next/link"
-import { ShoppingCart, Menu, X, MapPin, Info, Utensils, User, LogOut, LayoutDashboard, Settings, Shield } from "lucide-react"
+import { ShoppingCart, Menu, X, MapPin, Info, Utensils, User, LogOut, LayoutDashboard, Settings, Shield, Share2 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -11,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { useFirebase, useDoc, useFirestore, useMemoFirebase } from "@/firebase"
 import { doc } from "firebase/firestore"
 import { ShareDialog } from "./share-dialog"
+import { Logo } from "./logo"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,12 +54,7 @@ export function Navbar() {
         scrolled ? "glass-dark shadow-2xl border-white/10 translate-y-[-4px]" : "bg-transparent"
       )}>
         <Link href="/" className="flex items-center gap-3 px-2 group no-underline">
-          <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center font-black text-primary-foreground text-2xl shadow-lg group-hover:rotate-12 transition-transform">
-            S&S
-          </div>
-          <span className="font-headline font-black text-2xl tracking-tighter hidden sm:block text-foreground">
-            <span className="bg-primary text-primary-foreground px-2 py-0.5 rounded-lg mr-1 inline-block">SLICE</span>&SPICE
-          </span>
+          <Logo size="sm" />
         </Link>
 
         <div className="hidden md:flex items-center gap-10">
@@ -67,7 +62,7 @@ export function Navbar() {
             <Link 
               key={link.name} 
               href={link.href} 
-              className="text-sm font-bold uppercase tracking-widest hover:text-gold transition-colors relative group no-underline text-foreground"
+              className="text-xs font-black uppercase tracking-widest hover:text-gold transition-colors relative group no-underline text-foreground"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 gold-gradient group-hover:w-full transition-all duration-300" />
@@ -136,7 +131,7 @@ export function Navbar() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 md:hidden">
+        <div className="flex items-center gap-4 md:hidden pointer-events-auto">
           <ShareDialog />
           <Link href="/order" className="relative glass w-12 h-12 rounded-2xl flex items-center justify-center no-underline">
             <ShoppingCart className="w-6 h-6 text-foreground" />

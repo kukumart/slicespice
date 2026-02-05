@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 12%; /* #1e1e1e - softer than pure black */
+    --background: 0 0% 12%; /* #1e1e1e - soft black */
     --foreground: 0 0% 100%;
     --card: 0 0% 8%;
     --card-foreground: 0 0% 100%;
@@ -25,14 +25,16 @@
     --ring: 45 100% 50%;
     --radius: 1.5rem;
 
-    /* Fluid Type Scale */
-    --text-display: clamp(2.5rem, 1.5rem + 5vw, 6rem);
-    --text-h1:      clamp(2rem, 1.25rem + 4vw, 4.5rem);
-    --text-h2:      clamp(1.75rem, 1rem + 3vw, 3.5rem);
-    --text-h3:      clamp(1.5rem, 1rem + 2vw, 2.5rem);
-    --text-body:    clamp(0.95rem, 0.85rem + 0.5vw, 1.125rem);
+    /* Standardized Fluid Type Scale */
+    --text-display: clamp(2.5rem, 1rem + 5vw, 4rem);    /* 40px -> 64px */
+    --text-h1:      clamp(1.75rem, 1rem + 3vw, 2.5rem); /* 28px -> 40px */
+    --text-h2:      clamp(1.5rem, 1rem + 2vw, 2rem);    /* 24px -> 32px */
+    --text-h3:      clamp(1.25rem, 1rem + 1vw, 1.5rem); /* 20px -> 24px */
     
-    --leading-tight: 1.1;
+    /* Body text scales slightly for reading comfort */
+    --text-body:    clamp(1rem, 0.875rem + 0.5vw, 1.125rem); /* 16px -> 18px */
+    
+    --leading-tight: 1.2;
     --leading-base:  1.6;
   }
 }
