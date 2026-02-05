@@ -46,6 +46,22 @@
         "address",
         "role"
       ]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Represents a customer order in the system.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "items": { "type": "array" },
+        "total": { "type": "number" },
+        "status": { "type": "string", "enum": ["placed", "preparing", "on-the-way", "delivered"] },
+        "deliveryProvider": { "type": "string" },
+        "deliveryAddress": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
     }
   },
   "auth": {
@@ -56,40 +72,17 @@
     ]
   },
   "firestore": {
-    "structure": [
-      {
-        "path": "/users/{userId}",
-        "definition": {
-          "entityName": "User",
-          "schema": {
-            "$ref": "#/backend/entities/User"
-          },
-          "description": "Stores user profile information.  Includes the 'role' field for authorization independence.",
-          "params": [
-            {
-              "name": "userId",
-              "description": "The unique identifier of the user."
-            }
-          ]
-        }
-      },
-      {
-        "path": "/roles_admin/{userId}",
-        "definition": {
-          "entityName": "adminRole",
-          "schema": {
-            "$ref": "#/backend/entities/User"
-          },
-          "description": "Indicates whether a user has admin privileges. Existence of a document at this path grants admin access.  Content of document is irrelevant.",
-          "params": [
-            {
-              "name": "userId",
-              "description": "The unique identifier of the user who might be an admin."
-            }
-          ]
-        }
-      }
-    ],
-    "reasoning": "This design prioritizes security and scalability for the Slice & Spice application, particularly around user authentication and authorization. It leverages Structural Segregation and Authorization Independence to simplify security rules and enable robust data access control. The key collections are `/users` for user profiles, `/roles_admin` for admin role assignments.  The design emphasizes denormalization to avoid hierarchical `get()` calls in security rules, ensuring atomic operations. Path-based ownership secures user-specific data, while existence checks for admin roles simplify admin authorization.\n\n**Authorization Independence:** The `users` collection stores the `role` property directly within the user document. This eliminates the need for security rules to fetch user roles from a separate location, enabling atomic operations and simplifying rule logic.\n\n**QAPs (Rules are not Filters):**\n*   The separation of user roles into a distinct collection (`/roles_admin`) and the role property in the user collection enables secure `list` operations. Listing of users can be secured based on their role. Existence checks on `/roles_admin/{userId}` can determine admin privileges.\n\n"
+    "/users/{userId}": {
+      "schema": { "$ref": "#/backend/entities/User" },
+      "description": "Stores user profile information."
+    },
+    "/roles_admin/{userId}": {
+      "schema": { "$ref": "#/backend/entities/User" },
+      "description": "Grants admin privileges via presence check."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/backend/entities/Order" },
+      "description": "Stores customer orders."
+    }
   }
 }

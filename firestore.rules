@@ -10,29 +10,15 @@ service cloud.firestore {
      * administrative privileges are verified via a dedicated /roles_admin/ collection.
      *
      * DATA STRUCTURE
-     * - /users/{userId}: Primary user profile data. Access is limited to the owner and administrators.
-     * - /roles_admin/{userId}: An administrative flag collection. The existence of a document 
-     *   at this path signifies that the user has admin privileges.
-     *
-     * KEY SECURITY DECISIONS
-     * - Ownership: Standard CRUD operations on user documents are restricted to the owner.
-     * - Admin Elevation: Admin privileges are managed via a separate collection to prevent 
-     *   users from self-assigning roles within their own profile.
-     * - Relational Integrity: On creation of a user profile, the internal 'id' field must 
-     *   match the document ID to ensure consistency between the auth state and the data.
-     * - Prototyping Flexibility: Rules do not enforce data types or non-relational field 
-     *   requirements, allowing for rapid schema evolution.
-     *
-     * DENORMALIZATION FOR AUTHORIZATION
-     * Roles are stored both in the /users collection (for easy UI consumption/logic) 
-     * and represented by the presence of a document in /roles_admin (for secure, 
-     * performant admin-level access checks).
+     * - /users/{userId}: Primary user profile data. Access limited to owner and admins.
+     * - /roles_admin/{userId}: Administrative flag collection. Presence = Admin status.
+     * - /orders/{orderId}: Customer orders. Owners can read/create. Admins can manage all.
      */
 
     // --- Helper Functions ---
 
     /**
-     * @description Checks if the request is from an authenticated user.
+     * @description Checks if the request is from an authenticated user (includes Anonymous).
      */
     function isSignedIn() {
       return request.auth != null;
@@ -46,8 +32,7 @@ service cloud.firestore {
     }
 
     /**
-     * @description Checks if the authenticated user has administrative privileges 
-     * by verifying the existence of a document in the roles_admin collection.
+     * @description Checks if the authenticated user has administrative privileges.
      */
     function isAdmin() {
       return isSignedIn() && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
@@ -56,38 +41,27 @@ service cloud.firestore {
     // --- Collection Rules ---
 
     match /users/{userId} {
-      /**
-       * @description Rules for the User profile collection. Allows users to manage their own 
-       * profile and admins to view or manage all profiles.
-       * @path /users/{userId}
-       * @allow (get) if isOwner(userId) || isAdmin()
-       * @allow (list) if isAdmin()
-       * @allow (create) if isOwner(userId) && request.resource.data.id == userId
-       * @allow (update) if (isOwner(userId) || isAdmin()) && getAfter(userId).data.id == request.resource.data.id
-       * @allow (delete) if isAdmin()
-       * @deny (list) if the user is not an admin.
-       * @principle Enforces path-based ownership and relational integrity for user profiles.
-       */
       allow get: if isOwner(userId) || isAdmin();
       allow list: if isAdmin();
       allow create: if isOwner(userId) && request.resource.data.id == userId;
-      allow update: if (isOwner(userId) || isAdmin()) && request.resource.data.id.id == userId;
+      allow update: if (isOwner(userId) || isAdmin()) && request.resource.data.id == userId;
       allow delete: if isAdmin();
     }
 
     match /roles_admin/{userId} {
+      allow get, list, create, update, delete: if isAdmin();
+    }
+
+    match /orders/{orderId} {
       /**
-       * @description Rules for the admin roles collection. This is a high-security collection 
-       * where only existing admins can grant or revoke admin status to others.
-       * @path /roles_admin/{userId}
-       * @allow (get, list) if isAdmin()
-       * @allow (create, update, delete) if isAdmin()
-       * @deny (create) if a regular user tries to create an admin entry for themselves.
-       * @principle Uses structural segregation to protect administrative privileges.
+       * @description Rules for the Orders collection. 
+       * Users can create orders and read their own.
+       * Admins have full access to manage the order stream.
        */
-      allow get, list: if isAdmin();
-      allow create: if isAdmin();
-      allow update: if isAdmin();
+      allow create: if isSignedIn(); // Allows both registered and guest users to order
+      allow get: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow list: if isAdmin(); // Only admins can see the full list
+      allow update: if isAdmin(); // Only admins can update status in the dashboard
       allow delete: if isAdmin();
     }
 
