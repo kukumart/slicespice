@@ -40,15 +40,15 @@ export default function LocationPage() {
           <Badge className="bg-primary text-primary-foreground font-black px-4 py-1 rounded-lg uppercase tracking-widest mb-4">
             Our Network
           </Badge>
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase">FIND A <span className="gold-highlight text-primary-foreground">HUB</span></h1>
-          <p className="text-muted-foreground text-xl max-w-2xl mx-auto font-medium">
+          <h1 className="text-7xl md:text-8xl font-black tracking-tighter uppercase">FIND A <span className="gold-highlight text-primary-foreground">HUB</span></h1>
+          <p className="text-muted-foreground text-2xl max-w-2xl mx-auto font-medium">
             Visit our flagship restaurant at Waris Mall or discover our specialized express hubs across Nairobi.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           <div className="lg:col-span-4 space-y-6">
-            <h2 className="text-2xl font-black uppercase tracking-tight flex items-center gap-3">
+            <h2 className="text-3xl font-black uppercase tracking-tight flex items-center gap-3">
               <Star className="w-6 h-6 text-gold fill-gold" />
               Active Hubs
             </h2>
@@ -57,12 +57,12 @@ export default function LocationPage() {
                 <GlassCard key={i} className="p-6 border-white/5 hover:border-primary/20">
                   <div className="space-y-4">
                     <div className="flex justify-between items-start">
-                      <h3 className="font-black text-xl tracking-tight uppercase">{loc.name}</h3>
+                      <h3 className="font-black text-2xl tracking-tight uppercase">{loc.name}</h3>
                       <Badge variant={loc.status === "Open Now" ? "default" : "secondary"} className={loc.status === "Open Now" ? "bg-primary text-primary-foreground font-bold" : ""}>
                         {loc.status}
                       </Badge>
                     </div>
-                    <div className="space-y-2 text-sm text-muted-foreground font-medium">
+                    <div className="space-y-2 text-base text-muted-foreground font-medium">
                       <p className="flex items-center gap-2 leading-tight"><MapPin className="w-5 h-5 text-gold shrink-0" /> {loc.address}</p>
                       <p className="flex items-center gap-2"><Clock className="w-4 h-4 text-gold" /> 10:00 AM - 11:00 PM</p>
                     </div>
@@ -88,7 +88,7 @@ export default function LocationPage() {
                 </div>
                 <div>
                   <h4 className="font-black uppercase text-xs tracking-widest text-gold">Priority Line</h4>
-                  <p className="font-bold text-lg">+254 (0) SLICE-JUICE</p>
+                  <p className="font-bold text-xl">+254 (0) SLICE-JUICE</p>
                 </div>
               </div>
             </GlassCard>
@@ -133,8 +133,8 @@ export default function LocationPage() {
                   <div className="flex items-center gap-4">
                     <Star className="w-8 h-8 text-gold fill-gold" />
                     <div>
-                      <p className="font-black text-lg uppercase tracking-tight">The Gold Standard</p>
-                      <p className="text-xs text-muted-foreground font-medium">Opposite Carrefour, Eastern Bypass. Your slice awaits.</p>
+                      <p className="font-black text-2xl uppercase tracking-tight">The Gold Standard</p>
+                      <p className="text-sm text-muted-foreground font-medium">Opposite Carrefour, Eastern Bypass. Your slice awaits.</p>
                     </div>
                   </div>
                   <Link 

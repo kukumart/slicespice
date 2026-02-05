@@ -63,11 +63,11 @@ export default function Home() {
           </div>
           
           <div className="space-y-8">
-            <h1 className="text-7xl md:text-9xl lg:text-[11rem] font-black tracking-tighter leading-[0.85] uppercase animate-in fade-in slide-in-from-bottom-12 duration-1000 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <h1 className="text-8xl md:text-9xl lg:text-[11rem] font-black tracking-tighter leading-[0.85] uppercase animate-in fade-in slide-in-from-bottom-12 duration-1000 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
               CRAVE THE <span className="gold-highlight italic text-primary-foreground px-8 py-2">SLICE</span><br />
               LOVE THE <span className="gold-highlight italic text-primary-foreground px-8 py-2">SPICE</span>
             </h1>
-            <p className="text-xl md:text-3xl text-white/90 max-w-4xl mx-auto leading-relaxed font-black animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-300 drop-shadow-2xl uppercase tracking-tight">
+            <p className="text-2xl md:text-3xl text-white/90 max-w-4xl mx-auto leading-relaxed font-black animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-300 drop-shadow-2xl uppercase tracking-tight">
               A premium symphony of artisanal sourdough pizzas and bold exotic spices, crafted for the modern foodie.
             </p>
           </div>

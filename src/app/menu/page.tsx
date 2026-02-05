@@ -98,10 +98,10 @@ export default function MenuPage() {
       <div className="max-w-7xl mx-auto space-y-20">
         <div className="flex flex-col items-center gap-12 text-center">
           <div className="space-y-6">
-            <h1 className="text-7xl md:text-9xl font-black tracking-tight uppercase leading-[0.9]">
+            <h1 className="text-8xl md:text-9xl font-black tracking-tight uppercase leading-[0.9]">
               Our <span className="gold-highlight italic animate-masterpiece text-black">Curation</span>
             </h1>
-            <p className="text-muted-foreground text-xl md:text-2xl max-w-3xl mx-auto font-medium">
+            <p className="text-2xl md:text-3xl text-muted-foreground max-w-3xl mx-auto font-medium">
               Explore a symphony of premium flavors, hand-crafted with artisanal precision.
             </p>
           </div>

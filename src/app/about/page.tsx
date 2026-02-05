@@ -14,11 +14,11 @@ export default function AboutPage() {
         {/* Story Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h1 className="text-5xl font-bold tracking-tight uppercase">Our <span className="gold-highlight italic">Story</span></h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <h1 className="text-6xl font-bold tracking-tight uppercase">Our <span className="gold-highlight italic">Story</span></h1>
+            <p className="text-xl text-muted-foreground leading-relaxed">
               Founded in 2021, Slice & Spice began with a simple observation: why should fast food be a compromise on health or flavor? We wanted to combine the comfort of a perfect pizza with the intensity of bold, artisanal spices.
             </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-xl text-muted-foreground leading-relaxed">
               Every crust is hand-stretched from our 48-hour fermented sourdough. Every burger is formed with premium locally-sourced beef. And every spice blend is toasted and ground right before it hits your plate.
             </p>
           </div>
