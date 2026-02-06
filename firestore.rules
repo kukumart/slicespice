@@ -70,7 +70,7 @@ service cloud.firestore {
        * @description Allows users to list their own orders (filtered by userId) 
        * and admins to see the full stream.
        */
-      allow list: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (isAdmin() || (resource.data.userId == request.auth.uid));
       
       allow update: if isAdmin(); // Only admins can update status in the dashboard
       allow delete: if isAdmin();

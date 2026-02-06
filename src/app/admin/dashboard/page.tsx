@@ -75,7 +75,13 @@ export default function AdminDashboard() {
   const adminRef = useMemoFirebase(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
   const { data: adminRole, isLoading: isAdminCheckLoading } = useDoc(adminRef)
   
-  const ordersQuery = useMemoFirebase(() => query(collection(db, "orders"), orderBy("createdAt", "desc")), [db])
+  // CRITICAL FIX: Only attempt to query the orders collection if the user is confirmed as an admin.
+  // This prevents the permission error for non-admin users or during the initial auth check.
+  const ordersQuery = useMemoFirebase(() => {
+    if (!user || !adminRole) return null;
+    return query(collection(db, "orders"), orderBy("createdAt", "desc"));
+  }, [db, user, adminRole])
+  
   const { data: orders, isLoading: isOrdersLoading } = useCollection(ordersQuery)
 
   const handleUpdateStatus = (orderId: string, currentStatus: string) => {
