@@ -1,5 +1,37 @@
-# Firebase Studio
+# Slice & Spice | Premium Fast Food Delivery
 
-This is a NextJS starter in Firebase Studio.
+Welcome to the Slice & Spice Next.js application. This project is built with Next.js 15, React, Tailwind CSS, and Firebase.
 
-To get started, take a look at src/app/page.tsx.
+## Getting Started
+
+To run the development server:
+```bash
+npm run dev
+```
+
+## Custom Domains
+
+To add a custom domain to your application, follow these steps in the Firebase Console (code changes are not required for this):
+
+1.  Go to the [Firebase Console](https://console.firebase.google.com/).
+2.  Select your project: **studio-2954956221-d79a9**.
+3.  In the left sidebar, navigate to **Build** > **App Hosting**.
+4.  Select your backend from the list.
+5.  Click on the **Settings** tab.
+6.  In the **Domains** section, click **Add custom domain**.
+7.  Enter your domain name and follow the prompts to verify ownership via DNS.
+
+## Project Structure
+
+- `src/app`: Next.js App Router pages and layouts.
+- `src/components`: Reusable UI components (ShadCN).
+- `src/firebase`: Firebase configuration and custom hooks for Firestore and Auth.
+- `src/ai`: Genkit AI flows for personalized recommendations.
+- `docs/backend.json`: Blueprint for the application's data structure and authentication.
+
+## Admin Access
+
+To access the **Admin Command Center** at `/admin/dashboard`:
+1.  Sign in to the application.
+2.  Ensure your User UID is added to the `roles_admin` collection in Firestore.
+3.  Access the dashboard via the User Profile menu in the navigation bar.
