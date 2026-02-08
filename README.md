@@ -11,7 +11,7 @@ npm run dev
 
 ## Custom Domains
 
-To add a custom domain to your application, follow these steps in the Firebase Console (code changes are not required for this):
+To add a custom domain to your application, follow these steps in the Firebase Console:
 
 1.  Go to the [Firebase Console](https://console.firebase.google.com/).
 2.  Select your project: **studio-2954956221-d79a9**.
@@ -20,6 +20,24 @@ To add a custom domain to your application, follow these steps in the Firebase C
 5.  Click on the **Settings** tab.
 6.  In the **Domains** section, click **Add custom domain**.
 7.  Enter your domain name and follow the prompts to verify ownership via DNS.
+
+## Pushing to GitHub
+
+To create a GitHub repository for this project, follow these steps:
+
+1.  **Create a Repository**: Go to [GitHub](https://github.com/new) and create a new, empty repository.
+2.  **Initialize Git**: Open your terminal in the project root and run:
+    ```bash
+    git init
+    git add .
+    git commit -m "Initial commit: Gold Standard Slice & Spice App"
+    ```
+3.  **Link and Push**: Replace `<YOUR_GITHUB_REPO_URL>` with the URL of the repo you just created:
+    ```bash
+    git remote add origin <YOUR_GITHUB_REPO_URL>
+    git branch -M main
+    git push -u origin main
+    ```
 
 ## Project Structure
 
