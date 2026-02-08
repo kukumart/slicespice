@@ -76,12 +76,12 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 animate-in fade-in slide-in-from-bottom-20 duration-1000 delay-600">
-            <Link href="/menu" className="w-full sm:w-auto">
-              <button className="gold-gradient text-black text-lg px-12 py-5 rounded-2xl w-full font-black shadow-2xl hover:scale-105 transition-all duration-500 uppercase tracking-widest border-none flex items-center justify-center gap-4 cursor-pointer group">
+            <Button asChild className="gold-gradient text-black text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black shadow-2xl hover:scale-105 transition-all duration-500 uppercase tracking-widest border-none h-auto group">
+              <Link href="/menu">
                 START SELECTION <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-              </button>
-            </Link>
-            <Button asChild variant="outline" size="lg" className="glass border-white/20 text-lg px-12 py-5 rounded-2xl w-full sm:w-auto font-black hover:bg-white/10 transition-all text-white backdrop-blur-2xl uppercase tracking-widest h-auto">
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className="glass border-white/20 text-lg px-12 py-8 rounded-2xl w-full sm:w-auto font-black hover:bg-white/10 transition-all text-white backdrop-blur-2xl uppercase tracking-widest h-auto">
               <Link href="/about">OUR ETHOS</Link>
             </Button>
           </div>
@@ -195,15 +195,17 @@ export default function Home() {
       <section className="py-32 px-4 bg-background relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold/5 blur-[120px] rounded-full pointer-events-none" />
         <div className="max-w-5xl mx-auto text-center space-y-10 relative z-10">
-          <h2 className="text-[var(--text-display)] font-black tracking-tighter uppercase leading-tight">Ready for the <span className="gold-highlight text-black italic">Peak?</span></h2>
+          <h2 className="text-[var(--text-h1)] md:text-[var(--text-display)] font-black tracking-tighter uppercase leading-tight">Ready for the <span className="gold-highlight text-black italic">Peak?</span></h2>
           <p className="text-xl md:text-3xl max-w-3xl mx-auto font-medium leading-relaxed uppercase tracking-tight opacity-90">
             Join the elite circle of food lovers. Your next masterpiece is one click away.
           </p>
-          <Link href="/menu" className="inline-block no-underline">
-            <button className="gold-gradient text-black px-12 py-6 rounded-3xl text-xl md:text-2xl font-black shadow-2xl hover:scale-110 transition-all uppercase tracking-widest border-none cursor-pointer group flex items-center gap-6">
-              START ORDER <ArrowRight className="w-8 h-8 group-hover:translate-x-5 transition-transform duration-500" />
-            </button>
-          </Link>
+          <div className="flex justify-center">
+            <Button asChild className="gold-gradient text-black px-12 py-10 rounded-3xl text-xl md:text-2xl font-black shadow-2xl hover:scale-110 transition-all uppercase tracking-widest border-none cursor-pointer group h-auto">
+              <Link href="/menu" className="flex items-center gap-6">
+                START ORDER <ArrowRight className="w-8 h-8 group-hover:translate-x-5 transition-transform duration-500" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -212,9 +214,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div className="space-y-6">
-              <Link href="/" className="inline-block no-underline">
+              <div className="flex justify-start">
                 <Logo size="sm" className="items-start" />
-              </Link>
+              </div>
               <p className="text-muted-foreground text-sm font-medium leading-relaxed opacity-70 uppercase tracking-widest">
                 The global benchmark for premium fast food. Artisanal precision meets bold flavor innovation.
               </p>
@@ -246,7 +248,7 @@ export default function Home() {
                   placeholder="Official Email" 
                   className="bg-white/5 border border-white/10 rounded-xl px-5 py-3 text-[10px] outline-none focus:border-gold/50 text-white transition-all font-black uppercase tracking-widest" 
                 />
-                <button className="gold-gradient text-black py-3 rounded-xl font-black uppercase text-[10px] border-none cursor-pointer tracking-widest hover:opacity-90 transition-opacity">JOIN CIRCLE</button>
+                <Button className="gold-gradient text-black py-3 rounded-xl font-black uppercase text-[10px] border-none cursor-pointer tracking-widest hover:opacity-90 transition-opacity h-auto">JOIN CIRCLE</Button>
               </div>
             </div>
           </div>

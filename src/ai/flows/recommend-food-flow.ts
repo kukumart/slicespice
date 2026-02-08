@@ -3,7 +3,7 @@
  * @fileOverview AI Food Recommendation Flow for Slice & Spice.
  * 
  * This flow takes user preferences and suggests the best items from the Slice & Spice menu.
- * Enhanced with personalization context and "Chef's Note" output.
+ * Enhanced with robust fallbacks to prevent Internal Server Errors when AI is unavailable.
  */
 
 import { ai } from '@/ai/genkit';
@@ -26,7 +26,26 @@ const RecommendFoodOutputSchema = z.object({
 export type RecommendFoodInput = z.infer<typeof RecommendFoodInputSchema>;
 export type RecommendFoodOutput = z.infer<typeof RecommendFoodOutputSchema>;
 
-const prompt = ai.definePrompt({
+/**
+ * Recommended fallback data in case AI services are unavailable or keys are missing.
+ */
+const FALLBACK_RECOMMENDATION: RecommendFoodOutput = {
+  recommendations: [
+    { 
+      itemId: 1, 
+      reason: "Our most beloved masterpiece, perfect for any mood.", 
+      chefsNote: "Our 48-hour fermented sourdough is the soul of our pizza, providing a complex flavor profile that standard dough lacks." 
+    },
+    { 
+      itemId: 3, 
+      reason: "The definition of luxury and our signature bold burger.", 
+      chefsNote: "The truffle oil we use is sourced from the heart of Umbria, ensuring the ultimate gold standard of infusion." 
+    }
+  ],
+  pairingTip: "Pair with our Fresh Mint Lemonade for a crisp, artisanal finish."
+};
+
+const recommendFoodPrompt = ai.definePrompt({
   name: 'recommendFoodPrompt',
   input: { schema: RecommendFoodInputSchema },
   output: { schema: RecommendFoodOutputSchema },
@@ -47,59 +66,36 @@ const prompt = ai.definePrompt({
   Provide 2 curated recommendations. For each, include a "chefsNote" that explains a technical culinary detail. Be sophisticated, authoritative, and welcoming.`,
 });
 
-/**
- * Helper to retry a function if it fails due to rate limits or quota issues.
- */
-async function retryWithBackoff<T>(fn: () => Promise<T>, retries = 2, delay = 2000): Promise<T> {
-  try {
-    return await fn();
-  } catch (error: any) {
-    const errorMessage = error.message?.toLowerCase() || '';
-    const isRetryable = errorMessage.includes('429') || errorMessage.includes('quota') || errorMessage.includes('rate limit');
-    
-    if (retries > 0 && isRetryable) {
-      await new Promise(resolve => setTimeout(resolve, delay));
-      return retryWithBackoff(fn, retries - 1, delay * 1.5);
+const recommendFoodFlow = ai.defineFlow(
+  {
+    name: 'recommendFoodFlow',
+    inputSchema: RecommendFoodInputSchema,
+    outputSchema: RecommendFoodOutputSchema,
+  },
+  async (input) => {
+    try {
+      const { output } = await recommendFoodPrompt(input);
+      if (!output) return FALLBACK_RECOMMENDATION;
+      return output;
+    } catch (error) {
+      console.warn("AI Generation unavailable, using Gold Standard fallback:", error);
+      return FALLBACK_RECOMMENDATION;
     }
-    throw error;
   }
-}
-
-/**
- * Recommended fallback data in case AI services are unavailable.
- */
-const FALLBACK_RECOMMENDATION: RecommendFoodOutput = {
-  recommendations: [
-    { 
-      itemId: 1, 
-      reason: "Our most beloved masterpiece, perfect for any mood.", 
-      chefsNote: "Our 48-hour fermented sourdough is the soul of our pizza, providing a complex flavor profile that standard dough lacks." 
-    },
-    { 
-      itemId: 3, 
-      reason: "The definition of luxury and our signature bold burger.", 
-      chefsNote: "The truffle oil we use is sourced from the heart of Umbria, ensuring the ultimate gold standard of infusion." 
-    }
-  ],
-  pairingTip: "Pair with our Fresh Mint Lemonade for a crisp, artisanal finish."
-};
+);
 
 export async function recommendFood(input: RecommendFoodInput): Promise<RecommendFoodOutput> {
-  // Check for API key at runtime to avoid hard crashes
+  // Check for API keys before attempting flow to prevent server-side crash
   const hasKey = !!(process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY);
   
   if (!hasKey) {
-    console.warn("AI Service keys missing. Providing premium curated fallbacks.");
     return FALLBACK_RECOMMENDATION;
   }
 
   try {
-    const result = await retryWithBackoff(() => prompt(input));
-    if (!result.output) return FALLBACK_RECOMMENDATION;
-    return result.output;
+    return await recommendFoodFlow(input);
   } catch (error: any) {
-    console.error("AI Flow Error:", error);
-    // Return fallback instead of throwing to prevent 500 errors in the UI
+    console.error("AI Flow Execution Failure:", error);
     return FALLBACK_RECOMMENDATION;
   }
 }
