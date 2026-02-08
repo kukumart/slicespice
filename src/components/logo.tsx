@@ -1,4 +1,7 @@
+"use client"
+
 import { cn } from "@/lib/utils"
+import { useState, useEffect } from "react"
 
 interface LogoProps {
   className?: string
@@ -6,11 +9,22 @@ interface LogoProps {
 }
 
 export function Logo({ className, size = "md" }: LogoProps) {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const scales = {
     sm: "scale-75",
     md: "scale-100",
     lg: "scale-150"
   }
+
+  // Prevent hydration flicker for complex SVG/transform logic
+  if (!mounted) return (
+    <div className={cn("w-24 h-12 bg-primary/20 rounded-3xl animate-pulse", scales[size], className)} />
+  )
 
   return (
     <div className={cn(

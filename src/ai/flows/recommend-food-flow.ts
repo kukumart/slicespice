@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview AI Food Recommendation Flow for Slice & Spice.
@@ -45,7 +44,7 @@ const prompt = ai.definePrompt({
 
   User Preference: {{{preference}}}
 
-  Provide 2 curated recommendations. For each, include a "chefsNote" that explains a technical culinary detail (e.g., about the sourdough fermentation or the truffle oil source). Be sophisticated, authoritative, and welcoming.`,
+  Provide 2 curated recommendations. For each, include a "chefsNote" that explains a technical culinary detail. Be sophisticated, authoritative, and welcoming.`,
 });
 
 /**
@@ -66,8 +65,41 @@ async function retryWithBackoff<T>(fn: () => Promise<T>, retries = 2, delay = 20
   }
 }
 
+/**
+ * Recommended fallback data in case AI services are unavailable.
+ */
+const FALLBACK_RECOMMENDATION: RecommendFoodOutput = {
+  recommendations: [
+    { 
+      itemId: 1, 
+      reason: "Our most beloved masterpiece, perfect for any mood.", 
+      chefsNote: "Our 48-hour fermented sourdough is the soul of our pizza, providing a complex flavor profile that standard dough lacks." 
+    },
+    { 
+      itemId: 3, 
+      reason: "The definition of luxury and our signature bold burger.", 
+      chefsNote: "The truffle oil we use is sourced from the heart of Umbria, ensuring the ultimate gold standard of infusion." 
+    }
+  ],
+  pairingTip: "Pair with our Fresh Mint Lemonade for a crisp, artisanal finish."
+};
+
 export async function recommendFood(input: RecommendFoodInput): Promise<RecommendFoodOutput> {
-  const result = await retryWithBackoff(() => prompt(input));
-  if (!result.output) throw new Error('AI failed to generate recommendation');
-  return result.output;
+  // Check for API key at runtime to avoid hard crashes
+  const hasKey = !!(process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY);
+  
+  if (!hasKey) {
+    console.warn("AI Service keys missing. Providing premium curated fallbacks.");
+    return FALLBACK_RECOMMENDATION;
+  }
+
+  try {
+    const result = await retryWithBackoff(() => prompt(input));
+    if (!result.output) return FALLBACK_RECOMMENDATION;
+    return result.output;
+  } catch (error: any) {
+    console.error("AI Flow Error:", error);
+    // Return fallback instead of throwing to prevent 500 errors in the UI
+    return FALLBACK_RECOMMENDATION;
+  }
 }
