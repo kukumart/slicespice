@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect, ReactNode } from "react"
@@ -57,78 +58,71 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
   const effectiveTrigger = trigger || defaultTrigger
 
   // CRITICAL HYDRATION FIX: 
-  // We must ensure the server and the initial client render the exact same structure.
-  // By rendering the trigger directly until mounted, and then using Dialog with asChild,
-  // we keep the 'button' as the root element in all states, preventing hydration mismatches.
+  // To avoid hydration mismatch, the server and client MUST render the same root element.
+  // We render the trigger directly initially. The Dialog is only added after mounting.
   if (!mounted) {
-    return (
-      <div suppressHydrationWarning className="inline-block">
-        {effectiveTrigger}
-      </div>
-    )
+    return effectiveTrigger
   }
 
   return (
-    <div suppressHydrationWarning className="inline-block">
-      <Dialog>
-        <DialogTrigger asChild>
-          {effectiveTrigger}
-        </DialogTrigger>
-        <DialogContent className="glass-dark border-white/10 text-foreground max-w-sm rounded-[2rem]">
-          <DialogHeader>
-            <DialogTitle className="text-3xl font-black uppercase tracking-tight text-center">
-              Share the <span className="text-gold">Spice</span>
-            </DialogTitle>
-          </DialogHeader>
-          
-          <div className="flex flex-col items-center space-y-8 pt-6">
-            <GlassCard className="p-6 bg-white rounded-3xl" hover={false}>
-              {qrCodeUrl && (
-                <div className="relative w-[180px] h-[180px]">
-                  <Image 
-                    src={qrCodeUrl} 
-                    alt="Scan to share" 
-                    width={180} 
-                    height={180}
-                    className="rounded-xl"
-                    unoptimized
-                  />
-                </div>
-              )}
-            </GlassCard>
-
-            <p className="text-center text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-              Scan to experience the gold standard
-            </p>
-
-            <div className="w-full space-y-4">
-              <div className="flex gap-2 w-full">
-                <div className="flex-1 bg-white rounded-xl px-4 py-3 text-xs font-mono truncate border-white/5 text-black font-black flex items-center overflow-hidden">
-                  {url}
-                </div>
-                <Button 
-                  onClick={handleCopy}
-                  className="gold-gradient text-black font-black uppercase tracking-widest text-[10px] px-6 rounded-xl border-none h-12 shadow-lg"
-                >
-                  {copied ? <Check className="w-4 h-4 text-black" /> : <Copy className="w-4 h-4 text-black" />}
-                </Button>
+    <Dialog>
+      <DialogTrigger asChild>
+        {effectiveTrigger}
+      </DialogTrigger>
+      <DialogContent className="glass-dark border-white/10 text-foreground max-w-sm rounded-[2rem]">
+        <DialogHeader>
+          <DialogTitle className="text-3xl font-black uppercase tracking-tight text-center">
+            Share the <span className="text-gold">Spice</span>
+          </DialogTitle>
+        </DialogHeader>
+        
+        <div className="flex flex-col items-center space-y-8 pt-6">
+          <GlassCard className="p-6 bg-white rounded-3xl" hover={false}>
+            {qrCodeUrl && (
+              <div className="relative w-[180px] h-[180px]">
+                <Image 
+                  src={qrCodeUrl} 
+                  alt="Scan to share" 
+                  width={180} 
+                  height={180}
+                  className="rounded-xl"
+                  unoptimized
+                />
               </div>
+            )}
+          </GlassCard>
 
-              <div className="flex justify-between gap-2">
-                <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
-                  <Twitter className="w-4 h-4 text-[#1DA1F2]" />
-                </Button>
-                <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
-                  <Facebook className="w-4 h-4 text-[#4267B2]" />
-                </Button>
-                <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
-                  <Send className="w-4 h-4 text-[#0088cc]" />
-                </Button>
+          <p className="text-center text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+            Scan to experience the gold standard
+          </p>
+
+          <div className="w-full space-y-4">
+            <div className="flex gap-2 w-full">
+              <div className="flex-1 bg-white rounded-xl px-4 py-3 text-xs font-mono truncate border-white/5 text-black font-black flex items-center overflow-hidden">
+                {url}
               </div>
+              <Button 
+                onClick={handleCopy}
+                className="gold-gradient text-black font-black uppercase tracking-widest text-[10px] px-6 rounded-xl border-none h-12 shadow-lg"
+              >
+                {copied ? <Check className="w-4 h-4 text-black" /> : <Copy className="w-4 h-4 text-black" />}
+              </Button>
+            </div>
+
+            <div className="flex justify-between gap-2">
+              <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
+                <Twitter className="w-4 h-4 text-[#1DA1F2]" />
+              </Button>
+              <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
+                <Facebook className="w-4 h-4 text-[#4267B2]" />
+              </Button>
+              <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
+                <Send className="w-4 h-4 text-[#0088cc]" />
+              </Button>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
-    </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }
