@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect, ReactNode } from "react"
@@ -92,7 +91,7 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
 
           <div className="w-full space-y-4">
             <div className="flex gap-2 w-full">
-              <div className="flex-1 glass rounded-xl px-4 py-3 text-xs font-mono truncate border-white/5 opacity-50 flex items-center">
+              <div className="flex-1 bg-white/90 rounded-xl px-4 py-3 text-xs font-mono truncate border-white/5 text-black font-bold flex items-center">
                 {url}
               </div>
               <Button 
