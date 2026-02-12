@@ -16,10 +16,10 @@ export default function AboutPage() {
           <div className="space-y-6 md:space-y-8">
             <h1 className="text-[var(--text-h1)] font-black uppercase tracking-tight">Our <span className="gold-highlight italic text-black">Story</span></h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              Founded in 2021, Slice & Spice began with a simple observation: why should fast food be a compromise on health or flavor? We wanted to combine the comfort of a perfect pizza with the intensity of bold, artisanal spices.
+              We started Slice & Spice in 2021 because we wanted to make fast food better. We thought, "Why can't fast food be healthy and super yummy at the same time?"
             </p>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              Every crust is hand-stretched from our 48-hour fermented sourdough. Every burger is formed with premium locally-sourced beef.
+              We use special dough for our pizza and the best meat for our burgers. Every single meal is made with a lot of care to make sure you love it!
             </p>
           </div>
           <div className="relative aspect-square rounded-3xl overflow-hidden glass shadow-2xl">
@@ -38,20 +38,20 @@ export default function AboutPage() {
         {/* Mission Section */}
         <section className="space-y-12 md:space-y-16">
           <div className="text-center">
-            <h2 className="text-[var(--text-h2)] font-black uppercase tracking-tighter">Mission & <span className="gold-highlight italic text-black">Values</span></h2>
+            <h2 className="text-[var(--text-h2)] font-black uppercase tracking-tighter">Why We Are <span className="gold-highlight italic text-black">Special</span></h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
             <GlassCard className="p-10 space-y-4">
-              <h3 className="text-xl md:text-2xl font-black text-primary-foreground gold-gradient inline-block px-4 py-1 rounded-xl">Premium First</h3>
-              <p className="text-base text-muted-foreground leading-relaxed">We never settle for "good enough". Our ingredients are hand-picked from premium suppliers.</p>
+              <h3 className="text-xl md:text-2xl font-black text-primary-foreground gold-gradient inline-block px-4 py-1 rounded-xl">Best Quality</h3>
+              <p className="text-base text-muted-foreground leading-relaxed">We only use the freshest and best ingredients we can find. No shortcuts!</p>
             </GlassCard>
             <GlassCard className="p-10 space-y-4">
-              <h3 className="text-xl md:text-2xl font-black text-primary-foreground gold-gradient inline-block px-4 py-1 rounded-xl">Eco-Conscious</h3>
-              <p className="text-base text-muted-foreground leading-relaxed">Our packaging is 100% biodegradable. We care about the planet as much as our taste buds.</p>
+              <h3 className="text-xl md:text-2xl font-black text-primary-foreground gold-gradient inline-block px-4 py-1 rounded-xl">Help the Planet</h3>
+              <p className="text-base text-muted-foreground leading-relaxed">Our boxes and bags are good for the earth. We want to keep the world beautiful.</p>
             </GlassCard>
             <GlassCard className="p-10 space-y-4">
-              <h3 className="text-xl md:text-2xl font-black text-primary-foreground gold-gradient inline-block px-4 py-1 rounded-xl">Community</h3>
-              <p className="text-base text-muted-foreground leading-relaxed">Slice & Spice is a hub for the local community, supporting local farms and businesses.</p>
+              <h3 className="text-xl md:text-2xl font-black text-primary-foreground gold-gradient inline-block px-4 py-1 rounded-xl">Good Friends</h3>
+              <p className="text-base text-muted-foreground leading-relaxed">We love our community and work with local farmers to bring you the best food.</p>
             </GlassCard>
           </div>
         </section>

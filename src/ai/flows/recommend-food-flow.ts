@@ -3,67 +3,69 @@
  * @fileOverview AI Food Recommendation Flow for Slice & Spice.
  * 
  * This flow takes user preferences and suggests the best items from the Slice & Spice menu.
- * Enhanced with robust fallbacks to prevent Internal Server Errors when AI is unavailable.
+ * Simplified for easy reading by everyone.
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const RecommendFoodInputSchema = z.object({
-  preference: z.string().describe('User preference, e.g., "something spicy", "healthy lunch"'),
-  userName: z.string().optional().describe('The name of the user for personalization'),
+  preference: z.string().describe('What the user likes, e.g., "cheesy pizza", "juicy burger"'),
+  userName: z.string().optional().describe('The name of the user'),
 });
 
 const RecommendFoodOutputSchema = z.object({
   recommendations: z.array(z.object({
     itemId: z.number(),
-    reason: z.string().describe('Why this item fits the preference'),
-    chefsNote: z.string().describe('A premium insight from the head chef about this item'),
+    reason: z.string().describe('Why this food is good for them'),
+    chefsNote: z.string().describe('A fun fact about the food'),
   })),
-  pairingTip: z.string().describe('A suggestion for a drink or spice pairing'),
+  pairingTip: z.string().describe('A suggestion for a yummy drink to go with it'),
 });
 
 export type RecommendFoodInput = z.infer<typeof RecommendFoodInputSchema>;
 export type RecommendFoodOutput = z.infer<typeof RecommendFoodOutputSchema>;
 
 /**
- * Recommended fallback data in case AI services are unavailable or keys are missing.
+ * Fallback data if the AI is busy.
  */
 const FALLBACK_RECOMMENDATION: RecommendFoodOutput = {
   recommendations: [
     { 
       itemId: 1, 
-      reason: "Our most beloved masterpiece, perfect for any mood.", 
-      chefsNote: "Our 48-hour fermented sourdough is the soul of our pizza, providing a complex flavor profile that standard dough lacks." 
+      reason: "Everyone loves our cheese pizza!", 
+      chefsNote: "We let our pizza dough rest for a long time so it's super soft." 
     },
     { 
       itemId: 3, 
-      reason: "The definition of luxury and our signature bold burger.", 
-      chefsNote: "The truffle oil we use is sourced from the heart of Umbria, ensuring the ultimate gold standard of infusion." 
+      reason: "Our gold burger is big and super juicy.", 
+      chefsNote: "The bread is colored like real gold and tastes amazing." 
     }
   ],
-  pairingTip: "Pair with our Fresh Mint Lemonade for a crisp, artisanal finish."
+  pairingTip: "Try it with our fresh lemonade for a perfect meal!"
 };
 
 const recommendFoodPrompt = ai.definePrompt({
   name: 'recommendFoodPrompt',
   input: { schema: RecommendFoodInputSchema },
   output: { schema: RecommendFoodOutputSchema },
-  prompt: `You are the Slice & Spice Head Taste Curator. Your goal is to guide {{#if userName}}{{userName}}{{else}}our guest{{/if}} to the perfect meal masterpiece.
+  prompt: `You are the Slice & Spice Head Chef. Your goal is to help {{#if userName}}{{userName}}{{else}}our friend{{/if}} find the perfect yummy meal.
   
+  Use simple and friendly words that a 10-year-old would understand.
+
   Current Menu Items:
-  1. Classic Margherita (Pizza) - $14.99: Fresh basil, buffalo mozzarella.
-  2. Fiery Pepperoni (Pizza) - $16.99: Spicy pepperoni, chili flakes.
-  3. Signature Gold Burger (Burger) - $18.99: Aged beef, truffle mayo.
-  4. Crispy Sriracha Chicken (Burger) - $15.99: Double-breaded, honey sriracha.
-  5. Truffle Fries (Snack) - $7.99: Double-fried, truffle oil.
-  6. Giant Onion Rings (Snack) - $6.99: Golden beer batter.
-  7. Artisanal Latte (Drink) - $5.49: Locally roasted.
-  8. Fresh Mint Lemonade (Drink) - $4.99: Cold-pressed.
+  1. Cheese Pizza - $14.99: Lots of cheese and fresh tomato sauce.
+  2. Spicy Meat Pizza - $16.99: Spicy meat and lots of cheese.
+  3. Special Gold Burger - $18.99: Juicy beef with gold-colored bread.
+  4. Crunchy Chicken Burger - $15.99: Crunchy fried chicken with a little spicy sauce.
+  5. Special Tasty Fries - $7.99: Crunchy potato fries with yummy oil.
+  6. Crunchy Onion Rings - $6.99: Fried onion circles.
+  7. Fluffy Coffee - $5.49: Warm coffee with fluffy milk.
+  8. Minty Lemonade - $4.99: Cold lemon juice with mint.
 
-  User Preference: {{{preference}}}
+  What they like: {{{preference}}}
 
-  Provide 2 curated recommendations. For each, include a "chefsNote" that explains a technical culinary detail. Be sophisticated, authoritative, and welcoming.`,
+  Give 2 suggestions. For each, include a "chefsNote" that tells them something fun about the food. Be very friendly and welcoming.`,
 });
 
 const recommendFoodFlow = ai.defineFlow(
@@ -78,14 +80,13 @@ const recommendFoodFlow = ai.defineFlow(
       if (!output) return FALLBACK_RECOMMENDATION;
       return output;
     } catch (error) {
-      console.warn("AI Generation unavailable, using Gold Standard fallback:", error);
+      console.warn("AI busy, using fallback:", error);
       return FALLBACK_RECOMMENDATION;
     }
   }
 );
 
 export async function recommendFood(input: RecommendFoodInput): Promise<RecommendFoodOutput> {
-  // Check for API keys before attempting flow to prevent server-side crash
   const hasKey = !!(process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY);
   
   if (!hasKey) {
@@ -95,7 +96,7 @@ export async function recommendFood(input: RecommendFoodInput): Promise<Recommen
   try {
     return await recommendFoodFlow(input);
   } catch (error: any) {
-    console.error("AI Flow Execution Failure:", error);
+    console.error("AI Flow error:", error);
     return FALLBACK_RECOMMENDATION;
   }
 }

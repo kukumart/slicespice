@@ -23,14 +23,14 @@ import {
 } from "@/components/ui/dialog"
 
 const MENU_ITEMS = [
-  { id: 1, category: "Pizza", name: "Classic Margherita", price: 14.99, desc: "Fresh basil, buffalo mozzarella, and san marzano tomatoes.", imageId: "pizza-margherita" },
-  { id: 2, category: "Pizza", name: "Fiery Pepperoni", price: 16.99, desc: "Spicy pepperoni, chili flakes, and triple cheese blend.", imageId: "pizza-pepperoni" },
-  { id: 3, category: "Burgers", name: "Signature Gold Burger", price: 18.99, desc: "Aged beef patty, gold-leaf bun, truffle mayo, and aged cheddar.", imageId: "burger-beef" },
-  { id: 4, category: "Burgers", name: "Crispy Sriracha Chicken", price: 15.99, desc: "Double-breaded chicken breast with honey sriracha glaze.", imageId: "burger-chicken" },
-  { id: 5, category: "Snacks", name: "Truffle Fries", price: 7.99, desc: "Double-fried potatoes tossed in truffle oil and parmesan.", imageId: "snack-fries" },
-  { id: 6, category: "Snacks", name: "Giant Onion Rings", price: 6.99, desc: "Sweet vidalia onions in a crispy golden beer batter.", imageId: "snack-onion-rings" },
-  { id: 7, category: "Drinks", name: "Artisanal Latte", price: 5.49, desc: "Locally roasted beans with velvety steamed milk.", imageId: "coffee-latte" },
-  { id: 8, category: "Drinks", name: "Fresh Mint Lemonade", price: 4.99, desc: "Cold-pressed lemons with garden-fresh mint leaves.", imageId: "drink-lemonade" },
+  { id: 1, category: "Pizza", name: "Cheese Pizza", price: 14.99, desc: "Yummy cheese, fresh tomatoes, and green leaves.", imageId: "pizza-margherita" },
+  { id: 2, category: "Pizza", name: "Spicy Meat Pizza", price: 16.99, desc: "Lots of spicy meat and melted cheese.", imageId: "pizza-pepperoni" },
+  { id: 3, category: "Burgers", name: "Special Gold Burger", price: 18.99, desc: "A big juicy burger with special gold-colored bread.", imageId: "burger-beef" },
+  { id: 4, category: "Burgers", name: "Crunchy Chicken Burger", price: 15.99, desc: "Crunchy fried chicken with a little bit of spicy sauce.", imageId: "burger-chicken" },
+  { id: 5, category: "Snacks", name: "Special Tasty Fries", price: 7.99, desc: "Crunchy potato fries with a special yummy oil.", imageId: "snack-fries" },
+  { id: 6, category: "Snacks", name: "Crunchy Onion Rings", price: 6.99, desc: "Crunchy fried onion circles that everyone loves.", imageId: "snack-onion-rings" },
+  { id: 7, category: "Drinks", name: "Fluffy Coffee", price: 5.49, desc: "Warm coffee with lots of fluffy white milk.", imageId: "coffee-latte" },
+  { id: 8, category: "Drinks", name: "Minty Lemonade", price: 4.99, desc: "Cold lemon juice with fresh mint leaves.", imageId: "drink-lemonade" },
 ]
 
 const CATEGORIES = ["All", "Pizza", "Burgers", "Snacks", "Drinks"]
@@ -66,8 +66,8 @@ export default function MenuPage() {
   const handleAddToCart = (item: any) => {
     addToCart(item)
     toast({
-      title: "Selection Added",
-      description: `${item.name} is now in your cart.`,
+      title: "Added to Bag!",
+      description: `${item.name} is now ready for you.`,
       className: "glass-dark border-primary/20",
     })
   }
@@ -82,8 +82,8 @@ export default function MenuPage() {
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Assistant is Busy",
-        description: "The Taste Assistant is receiving high volume. Please try again in a few moments.",
+        title: "Busy!",
+        description: "Our robot helper is busy cooking. Try again in a minute!",
         className: "glass-dark border-destructive/20",
       })
     } finally {
@@ -99,10 +99,10 @@ export default function MenuPage() {
         <div className="flex flex-col items-center gap-8 text-center">
           <div className="space-y-4">
             <h1 className="text-[var(--text-display)] font-black tracking-tight uppercase leading-[0.8]">
-              Our <span className="gold-highlight italic animate-masterpiece text-black px-6">Curation</span>
+              Our <span className="gold-highlight italic animate-masterpiece text-black px-6">Food</span>
             </h1>
             <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto font-medium leading-tight">
-              Explore a symphony of premium flavors, hand-crafted with artisanal precision.
+              Pick your favorite yummy food made fresh just for you!
             </p>
           </div>
           
@@ -112,7 +112,7 @@ export default function MenuPage() {
                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-gold transition-colors" />
                 <Input 
                   className="glass h-14 pl-14 pr-6 rounded-2xl text-lg border-white/5 focus-visible:ring-primary/20 bg-white/5 transition-all focus:bg-white/10"
-                  placeholder="What are you craving?"
+                  placeholder="What do you want to eat?"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -123,18 +123,18 @@ export default function MenuPage() {
                   <DialogTrigger asChild>
                     <Button size="lg" className="h-14 px-8 rounded-2xl gold-gradient text-black font-black shadow-xl hover:scale-105 transition-all border-none uppercase tracking-widest text-xs h-auto">
                       <Sparkles className="w-5 h-5 mr-3" />
-                      AI Assistant
+                      Food Helper
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="glass-dark border-white/10 text-foreground max-w-xl rounded-3xl p-8">
                     <DialogHeader>
-                      <DialogTitle className="text-3xl font-black uppercase tracking-tight text-center">Taste <span className="text-gold">Assistant</span></DialogTitle>
+                      <DialogTitle className="text-3xl font-black uppercase tracking-tight text-center">Food <span className="text-gold">Assistant</span></DialogTitle>
                     </DialogHeader>
                     <div className="space-y-6 pt-6">
                       <div className="space-y-2">
-                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] text-center">Personalized Palate Mapping</p>
+                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] text-center">Tell us what you like!</p>
                         <Input 
-                          placeholder="e.g. Something spicy for a rainy afternoon..." 
+                          placeholder="e.g. I want something cheesy and crunchy..." 
                           className="glass border-white/10 h-14 rounded-xl text-base px-6"
                           value={aiPreference}
                           onChange={(e) => setAiPreference(e.target.value)}
@@ -145,7 +145,7 @@ export default function MenuPage() {
                         disabled={aiLoading}
                         className="w-full gold-gradient text-black h-14 rounded-xl font-black text-lg border-none shadow-xl hover:scale-[1.02] transition-all"
                       >
-                        {aiLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : "FIND MY MATCH"}
+                        {aiLoading ? <Loader2 className="w-6 h-6 animate-spin" /> : "HELP ME CHOOSE"}
                       </Button>
 
                       {aiResult && (
@@ -167,14 +167,14 @@ export default function MenuPage() {
                                     className="gold-gradient text-black font-black h-10 rounded-lg border-none w-full shadow-lg text-xs"
                                     onClick={() => handleAddToCart(item)}
                                   >
-                                    ADD TO SELECTION
+                                    ADD TO BAG
                                   </Button>
                                 </GlassCard>
                               ) : null
                             })}
                           </div>
                           <div className="p-6 gold-gradient rounded-2xl shadow-xl relative overflow-hidden">
-                            <p className="text-[9px] font-black text-black uppercase tracking-[0.3em] mb-2 opacity-60">Chef's Secret Pairing</p>
+                            <p className="text-[9px] font-black text-black uppercase tracking-[0.3em] mb-2 opacity-60">Yummy Drink Tip</p>
                             <p className="text-xs font-bold text-black italic leading-relaxed">{aiResult.pairingTip}</p>
                           </div>
                         </div>
@@ -254,7 +254,7 @@ export default function MenuPage() {
                           </Button>
                           <div className="flex flex-col items-center">
                             <span className="font-black text-lg text-foreground leading-none">{qty}</span>
-                            <span className="text-[7px] font-black uppercase tracking-[0.2em] text-gold mt-1">Reserved</span>
+                            <span className="text-[7px] font-black uppercase tracking-[0.2em] text-gold mt-1">Ready</span>
                           </div>
                           <Button 
                             variant="ghost" 
@@ -271,7 +271,7 @@ export default function MenuPage() {
                           className="w-full gold-gradient text-black rounded-xl py-6 font-black shadow-lg hover:scale-[1.02] active:scale-95 transition-all border-none uppercase tracking-widest text-xs flex items-center justify-center gap-3 h-auto"
                         >
                           <Plus className="w-4 h-4" />
-                          SELECT MASTERPIECE
+                          PICK THIS ONE
                         </Button>
                       )}
                     </div>
@@ -303,13 +303,13 @@ export default function MenuPage() {
                     <ShoppingCart className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="font-black text-xl uppercase tracking-tighter leading-none">{totalItems} Masterpieces</p>
-                    <p className="text-[9px] font-black opacity-60 uppercase tracking-[0.3em] mt-1">Curated Selection</p>
+                    <p className="font-black text-xl uppercase tracking-tighter leading-none">{totalItems} Yummy Things</p>
+                    <p className="text-[9px] font-black opacity-60 uppercase tracking-[0.3em] mt-1">Ready to Order</p>
                   </div>
                </div>
                <div className="flex items-center gap-4 text-right">
                   <div className="space-y-0.5">
-                    <p className="text-[9px] font-black uppercase tracking-[0.3em] opacity-60">Subtotal</p>
+                    <p className="text-[9px] font-black uppercase tracking-[0.3em] opacity-60">Total</p>
                     <p className="font-black text-2xl leading-none">${subtotal.toFixed(2)}</p>
                   </div>
                   <div className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center group-hover:translate-x-2 transition-transform shrink-0">
