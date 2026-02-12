@@ -70,7 +70,7 @@
 }
 
 .gold-highlight {
-  @apply gold-gradient text-primary-foreground px-4 py-1 rounded-xl inline-block shadow-lg shadow-primary/10 font-bold;
+  @apply gold-gradient text-black px-4 py-1 rounded-xl inline-block shadow-lg shadow-primary/10 font-bold;
   background-size: 200% auto;
   animation: highlight-shimmer 3s linear infinite;
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ShoppingCart, Menu, X, MapPin, Info, Utensils, User, LogOut, LayoutDashboard, Settings, Shield, Share2 } from "lucide-react"
+import { ShoppingCart, Menu, X, MapPin, Info, Utensils, User, LogOut, LayoutDashboard, Settings, Shield } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -79,7 +79,7 @@ export function Navbar() {
                     <User className="w-6 h-6 text-gold" />
                     {isAdmin && (
                       <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full border-2 border-background flex items-center justify-center">
-                        <Shield className="w-2.5 h-2.5 text-primary-foreground fill-primary-foreground" />
+                        <Shield className="w-2.5 h-2.5 text-black fill-black" />
                       </div>
                     )}
                   </Button>
@@ -117,12 +117,12 @@ export function Navbar() {
               </Button>
             )}
 
-            <Button asChild variant="default" className="rounded-2xl gold-gradient hover:opacity-90 transition-all font-black px-8 py-6 shadow-xl hover:scale-105 active:scale-95 relative overflow-visible border-none text-primary-foreground">
-              <Link href="/order" className="flex items-center text-primary-foreground no-underline">
-                <ShoppingCart className="w-5 h-5 mr-2 text-primary-foreground" />
+            <Button asChild variant="default" className="rounded-2xl gold-gradient hover:opacity-90 transition-all font-black px-8 py-6 shadow-xl hover:scale-105 active:scale-95 relative overflow-visible border-none text-black">
+              <Link href="/order" className="flex items-center text-black no-underline">
+                <ShoppingCart className="w-5 h-5 mr-2 text-black" />
                 ORDER
                 {totalItems > 0 && (
-                  <Badge className="absolute -top-2 -right-2 bg-foreground text-background font-bold border-2 border-primary rounded-full px-2 py-0.5 min-w-[1.5rem] h-6 flex items-center justify-center">
+                  <Badge className="absolute -top-2 -right-2 bg-black text-primary font-bold border-2 border-primary rounded-full px-2 py-0.5 min-w-[1.5rem] h-6 flex items-center justify-center">
                     {totalItems}
                   </Badge>
                 )}
@@ -136,7 +136,7 @@ export function Navbar() {
           <Link href="/order" className="relative glass w-12 h-12 rounded-2xl flex items-center justify-center no-underline">
             <ShoppingCart className="w-6 h-6 text-foreground" />
             {totalItems > 0 && (
-              <Badge className="absolute -top-1 -right-1 bg-primary text-primary-foreground font-black text-[10px] p-1 h-5 w-5 flex items-center justify-center rounded-full">
+              <Badge className="absolute -top-1 -right-1 bg-primary text-black font-black text-[10px] p-1 h-5 w-5 flex items-center justify-center rounded-full">
                 {totalItems}
               </Badge>
             )}
@@ -194,9 +194,9 @@ export function Navbar() {
                 <Link href="/auth">LOGIN</Link>
               </Button>
             )}
-            <Button asChild variant="default" className="gold-gradient rounded-[1.25rem] py-8 text-lg font-black border-none text-primary-foreground">
-              <Link href="/order" className="flex items-center justify-center text-primary-foreground no-underline">
-                <ShoppingCart className="w-6 h-6 mr-3 text-primary-foreground" />
+            <Button asChild variant="default" className="gold-gradient rounded-[1.25rem] py-8 text-lg font-black border-none text-black">
+              <Link href="/order" className="flex items-center justify-center text-black no-underline">
+                <ShoppingCart className="w-6 h-6 mr-3 text-black" />
                 ORDER
               </Link>
             </Button>

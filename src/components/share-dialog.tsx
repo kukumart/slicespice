@@ -46,17 +46,25 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
   const qrCodeUrl = url ? `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}` : ""
 
   const defaultTrigger = (
-    <Button variant="ghost" className="h-12 px-4 md:px-6 rounded-2xl glass hover:bg-white/10 group flex items-center gap-3 transition-all duration-300">
-      <Share2 className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />
-      <span className="text-[10px] font-black uppercase tracking-[0.25em] text-gold hidden sm:inline">Share Spice</span>
+    <Button 
+      variant="default" 
+      className="h-12 px-4 md:px-6 rounded-2xl gold-gradient text-black font-black uppercase tracking-widest text-[10px] group flex items-center gap-3 transition-all duration-300 shadow-lg border-none"
+    >
+      <Share2 className="w-5 h-5 text-black group-hover:scale-110 transition-transform" />
+      <span className="hidden sm:inline">Share Spice</span>
     </Button>
   )
 
   const effectiveTrigger = trigger || defaultTrigger
 
   // Avoid hydration mismatch by rendering only the trigger on server and first client pass.
+  // Next.js 15 is strict about Radix Dialog's generated aria attributes.
   if (!mounted) {
-    return effectiveTrigger
+    return (
+      <div suppressHydrationWarning>
+        {effectiveTrigger}
+      </div>
+    )
   }
 
   return (
@@ -98,9 +106,9 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
               </div>
               <Button 
                 onClick={handleCopy}
-                className="gold-gradient text-primary-foreground font-black uppercase tracking-widest text-[10px] px-6 rounded-xl border-none h-12 shadow-lg"
+                className="gold-gradient text-black font-black uppercase tracking-widest text-[10px] px-6 rounded-xl border-none h-12 shadow-lg"
               >
-                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                {copied ? <Check className="w-4 h-4 text-black" /> : <Copy className="w-4 h-4 text-black" />}
               </Button>
             </div>
 
