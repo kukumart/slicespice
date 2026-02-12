@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -8,12 +7,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
-import { ShoppingBag, Truck, CreditCard, ChevronRight, Minus, Plus, Trash2, ArrowLeft, Loader2, Bike, Wallet, Sparkles } from "lucide-react"
+import { ShoppingBag, Truck, CreditCard, ChevronRight, Minus, Plus, Trash2, ArrowLeft, Loader2, Bike, Wallet, Sparkles, Smartphone } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/context/cart-context"
 import Link from "next/link"
 import { collection, doc, serverTimestamp } from "firebase/firestore"
 import { useFirestore, useUser, setDocumentNonBlocking } from "@/firebase"
+import { useToast } from "@/hooks/use-toast"
 
 const DELIVERY_PROVIDERS = [
   { id: 'own', name: 'S&S Express', desc: 'Our priority riders', icon: <Bike className="w-5 h-5" /> },
@@ -26,9 +26,11 @@ export default function OrderPage() {
   const db = useFirestore()
   const { user } = useUser()
   const { cart, subtotal, updateQty, clearCart } = useCart()
+  const { toast } = useToast()
   const [step, setStep] = useState(1) 
   const [loading, setLoading] = useState(false)
   const [deliveryProvider, setDeliveryProvider] = useState('own')
+  const [paymentMethod, setPaymentMethod] = useState('cash')
 
   const deliveryFee = cart.length > 0 ? (deliveryProvider === 'own' ? 2.50 : 3.50) : 0
   const total = subtotal + deliveryFee
@@ -47,6 +49,7 @@ export default function OrderPage() {
       items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty })),
       total: total,
       status: "placed",
+      paymentMethod: paymentMethod,
       deliveryProvider: deliveryProvider,
       createdAt: serverTimestamp(),
       deliveryAddress: formData.get("address") as string,
@@ -55,11 +58,22 @@ export default function OrderPage() {
       deliveryNote: formData.get("note") as string,
     }
 
+    if (paymentMethod === 'mpesa') {
+      toast({
+        title: "M-Pesa STK Push",
+        description: "Please check your phone for the M-Pesa prompt to authorize payment.",
+        className: "glass-dark border-primary/20",
+      })
+    }
+
     setDocumentNonBlocking(newOrderRef, orderData, {})
     
-    clearCart()
-    router.push(`/track/${newOrderRef.id}`)
-    setLoading(false)
+    // Simulate slight delay for effect
+    setTimeout(() => {
+      clearCart()
+      router.push(`/track/${newOrderRef.id}`)
+      setLoading(false)
+    }, 1500)
   }
 
   if (cart.length === 0 && step === 1) {
@@ -228,22 +242,42 @@ export default function OrderPage() {
                     <h3 className="text-sm font-black uppercase tracking-[0.2em] text-gold flex items-center gap-2">
                        <CreditCard className="w-4 h-4" /> Payment Selection
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <label className="relative glass p-6 rounded-2xl cursor-pointer border border-primary bg-primary/10 shadow-[0_0_20px_rgba(255,215,0,0.1)] group">
-                        <input type="radio" name="payment" className="absolute opacity-0" defaultChecked />
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <label 
+                        className={`relative glass p-6 rounded-2xl cursor-pointer border transition-all duration-300 ${
+                          paymentMethod === 'cash' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(255,215,0,0.1)]' : 'border-white/5 opacity-40 hover:opacity-100'
+                        }`}
+                        onClick={() => setPaymentMethod('cash')}
+                      >
+                        <input type="radio" name="payment" className="absolute opacity-0" checked={paymentMethod === 'cash'} onChange={() => {}} />
                         <div className="flex items-center gap-3">
-                          <Wallet className="w-6 h-6 text-primary" />
-                          <div className="font-black text-lg uppercase leading-none">Cash/M-Pesa</div>
+                          <Wallet className={`w-6 h-6 ${paymentMethod === 'cash' ? 'text-primary' : 'text-foreground'}`} />
+                          <div className="font-black text-lg uppercase leading-none">Cash</div>
                         </div>
-                        <div className="text-[10px] text-primary/80 uppercase font-black tracking-widest mt-2">Pay on Delivery</div>
+                        <div className="text-[10px] uppercase font-black tracking-widest mt-2">Pay on Delivery</div>
                       </label>
-                      <label className="relative glass p-6 rounded-2xl cursor-not-allowed border border-white/5 opacity-30">
+
+                      <label 
+                        className={`relative glass p-6 rounded-2xl cursor-pointer border transition-all duration-300 ${
+                          paymentMethod === 'mpesa' ? 'border-primary bg-primary/10 shadow-[0_0_20px_rgba(255,215,0,0.1)]' : 'border-white/5 opacity-40 hover:opacity-100'
+                        }`}
+                        onClick={() => setPaymentMethod('mpesa')}
+                      >
+                        <input type="radio" name="payment" className="absolute opacity-0" checked={paymentMethod === 'mpesa'} onChange={() => {}} />
+                        <div className="flex items-center gap-3">
+                          <Smartphone className={`w-6 h-6 ${paymentMethod === 'mpesa' ? 'text-primary' : 'text-foreground'}`} />
+                          <div className="font-black text-lg uppercase leading-none">M-Pesa</div>
+                        </div>
+                        <div className="text-[10px] uppercase font-black tracking-widest mt-2">STK Push Simulation</div>
+                      </label>
+
+                      <label className="relative glass p-6 rounded-2xl cursor-not-allowed border border-white/5 opacity-20">
                         <input type="radio" name="payment" className="absolute opacity-0" disabled />
                         <div className="flex items-center gap-3">
                           <CreditCard className="w-6 h-6" />
-                          <div className="font-black text-lg uppercase leading-none">Digital Card</div>
+                          <div className="font-black text-lg uppercase leading-none">Card</div>
                         </div>
-                        <div className="text-[10px] text-muted-foreground italic uppercase font-black tracking-widest mt-2">Secure Gateway Soon</div>
+                        <div className="text-[10px] text-muted-foreground italic uppercase font-black tracking-widest mt-2">Coming Soon</div>
                       </label>
                     </div>
                   </div>

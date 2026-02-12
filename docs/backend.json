@@ -58,6 +58,7 @@
         "items": { "type": "array" },
         "total": { "type": "number" },
         "status": { "type": "string", "enum": ["placed", "preparing", "on-the-way", "delivered"] },
+        "paymentMethod": { "type": "string", "enum": ["cash", "mpesa", "card"] },
         "deliveryProvider": { "type": "string" },
         "deliveryAddress": { "type": "string" },
         "createdAt": { "type": "string", "format": "date-time" }
