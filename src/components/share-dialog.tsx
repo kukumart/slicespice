@@ -42,7 +42,6 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
     setTimeout(() => setCopied(false), 2000)
   }
 
-  // QR generation API URL
   const qrCodeUrl = url ? `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}` : ""
 
   const defaultTrigger = (
@@ -57,75 +56,73 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
 
   const effectiveTrigger = trigger || defaultTrigger
 
-  // Avoid hydration mismatch by rendering only the trigger on server and first client pass.
-  // Next.js 15 is strict about Radix Dialog's generated aria attributes.
-  if (!mounted) {
-    return (
-      <div suppressHydrationWarning>
-        {effectiveTrigger}
-      </div>
-    )
-  }
-
+  // To prevent hydration mismatch, we render a stable wrapper on the server
+  // and only mount the interactive Dialog on the client.
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {effectiveTrigger}
-      </DialogTrigger>
-      <DialogContent className="glass-dark border-white/10 text-foreground max-w-sm rounded-[2rem]">
-        <DialogHeader>
-          <DialogTitle className="text-3xl font-black uppercase tracking-tight text-center">
-            Share the <span className="text-gold">Spice</span>
-          </DialogTitle>
-        </DialogHeader>
-        
-        <div className="flex flex-col items-center space-y-8 pt-6">
-          <GlassCard className="p-6 bg-white rounded-3xl" hover={false}>
-            {qrCodeUrl && (
-              <div className="relative w-[180px] h-[180px]">
-                <Image 
-                  src={qrCodeUrl} 
-                  alt="Scan to share" 
-                  width={180} 
-                  height={180}
-                  className="rounded-xl"
-                  unoptimized
-                />
+    <div suppressHydrationWarning className="inline-block">
+      {!mounted ? (
+        effectiveTrigger
+      ) : (
+        <Dialog>
+          <DialogTrigger asChild>
+            {effectiveTrigger}
+          </DialogTrigger>
+          <DialogContent className="glass-dark border-white/10 text-foreground max-w-sm rounded-[2rem]">
+            <DialogHeader>
+              <DialogTitle className="text-3xl font-black uppercase tracking-tight text-center">
+                Share the <span className="text-gold">Spice</span>
+              </DialogTitle>
+            </DialogHeader>
+            
+            <div className="flex flex-col items-center space-y-8 pt-6">
+              <GlassCard className="p-6 bg-white rounded-3xl" hover={false}>
+                {qrCodeUrl && (
+                  <div className="relative w-[180px] h-[180px]">
+                    <Image 
+                      src={qrCodeUrl} 
+                      alt="Scan to share" 
+                      width={180} 
+                      height={180}
+                      className="rounded-xl"
+                      unoptimized
+                    />
+                  </div>
+                )}
+              </GlassCard>
+
+              <p className="text-center text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                Scan to experience the gold standard
+              </p>
+
+              <div className="w-full space-y-4">
+                <div className="flex gap-2 w-full">
+                  <div className="flex-1 bg-white rounded-xl px-4 py-3 text-xs font-mono truncate border-white/5 text-black font-black flex items-center overflow-hidden">
+                    {url}
+                  </div>
+                  <Button 
+                    onClick={handleCopy}
+                    className="gold-gradient text-black font-black uppercase tracking-widest text-[10px] px-6 rounded-xl border-none h-12 shadow-lg"
+                  >
+                    {copied ? <Check className="w-4 h-4 text-black" /> : <Copy className="w-4 h-4 text-black" />}
+                  </Button>
+                </div>
+
+                <div className="flex justify-between gap-2">
+                  <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
+                    <Twitter className="w-4 h-4 text-[#1DA1F2]" />
+                  </Button>
+                  <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
+                    <Facebook className="w-4 h-4 text-[#4267B2]" />
+                  </Button>
+                  <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
+                    <Send className="w-4 h-4 text-[#0088cc]" />
+                  </Button>
+                </div>
               </div>
-            )}
-          </GlassCard>
-
-          <p className="text-center text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-            Scan to experience the gold standard
-          </p>
-
-          <div className="w-full space-y-4">
-            <div className="flex gap-2 w-full">
-              <div className="flex-1 bg-white rounded-xl px-4 py-3 text-xs font-mono truncate border-white/5 text-black font-black flex items-center overflow-hidden">
-                {url}
-              </div>
-              <Button 
-                onClick={handleCopy}
-                className="gold-gradient text-black font-black uppercase tracking-widest text-[10px] px-6 rounded-xl border-none h-12 shadow-lg"
-              >
-                {copied ? <Check className="w-4 h-4 text-black" /> : <Copy className="w-4 h-4 text-black" />}
-              </Button>
             </div>
-
-            <div className="flex justify-between gap-2">
-              <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
-                <Twitter className="w-4 h-4 text-[#1DA1F2]" />
-              </Button>
-              <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
-                <Facebook className="w-4 h-4 text-[#4267B2]" />
-              </Button>
-              <Button variant="ghost" className="flex-1 glass h-12 rounded-xl border-white/5 hover:bg-white/10">
-                <Send className="w-4 h-4 text-[#0088cc]" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+          </DialogContent>
+        </Dialog>
+      )}
+    </div>
   )
 }
