@@ -66,7 +66,7 @@ export default function Home() {
           </div>
           
           <div className="space-y-6">
-            <h1 className="text-[var(--text-display)] font-black tracking-tighter leading-tight uppercase animate-in fade-in slide-in-from-bottom-12 duration-1000 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <h1 className="text-[var(--text-display)] font-black tracking-tighter leading-tight uppercase animate-in fade-in slide-in-from-bottom-12 duration-1000 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] text-black">
               CRAVE THE <span className="gold-highlight italic text-black px-4">SLICE</span><br />
               LOVE THE <span className="gold-highlight italic text-black px-4">SPICE</span>
             </h1>
