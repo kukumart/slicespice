@@ -88,9 +88,11 @@ export function Navbar() {
                   <DropdownMenuLabel className="font-black uppercase tracking-widest text-[10px] text-muted-foreground p-4">Member Identity</DropdownMenuLabel>
                   <div className="px-4 pb-4">
                     <p className="text-xs font-black truncate text-foreground">{user.email || 'Anonymous Member'}</p>
-                    <p className="text-[8px] font-black uppercase tracking-[0.2em] text-gold mt-1">
-                      {isAdmin ? "ADMIN COMMANDER" : "GOLD STANDARD PROFILE"}
-                    </p>
+                    <div className="mt-2">
+                      <span className="gold-highlight text-[8px] font-black px-2 py-0.5 rounded-md uppercase tracking-[0.2em] text-black">
+                        {isAdmin ? "ADMIN COMMANDER" : "GOLD STANDARD PROFILE"}
+                      </span>
+                    </div>
                   </div>
                   <DropdownMenuSeparator className="bg-white/5" />
                   <DropdownMenuItem asChild>

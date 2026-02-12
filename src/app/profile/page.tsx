@@ -9,13 +9,15 @@ import {
   useFirestore, 
   useCollection,
   useUser,
-  useMemoFirebase
+  useMemoFirebase,
+  useDoc
 } from "@/firebase"
 import { 
   collection, 
   query, 
   where, 
-  orderBy 
+  orderBy,
+  doc
 } from "firebase/firestore"
 import { 
   Loader2, 
@@ -46,6 +48,10 @@ export default function ProfilePage() {
     setMounted(true)
   }, [])
   
+  const adminRef = useMemoFirebase(() => user ? doc(db, "roles_admin", user.uid) : null, [db, user])
+  const { data: adminRole } = useDoc(adminRef)
+  const isAdmin = !!adminRole
+
   const ordersQuery = useMemoFirebase(() => 
     user ? query(collection(db, "orders"), where("userId", "==", user.uid), orderBy("createdAt", "desc")) : null, 
     [db, user]
@@ -90,11 +96,13 @@ export default function ProfilePage() {
             <div className="w-24 h-24 rounded-[2rem] gold-gradient flex items-center justify-center text-black shadow-2xl">
               <User className="w-12 h-12" />
             </div>
-            <div className="space-y-1">
+            <div className="space-y-2">
               <h1 className="text-4xl font-black uppercase tracking-tighter">My <span className="gold-highlight text-black italic">Vault</span></h1>
-              <p className="text-muted-foreground font-black uppercase tracking-widest text-xs flex items-center gap-2">
-                <Star className="w-3 h-3 text-gold fill-gold" /> Gold Standard Member
-              </p>
+              <div className="flex items-center gap-2">
+                <span className="gold-highlight text-[10px] font-black px-3 py-1 rounded-lg uppercase tracking-widest text-black flex items-center gap-2">
+                  <Star className="w-3 h-3 text-black fill-black" /> {isAdmin ? "ADMIN COMMANDER" : "GOLD STANDARD MEMBER"}
+                </span>
+              </div>
             </div>
           </div>
           
@@ -105,7 +113,7 @@ export default function ProfilePage() {
              </GlassCard>
              <GlassCard className="p-4 px-6 text-center" hover={false}>
                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Status</p>
-               <p className="text-xl font-black text-gold">ELITE</p>
+               <span className="gold-highlight text-lg font-black text-black px-4 py-1 rounded-lg mt-1">ELITE</span>
              </GlassCard>
           </div>
         </div>
