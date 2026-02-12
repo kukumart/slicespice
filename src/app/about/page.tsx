@@ -14,7 +14,7 @@ export default function AboutPage() {
         {/* Story Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div className="space-y-6 md:space-y-8">
-            <h1 className="text-[var(--text-h1)] font-black uppercase tracking-tight">Our <span className="gold-highlight italic text-black">Story</span></h1>
+            <h1 className="text-[var(--text-h1)] font-black uppercase tracking-tight">About <span className="gold-highlight italic text-black">Us</span></h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
               We started Slice & Spice in 2021 because we wanted to make fast food better. We thought, "Why can't fast food be healthy and super yummy at the same time?"
             </p>

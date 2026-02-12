@@ -39,7 +39,7 @@ export function Navbar() {
 
   const navLinks = [
     { name: "Menu", href: "/menu", icon: <Utensils className="w-4 h-4 mr-2" /> },
-    { name: "About", href: "/about", icon: <Info className="w-4 h-4 mr-2" /> },
+    { name: "About Us", href: "/about", icon: <Info className="w-4 h-4 mr-2" /> },
     { name: "Location", href: "/location", icon: <MapPin className="w-4 h-4 mr-2" /> },
   ]
 
