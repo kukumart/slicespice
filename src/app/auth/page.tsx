@@ -62,20 +62,14 @@ export default function AuthPage() {
     
     try {
       await initiateGoogleSignIn(auth)
-      // Redirect handled by useEffect
     } catch (error: any) {
       console.error("Google Auth Error:", error)
-      
-      // Handle common popup issues in preview/iframes
       if (error.code === 'auth/popup-blocked') {
         toast({
           variant: "destructive",
           title: "Popup Blocked",
           description: "Please enable popups in your browser settings to sign in with Google.",
         })
-      } else if (error.code === 'auth/popup-closed-by-user') {
-        // User closed the window, no toast needed but log it
-        console.log("User cancelled Google sign-in")
       } else {
         toast({
           variant: "destructive",
@@ -119,7 +113,7 @@ export default function AuthPage() {
         <div className="text-center space-y-4">
           <h1 className="text-5xl font-black tracking-tighter uppercase">
             {isLogin ? "Welcome" : "Join the"}<br />
-            <span className="gold-highlight italic text-primary-foreground">
+            <span className="gold-highlight italic text-black">
               {isLogin ? "Back" : "Circle"}
             </span>
           </h1>
@@ -148,9 +142,6 @@ export default function AuthPage() {
                     </svg>
                     Google Authentication
                   </>
-                )}
-                {isGoogleLoading && (
-                   <div className="absolute inset-0 bg-primary/10 animate-pulse" />
                 )}
               </Button>
 
@@ -203,13 +194,13 @@ export default function AuthPage() {
               <Button 
                 type="submit" 
                 disabled={isLoading || isGoogleLoading || isGuestLoading}
-                className="w-full gold-gradient text-primary-foreground h-16 rounded-2xl font-black text-lg border-none uppercase tracking-widest shadow-xl hover:scale-[1.02] transition-all"
+                className="w-full gold-gradient text-black h-16 rounded-2xl font-black text-lg border-none uppercase tracking-widest shadow-xl hover:scale-[1.02] transition-all"
               >
                 {isLoading ? (
-                  <Loader2 className="w-6 h-6 animate-spin text-primary-foreground" />
+                  <Loader2 className="w-6 h-6 animate-spin text-black" />
                 ) : (
                   <span className="flex items-center gap-2">
-                    {isLogin ? <LogIn className="w-5 h-5 text-primary-foreground" /> : <UserPlus className="w-5 h-5 text-primary-foreground" />}
+                    {isLogin ? <LogIn className="w-5 h-5 text-black" /> : <UserPlus className="w-5 h-5 text-black" />}
                     {isLogin ? "SIGN IN" : "CREATE ACCOUNT"}
                   </span>
                 )}

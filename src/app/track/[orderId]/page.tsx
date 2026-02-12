@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -11,10 +10,10 @@ import { doc } from "firebase/firestore"
 import { useFirestore, useDoc, useMemoFirebase } from "@/firebase"
 
 const STEPS = [
-  { id: 1, status: "placed", name: "Order Placed", icon: (active: boolean) => <CheckCircle2 className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "We've received your order." },
-  { id: 2, status: "preparing", name: "Preparing", icon: (active: boolean) => <Utensils className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "Our chefs are crafting your food." },
-  { id: 3, status: "on-the-way", name: "On the way", icon: (active: boolean) => <Truck className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "Our rider is heading your way." },
-  { id: 4, status: "delivered", name: "Delivered", icon: (active: boolean) => <PackageCheck className={`w-6 h-6 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />, desc: "Enjoy your fresh meal!" },
+  { id: 1, status: "placed", name: "Order Placed", icon: (active: boolean) => <CheckCircle2 className={`w-6 h-6 ${active ? 'text-black' : 'text-muted-foreground'}`} />, desc: "We've received your order." },
+  { id: 2, status: "preparing", name: "Preparing", icon: (active: boolean) => <Utensils className={`w-6 h-6 ${active ? 'text-black' : 'text-muted-foreground'}`} />, desc: "Our chefs are crafting your food." },
+  { id: 3, status: "on-the-way", name: "On the way", icon: (active: boolean) => <Truck className={`w-6 h-6 ${active ? 'text-black' : 'text-muted-foreground'}`} />, desc: "Our rider is heading your way." },
+  { id: 4, status: "delivered", name: "Delivered", icon: (active: boolean) => <PackageCheck className={`w-6 h-6 ${active ? 'text-black' : 'text-muted-foreground'}`} />, desc: "Enjoy your fresh meal!" },
 ]
 
 const PROVIDER_NAMES: Record<string, string> = {
@@ -63,7 +62,7 @@ export default function TrackingPage() {
 
       <div className="max-w-4xl mx-auto space-y-12">
         <div className="text-center space-y-4">
-          <h1 className="text-6xl font-black tracking-tighter uppercase">Tracking Your <span className="gold-highlight italic text-primary-foreground">Cravings</span></h1>
+          <h1 className="text-6xl font-black tracking-tighter uppercase">Tracking Your <span className="gold-highlight italic text-black">Cravings</span></h1>
           <p className="text-muted-foreground font-mono text-sm uppercase tracking-widest">Order Reference: #{orderId.slice(-6).toUpperCase()}</p>
         </div>
 
@@ -71,13 +70,13 @@ export default function TrackingPage() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
             <div className="space-y-2">
               <p className="text-muted-foreground uppercase tracking-[0.2em] text-xs font-black">Estimated Arrival</p>
-              <h2 className="text-5xl font-black text-primary-foreground gold-gradient px-6 py-2 rounded-2xl flex items-center gap-4 shadow-xl">
-                <Clock className="w-10 h-10 text-primary-foreground" />
-                25-30 <span className="text-lg text-primary-foreground/70 font-black">MIN</span>
+              <h2 className="text-5xl font-black text-black gold-gradient px-6 py-2 rounded-2xl flex items-center gap-4 shadow-xl">
+                <Clock className="w-10 h-10 text-black" />
+                25-30 <span className="text-lg text-black/70 font-black">MIN</span>
               </h2>
             </div>
             <div className="glass p-6 rounded-2xl flex items-center gap-4 border-white/10 bg-white/5">
-              <div className="w-12 h-12 rounded-full gold-gradient text-primary-foreground flex items-center justify-center font-black">
+              <div className="w-12 h-12 rounded-full gold-gradient text-black flex items-center justify-center font-black">
                 {order.deliveryProvider === 'own' ? 'SS' : order.deliveryProvider.charAt(0).toUpperCase()}
               </div>
               <div>
@@ -115,7 +114,7 @@ export default function TrackingPage() {
 
         <div className="text-center">
           <p className="text-muted-foreground text-sm font-medium">
-            Need help with your order? <span className="gold-highlight text-primary-foreground px-3 py-1 rounded-md cursor-pointer hover:scale-105 transition-all font-black uppercase text-xs tracking-widest">Contact Support</span>
+            Need help with your order? <span className="gold-highlight text-black px-3 py-1 rounded-md cursor-pointer hover:scale-105 transition-all font-black uppercase text-xs tracking-widest">Contact Support</span>
           </p>
         </div>
       </div>

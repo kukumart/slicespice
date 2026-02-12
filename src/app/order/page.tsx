@@ -88,7 +88,7 @@ export default function OrderPage() {
             <h1 className="text-5xl font-bold tracking-tight uppercase">Your cart is <span className="text-gold">empty</span></h1>
             <p className="text-muted-foreground text-lg font-medium">Looks like you haven't added any masterpieces to your selection yet.</p>
           </div>
-          <Button asChild size="lg" className="gold-gradient text-primary-foreground px-12 py-8 rounded-2xl font-black text-lg border-none uppercase tracking-widest shadow-xl">
+          <Button asChild size="lg" className="gold-gradient text-black px-12 py-8 rounded-2xl font-black text-lg border-none uppercase tracking-widest shadow-xl">
             <Link href="/menu">Go to Menu</Link>
           </Button>
         </div>
@@ -102,12 +102,12 @@ export default function OrderPage() {
 
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center gap-4 mb-12 overflow-x-auto pb-4 scrollbar-hide">
-          <div className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all ${step >= 1 ? 'border-primary text-primary-foreground bg-primary shadow-lg scale-105' : 'border-white/10 text-muted-foreground opacity-50'}`}>
+          <div className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all ${step >= 1 ? 'border-primary text-black bg-primary shadow-lg scale-105' : 'border-white/10 text-muted-foreground opacity-50'}`}>
             <ShoppingBag className="w-4 h-4" />
             <span className="font-black whitespace-nowrap uppercase tracking-widest text-xs">Review Selection</span>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground opacity-20" />
-          <div className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all ${step >= 2 ? 'border-primary text-primary-foreground bg-primary shadow-lg scale-105' : 'border-white/10 text-muted-foreground opacity-50'}`}>
+          <div className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all ${step >= 2 ? 'border-primary text-black bg-primary shadow-lg scale-105' : 'border-white/10 text-muted-foreground opacity-50'}`}>
             <Truck className="w-4 h-4" />
             <span className="font-black whitespace-nowrap uppercase tracking-widest text-xs">Delivery & Pay</span>
           </div>
@@ -171,7 +171,7 @@ export default function OrderPage() {
                   <Button asChild variant="outline" className="flex-1 py-8 rounded-2xl font-black border-white/10 uppercase tracking-widest text-[10px] glass">
                     <Link href="/menu"><ArrowLeft className="w-4 h-4 mr-2" /> Continue Shopping</Link>
                   </Button>
-                  <Button onClick={() => setStep(2)} className="flex-[2] gold-gradient text-primary-foreground py-8 rounded-2xl text-lg font-black shadow-2xl border-none uppercase tracking-widest group">
+                  <Button onClick={() => setStep(2)} className="flex-[2] gold-gradient text-black py-8 rounded-2xl text-lg font-black shadow-2xl border-none uppercase tracking-widest group">
                     Next: Delivery Details <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </div>
@@ -286,14 +286,14 @@ export default function OrderPage() {
                     <Button type="button" variant="ghost" onClick={() => setStep(1)} className="flex-1 py-8 rounded-2xl font-black uppercase tracking-widest text-[10px] glass">
                       Back to Selection
                     </Button>
-                    <Button type="submit" disabled={loading} className="flex-[2] gold-gradient text-primary-foreground py-8 rounded-2xl text-xl font-black shadow-2xl border-none uppercase tracking-widest">
-                      {loading ? <Loader2 className="w-6 h-6 animate-spin text-primary-foreground" /> : "Authorize & Place Order"}
+                    <Button type="submit" disabled={loading} className="flex-[2] gold-gradient text-black py-8 rounded-2xl text-xl font-black shadow-2xl border-none uppercase tracking-widest">
+                      {loading ? <Loader2 className="w-6 h-6 animate-spin text-black" /> : "Authorize & Place Order"}
                     </Button>
                   </div>
                 </form>
               </GlassCard>
-            )}
-          </div>
+            )
+          }
 
           <div className="space-y-8">
             <GlassCard className="p-8 space-y-8 border-white/10" hover={false}>
