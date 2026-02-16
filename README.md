@@ -11,7 +11,7 @@ npm run dev
 
 ## Custom Domains
 
-To add a custom domain to your application, follow these steps in the Firebase Console:
+Your application is configured to use the custom domain: **slicespice.co.ke**. To finish setting this up in the Firebase Console:
 
 1.  Go to the [Firebase Console](https://console.firebase.google.com/).
 2.  Select your project: **studio-2954956221-d79a9**.
@@ -19,7 +19,7 @@ To add a custom domain to your application, follow these steps in the Firebase C
 4.  Select your backend from the list.
 5.  Click on the **Settings** tab.
 6.  In the **Domains** section, click **Add custom domain**.
-7.  Enter your domain name and follow the prompts to verify ownership via DNS.
+7.  Enter `slicespice.co.ke` and follow the prompts to verify ownership via DNS.
 
 ## Pushing to GitHub
 

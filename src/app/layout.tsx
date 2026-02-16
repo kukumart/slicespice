@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://slice-spice.com',
+    url: 'https://slicespice.co.ke',
     siteName: 'Slice & Spice',
     title: 'Slice & Spice | Premium Fast Food',
     description: 'The Gold Standard of Fast Food. Artisanal precision meets bold flavor innovation.',
