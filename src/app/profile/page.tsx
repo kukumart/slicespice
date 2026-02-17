@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Navbar } from "@/components/navbar"
@@ -98,7 +97,7 @@ export default function ProfilePage() {
               <User className="w-12 h-12" />
             </div>
             <div className="space-y-2">
-              <h1 className="text-4xl font-black uppercase tracking-tighter">My <span className="gold-highlight text-black italic">Vault</span></h1>
+              <h1 className="text-4xl font-black uppercase tracking-tighter text-white">My <span className="gold-highlight text-black italic">Vault</span></h1>
               <div className="flex items-center gap-2">
                 <span className="gold-highlight text-[10px] font-black px-3 py-1 rounded-lg uppercase tracking-widest text-black flex items-center gap-2">
                   <Star className="w-3 h-3 text-black fill-black" /> {isAdmin ? "ADMIN COMMANDER" : "GOLD STANDARD MEMBER"}
@@ -121,7 +120,7 @@ export default function ProfilePage() {
 
         <div className="space-y-8">
           <div className="flex items-center justify-between border-b border-white/5 pb-4">
-            <h2 className="text-xl font-black uppercase tracking-tight flex items-center gap-3">
+            <h2 className="text-xl font-black uppercase tracking-tight flex items-center gap-3 text-white">
               <ShoppingBag className="w-5 h-5 text-gold" />
               Order History
             </h2>
@@ -143,7 +142,7 @@ export default function ProfilePage() {
                         </div>
                         <div className="space-y-1">
                           <div className="flex items-center gap-3">
-                             <h3 className="font-black uppercase text-lg leading-none">Order #{order.id.slice(-6).toUpperCase()}</h3>
+                             <h3 className="font-black uppercase text-lg leading-none text-white">Order #{order.id.slice(-6).toUpperCase()}</h3>
                              <Badge className={`${STATUS_CONFIG[order.status as keyof typeof STATUS_CONFIG]?.color || 'bg-white/5'} text-[10px] font-black uppercase tracking-widest border-none`}>
                                {STATUS_CONFIG[order.status as keyof typeof STATUS_CONFIG]?.label || order.status}
                              </Badge>
@@ -184,10 +183,10 @@ export default function ProfilePage() {
         <GlassCard className="p-10 bg-primary/5 border-primary/10" hover={false}>
            <div className="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
               <div className="w-20 h-20 rounded-full gold-gradient flex items-center justify-center text-black shrink-0 shadow-2xl">
-                <ShieldCheck className="w-10 h-10" />
+                <ShieldCheck className="w-10 h-10 text-black" />
               </div>
               <div className="space-y-4">
-                <h3 className="text-2xl font-black uppercase tracking-tight">The S&S Security Promise</h3>
+                <h3 className="text-2xl font-black uppercase tracking-tight text-white">The S&S Security Promise</h3>
                 <p className="text-muted-foreground text-sm font-medium leading-relaxed">
                   Your selection history and profile data are protected by our Gold Standard encryption protocols. We value your privacy as much as your palate.
                 </p>

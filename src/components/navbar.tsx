@@ -1,4 +1,3 @@
-
 "use client"
 
 import Link from "next/link"
@@ -63,7 +62,7 @@ export function Navbar() {
             <Link 
               key={link.name} 
               href={link.href} 
-              className="text-xs font-black uppercase tracking-widest hover:text-gold transition-colors relative group no-underline text-foreground"
+              className="text-xs font-black uppercase tracking-widest hover:text-gold transition-colors relative group no-underline text-white"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 gold-gradient group-hover:w-full transition-all duration-300" />
@@ -88,7 +87,7 @@ export function Navbar() {
                 <DropdownMenuContent className="glass-dark border-white/10 w-64" align="end">
                   <DropdownMenuLabel className="font-black uppercase tracking-widest text-[10px] text-muted-foreground p-4">Member Identity</DropdownMenuLabel>
                   <div className="px-4 pb-4">
-                    <p className="text-xs font-black truncate text-foreground">{user.email || 'Anonymous Member'}</p>
+                    <p className="text-xs font-black truncate text-white">{user.email || 'Anonymous Member'}</p>
                     <div className="mt-2">
                       <span className="gold-highlight text-[8px] font-black px-2 py-0.5 rounded-md uppercase tracking-[0.2em] text-black">
                         {isAdmin ? "ADMIN COMMANDER" : "GOLD STANDARD PROFILE"}
@@ -97,13 +96,13 @@ export function Navbar() {
                   </div>
                   <DropdownMenuSeparator className="bg-white/5" />
                   <DropdownMenuItem asChild>
-                    <Link href="/profile" className="cursor-pointer font-bold flex items-center gap-2 py-4 px-4 hover:bg-white/5">
+                    <Link href="/profile" className="cursor-pointer font-bold flex items-center gap-2 py-4 px-4 hover:bg-white/5 text-white">
                       <Settings className="w-4 h-4 text-gold" /> My Selection Vault
                     </Link>
                   </DropdownMenuItem>
                   {isAdmin && (
                     <DropdownMenuItem asChild>
-                      <Link href="/admin/dashboard" className="cursor-pointer font-bold flex items-center gap-2 py-4 px-4 hover:bg-white/5 bg-primary/5">
+                      <Link href="/admin/dashboard" className="cursor-pointer font-bold flex items-center gap-2 py-4 px-4 hover:bg-white/5 bg-primary/5 text-white">
                         <LayoutDashboard className="w-4 h-4 text-primary" /> Admin Command Center
                       </Link>
                     </DropdownMenuItem>
@@ -115,7 +114,7 @@ export function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button asChild variant="ghost" className="h-12 px-6 rounded-2xl glass hover:bg-white/10 font-black uppercase tracking-widest text-xs">
+              <Button asChild variant="ghost" className="h-12 px-6 rounded-2xl glass hover:bg-white/10 font-black uppercase tracking-widest text-xs text-white">
                 <Link href="/auth">Sign In</Link>
               </Button>
             )}
@@ -137,7 +136,7 @@ export function Navbar() {
         <div className="flex items-center gap-4 md:hidden pointer-events-auto">
           <ShareDialog />
           <Link href="/order" className="relative glass w-12 h-12 rounded-2xl flex items-center justify-center no-underline">
-            <ShoppingCart className="w-6 h-6 text-foreground" />
+            <ShoppingCart className="w-6 h-6 text-white" />
             {totalItems > 0 && (
               <Badge className="absolute -top-1 -right-1 bg-primary text-black font-black text-[10px] p-1 h-5 w-5 flex items-center justify-center rounded-full">
                 {totalItems}
@@ -145,7 +144,7 @@ export function Navbar() {
             )}
           </Link>
           <button 
-            className="glass w-12 h-12 rounded-2xl flex items-center justify-center text-foreground"
+            className="glass w-12 h-12 rounded-2xl flex items-center justify-center text-white"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -159,7 +158,7 @@ export function Navbar() {
             <Link 
               key={link.name} 
               href={link.href} 
-              className="text-2xl font-black uppercase tracking-tighter hover:text-gold flex items-center group no-underline text-foreground"
+              className="text-2xl font-black uppercase tracking-tighter hover:text-gold flex items-center group no-underline text-white"
               onClick={() => setIsOpen(false)}
             >
               <span className="w-2 h-2 rounded-full gold-gradient mr-4 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -169,7 +168,7 @@ export function Navbar() {
           {user && (
              <Link 
               href="/profile" 
-              className="text-2xl font-black uppercase tracking-tighter hover:text-gold flex items-center group no-underline text-foreground"
+              className="text-2xl font-black uppercase tracking-tighter hover:text-gold flex items-center group no-underline text-white"
               onClick={() => setIsOpen(false)}
             >
               <span className="w-2 h-2 rounded-full gold-gradient mr-4 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -193,7 +192,7 @@ export function Navbar() {
                 LOGOUT
                </Button>
             ) : (
-              <Button asChild variant="outline" className="glass rounded-[1.25rem] py-8 text-lg font-black uppercase tracking-widest">
+              <Button asChild variant="outline" className="glass rounded-[1.25rem] py-8 text-lg font-black uppercase tracking-widest text-white">
                 <Link href="/auth">LOGIN</Link>
               </Button>
             )}

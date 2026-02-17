@@ -48,7 +48,7 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
   const defaultTrigger = (
     <Button 
       variant="default" 
-      className="h-12 px-4 md:px-6 rounded-2xl gold-gradient text-black font-black uppercase tracking-widest text-[10px] group flex items-center gap-3 transition-all duration-300 shadow-lg border-none"
+      className="h-12 px-4 md:px-6 rounded-2xl gold-gradient text-black font-black uppercase tracking-widest text-[10px] group flex items-center gap-3 transition-all duration-300 shadow-xl border-none"
     >
       <Share2 className="w-5 h-5 text-black group-hover:scale-110 transition-transform" />
       <span className="hidden sm:inline">Share Spice</span>
@@ -57,6 +57,8 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
 
   const effectiveTrigger = trigger || defaultTrigger
 
+  // Hydration Fix: Always render the trigger (which is static)
+  // Only mount the Dialog interactive parts on the client
   return (
     <Dialog>
       <DialogTrigger asChild>

@@ -21,45 +21,53 @@ export function Logo({ className, size = "md" }: LogoProps) {
     lg: "scale-150"
   }
 
-  // Prevent hydration flicker by returning a placeholder of the same size/structure
-  if (!mounted) return (
-    <div 
-      className={cn("w-24 h-12 bg-primary/20 rounded-3xl animate-pulse", scales[size], className)} 
-      suppressHydrationWarning
-    />
-  )
-
+  // Hydration Fix: Render a stable structure on the server.
+  // The 'group' and animation effects are safe because they depend on CSS or post-mount state.
   return (
     <div 
       className={cn(
-        "flex flex-col items-center justify-center group pointer-events-auto bg-primary p-4 rounded-3xl border border-black/10 shadow-2xl transition-all duration-500 hover:scale-105",
+        "flex flex-col items-center justify-center pointer-events-auto bg-primary p-4 rounded-3xl border border-black/10 shadow-2xl transition-all duration-500",
+        mounted ? "group hover:scale-105" : "opacity-90",
         scales[size], 
         className
       )}
-      suppressHydrationWarning
     >
       <div className="relative h-12 w-24 flex items-center justify-center">
         {/* Left S (Black) */}
-        <span className="absolute left-2 text-5xl font-black text-black leading-none -translate-x-1 group-hover:-translate-x-2 transition-transform duration-700 drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] select-none italic" style={{ fontFamily: 'serif' }}>
+        <span className={cn(
+          "absolute left-2 text-5xl font-black text-black leading-none -translate-x-1 transition-transform duration-700 drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] select-none italic",
+          mounted && "group-hover:-translate-x-2"
+        )} style={{ fontFamily: 'serif' }}>
           S
         </span>
         
         {/* Overlapping & (Black) */}
-        <span className="absolute z-10 text-4xl font-black text-black leading-none group-hover:scale-110 transition-transform duration-700 select-none italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" style={{ fontFamily: 'serif' }}>
+        <span className={cn(
+          "absolute z-10 text-4xl font-black text-black leading-none transition-transform duration-700 select-none italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]",
+          mounted && "group-hover:scale-110"
+        )} style={{ fontFamily: 'serif' }}>
           &
         </span>
         
         {/* Right S (Black) */}
-        <span className="absolute right-2 text-5xl font-black text-black leading-none translate-x-1 group-hover:translate-x-2 transition-transform duration-700 drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] select-none italic" style={{ fontFamily: 'serif' }}>
+        <span className={cn(
+          "absolute right-2 text-5xl font-black text-black leading-none translate-x-1 transition-transform duration-700 drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] select-none italic",
+          mounted && "group-hover:translate-x-2"
+        )} style={{ fontFamily: 'serif' }}>
           S
         </span>
       </div>
       
       <div className="mt-2 relative overflow-hidden px-2">
-        <span className="text-xs font-black tracking-[0.25em] text-black uppercase whitespace-nowrap group-hover:tracking-[0.3em] transition-all duration-700 block">
+        <span className={cn(
+          "text-xs font-black tracking-[0.25em] text-black uppercase whitespace-nowrap transition-all duration-700 block",
+          mounted && "group-hover:tracking-[0.3em]"
+        )}>
           SLICE & SPICE
         </span>
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+        {mounted && (
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+        )}
       </div>
     </div>
   )
