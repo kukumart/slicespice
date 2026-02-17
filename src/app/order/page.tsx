@@ -68,7 +68,6 @@ export default function OrderPage() {
 
     setDocumentNonBlocking(newOrderRef, orderData, {})
     
-    // Simulate slight delay for effect
     setTimeout(() => {
       clearCart()
       router.push(`/track/${newOrderRef.id}`)
@@ -114,6 +113,7 @@ export default function OrderPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* LEFT COLUMN START */}
           <div className="lg:col-span-2 space-y-8">
             {step === 1 ? (
               <GlassCard className="p-8 space-y-8" hover={false}>
@@ -294,7 +294,9 @@ export default function OrderPage() {
               </GlassCard>
             )
           }
+          </div> {/* END OF LEFT COLUMN */}
 
+          {/* RIGHT COLUMN START */}
           <div className="space-y-8">
             <GlassCard className="p-8 space-y-8 border-white/10" hover={false}>
               <h3 className="text-2xl font-black uppercase tracking-tight border-b border-white/5 pb-4">Bill Summary</h3>
@@ -328,17 +330,21 @@ export default function OrderPage() {
                 </div>
                 <div className="space-y-1">
                   <p className="font-black text-sm uppercase tracking-tight">The S&S Guarantee</p>
-                  <p className="text-[10px] text-muted-foreground leading-relaxed font-medium uppercase tracking-widest">Your order will arrive at peak temperature in premium sustainable packaging.</p>
+                  <p className="text-[10px] text-muted-foreground leading-relaxed font-medium uppercase tracking-widest">
+                    Your order will arrive at peak temperature in premium sustainable packaging.
+                  </p>
                 </div>
               </div>
             </GlassCard>
 
             <div className="px-4 text-center">
-               <p className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40">Secure Gold Standard Encryption</p>
+               <p className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40">
+                 Secure Gold Standard Encryption
+               </p>
             </div>
-          </div>
-        </div>
-      </div>
+          </div> {/* END OF RIGHT COLUMN */}
+        </div>   {/* END OF GRID */}
+      </div>     {/* END OF MAX-W-5XL */}
     </main>
   )
 }
