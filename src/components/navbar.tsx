@@ -89,7 +89,7 @@ export function Navbar() {
                   <div className="px-4 pb-4">
                     <p className="text-xs font-black truncate text-white">{user.email || 'Anonymous Member'}</p>
                     <div className="mt-2">
-                      <span className="gold-highlight text-[8px] font-black px-2 py-0.5 rounded-md uppercase tracking-[0.2em] text-black">
+                      <span className="gold-highlight text-[8px] font-black px-2 py-1 rounded-md uppercase tracking-[0.2em] text-black">
                         {isAdmin ? "ADMIN COMMANDER" : "GOLD STANDARD PROFILE"}
                       </span>
                     </div>

@@ -9,7 +9,7 @@ import {
   DialogTrigger 
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { Share2, Copy, Check, Twitter, Facebook, Send } from "lucide-react"
+import { Share2, Copy, Check, Twitter, Facebook, Send, Loader2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { GlassCard } from "./glass-card"
 import Image from "next/image"
@@ -57,21 +57,21 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
 
   const effectiveTrigger = trigger || defaultTrigger
 
-  // Hydration Fix: Always render the trigger (which is static)
-  // Only mount the Dialog interactive parts on the client
+  // CRITICAL: To prevent hydration errors, we always render the Dialog structure.
+  // We only conditionally render the browser-dependent content (the QR code and URL).
   return (
     <Dialog>
       <DialogTrigger asChild>
         {effectiveTrigger}
       </DialogTrigger>
-      {mounted && (
-        <DialogContent className="glass-dark border-white/10 text-foreground max-w-sm rounded-[2rem]">
-          <DialogHeader>
-            <DialogTitle className="text-3xl font-black uppercase tracking-tight text-center">
-              Share the <span className="text-gold">Spice</span>
-            </DialogTitle>
-          </DialogHeader>
-          
+      <DialogContent className="glass-dark border-white/10 text-foreground max-w-sm rounded-[2rem]">
+        <DialogHeader>
+          <DialogTitle className="text-3xl font-black uppercase tracking-tight text-center">
+            Share the <span className="text-gold">Spice</span>
+          </DialogTitle>
+        </DialogHeader>
+        
+        {mounted ? (
           <div className="flex flex-col items-center space-y-8 pt-6">
             <GlassCard className="p-6 bg-white rounded-3xl" hover={false}>
               {qrCodeUrl && (
@@ -118,8 +118,13 @@ export function ShareDialog({ trigger }: ShareDialogProps) {
               </div>
             </div>
           </div>
-        </DialogContent>
-      )}
+        ) : (
+          <div className="flex flex-col items-center justify-center p-12 space-y-4">
+            <Loader2 className="w-8 h-8 text-gold animate-spin" />
+            <p className="text-[10px] font-black uppercase tracking-widest text-gold animate-pulse">Initializing Hub...</p>
+          </div>
+        )}
+      </DialogContent>
     </Dialog>
   )
 }
