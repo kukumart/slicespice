@@ -10,7 +10,7 @@ import { useState, useMemo, useEffect } from "react"
 import { Plus, Minus, Search, Sparkles, Loader2, ShoppingCart, ArrowRight } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { useCart } from "@/context/cart-context"
-import { recommendFood, RecommendFoodOutput } from "@/ai/flows/recommend-food-flow"
+import { recommendFood } from "@/ai/flows/recommend-food-flow" 
 import { useToast } from "@/hooks/use-toast"
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -40,7 +40,7 @@ export default function MenuPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [aiPreference, setAiPreference] = useState("")
   const [aiLoading, setAiLoading] = useState(false)
-  const [aiResult, setAiResult] = useState<RecommendFoodOutput | null>(null)
+  const [aiResult, setAiResult] = useState<string | null>(null) 
   const [mounted, setMounted] = useState(false)
   
   const { addToCart, updateQty, cart, totalItems, subtotal } = useCart()
@@ -150,33 +150,11 @@ export default function MenuPage() {
 
                       {aiResult && (
                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                          <div className="space-y-4">
-                            {aiResult.recommendations.map((rec, i) => {
-                              const item = MENU_ITEMS.find(m => m.id === rec.itemId)
-                              return item ? (
-                                <GlassCard key={i} className="p-6 border-primary/20 bg-white/5" hover={false}>
-                                  <div className="flex justify-between items-start mb-2">
-                                    <h4 className="font-black text-gold uppercase text-lg tracking-tight leading-none">{item.name}</h4>
-                                    <span className="font-black text-gold text-lg">${item.price}</span>
-                                  </div>
-                                  <div className="p-3 bg-primary/5 rounded-xl border border-primary/20 mb-4 italic">
-                                    <p className="text-xs text-foreground leading-relaxed font-black opacity-80">"{rec.reason}"</p>
-                                  </div>
-                                  <Button 
-                                    size="sm" 
-                                    className="gold-gradient text-black font-black h-10 rounded-lg border-none w-full shadow-lg text-xs"
-                                    onClick={() => handleAddToCart(item)}
-                                  >
-                                    ADD TO BAG
-                                  </Button>
-                                </GlassCard>
-                              ) : null
-                            })}
-                          </div>
-                          <div className="p-6 gold-gradient rounded-2xl shadow-xl relative overflow-hidden">
-                            <p className="text-[9px] font-black text-black uppercase tracking-[0.3em] mb-2 opacity-60">Yummy Drink Tip</p>
-                            <p className="text-xs font-bold text-black italic leading-relaxed">{aiResult.pairingTip}</p>
-                          </div>
+                          <GlassCard className="p-6 border-primary/20 bg-white/5" hover={false}>
+                            <p className="text-sm text-foreground leading-relaxed font-bold italic">
+                              "{aiResult}"
+                            </p>
+                          </GlassCard>
                         </div>
                       )}
                     </div>
@@ -218,7 +196,6 @@ export default function MenuPage() {
                         alt={item.name} 
                         fill 
                         className="object-cover group-hover:scale-110 transition-transform duration-[1500ms]"
-                        data-ai-hint={imgData.imageHint}
                       />
                     ) : (
                       <Skeleton className="w-full h-full" />
@@ -298,7 +275,7 @@ export default function MenuPage() {
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-lg px-4 animate-in slide-in-from-bottom-8 duration-700">
           <Link href="/order" className="no-underline group block">
             <GlassCard className="p-5 bg-primary text-black border-none shadow-2xl flex items-center justify-between hover:scale-[1.02] transition-all rounded-3xl">
-               <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-black/10 flex items-center justify-center">
                     <ShoppingCart className="w-6 h-6" />
                   </div>
@@ -306,8 +283,8 @@ export default function MenuPage() {
                     <p className="font-black text-xl uppercase tracking-tighter leading-none">{totalItems} Yummy Things</p>
                     <p className="text-[9px] font-black opacity-60 uppercase tracking-[0.3em] mt-1">Ready to Order</p>
                   </div>
-               </div>
-               <div className="flex items-center gap-4 text-right">
+                </div>
+                <div className="flex items-center gap-4 text-right">
                   <div className="space-y-0.5">
                     <p className="text-[9px] font-black uppercase tracking-[0.3em] opacity-60">Total</p>
                     <p className="font-black text-2xl leading-none">${subtotal.toFixed(2)}</p>
@@ -315,7 +292,7 @@ export default function MenuPage() {
                   <div className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center group-hover:translate-x-2 transition-transform shrink-0">
                     <ArrowRight className="w-6 h-6" />
                   </div>
-               </div>
+                </div>
             </GlassCard>
           </Link>
         </div>

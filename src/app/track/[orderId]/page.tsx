@@ -25,6 +25,8 @@ const PROVIDER_NAMES: Record<string, string> = {
 export default function TrackingPage() {
   const { orderId } = useParams()
   const db = useFirestore()
+  
+  // Cast orderId to string for the Firestore doc reference
   const orderRef = useMemoFirebase(() => doc(db, "orders", orderId as string), [db, orderId])
   const { data: order, isLoading } = useDoc(orderRef)
 
@@ -63,7 +65,10 @@ export default function TrackingPage() {
       <div className="max-w-4xl mx-auto space-y-12">
         <div className="text-center space-y-4">
           <h1 className="text-6xl font-black tracking-tighter uppercase">Tracking Your <span className="gold-highlight italic text-black">Cravings</span></h1>
-          <p className="text-muted-foreground font-mono text-sm uppercase tracking-widest">Order Reference: #{orderId.slice(-6).toUpperCase()}</p>
+          {/* FIXED: Added type check and fallback to satisfy TypeScript */}
+          <p className="text-muted-foreground font-mono text-sm uppercase tracking-widest">
+            Order Reference: #{(typeof orderId === 'string' ? orderId.slice(-6).toUpperCase() : '......')}
+          </p>
         </div>
 
         <GlassCard className="p-10 space-y-12">

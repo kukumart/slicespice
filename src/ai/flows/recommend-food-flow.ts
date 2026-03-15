@@ -10,13 +10,15 @@ export const recommendFood = ai.defineFlow(
       preference: z.string()
     }),
     outputSchema: z.string()
-  },
+  } as any, 
 
   async ({ preference }) => {
     const response = await ai.generate({
+      // Ensure your model is specified here
       prompt: `Suggest a menu item from Slice & Spice for someone who likes ${preference}`
     });
 
-    return response.text();
+    // CHANGE: Removed the () from text()
+    return response.text; 
   }
 );
