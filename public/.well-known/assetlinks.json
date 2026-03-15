@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.slicespice.twa",
+      "sha256_cert_fingerprints": [
+        "E2:3E:F1:7A:89:C3:43:2E:90:BE:92:3B:FE:1D:AA:F0:1B:40:94:D7:4B:9D:F9:08:52:2B:03:39:3C:11:A7:8D"
+      ]
+    }
+  }
+]
