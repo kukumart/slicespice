@@ -1,0 +1,17 @@
+# Ignore large and build artifacts for deployments
+AndroidStudioProjects/
+AndroidStudioProjects/**/*
+restaurant-delivery/e2e/
+restaurant-deliverynpx/e2e/
+**/test-results/
+**/coverage/
+*.jks
+*.keystore
+node_modules/
+**/node_modules/
+dist/
+.next/
+playwright-report/
+.env
+.env.local
+.vscode/
